@@ -1,0 +1,66 @@
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "plugins": [
+    "flow-vars",
+    "react",
+    "babel"
+  ],
+  "env": {
+    "es6": true
+  },
+  "ecmaFeatures": {
+    "modules": true
+  },
+  "rules": {
+    "no-var": [
+      0
+    ],
+    "arrow-body-style":[0],
+    "strict": [
+      0
+    ],
+    "no-console": [
+      0
+    ],
+    "func-names": [
+      0
+    ],
+    "space-before-function-paren": [
+      0
+    ],
+    "no-param-reassign": [
+      0
+    ],
+    "vars-on-top": [
+      0
+    ],
+    "quotes": [2, "single"],
+    # "strict": [2, "never"],
+    "max-len": [2, 100],
+    "max-depth": [2, 3],
+    "max-params": [2, 4],
+    # "babel/generator-star-spacing": 1,
+    "babel/new-cap": 0,
+    # "babel/object-shorthand": 1,
+    # "babel/arrow-parens": 1,
+    # "babel/no-await-in-loop": 1,
+    # "react/jsx-uses-react": 2,
+    # "react/jsx-uses-vars": 2,
+    # "react/react-in-jsx-scope": 2,
+    # "flow-vars/define-flow-type": 1,
+    # "flow-vars/use-flow-type": 1,
+    "no-magic-numbers": [
+       2,
+       { "ignore": [0, 1, 2, -2, -1], "ignoreArrayIndexes": true }
+    ],
+    "new-cap": [
+      0,
+      {
+        "capIsNewExceptions": [
+          "Immutable"
+        ]
+      }
+    ]
+  }
+}

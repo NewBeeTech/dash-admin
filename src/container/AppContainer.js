@@ -13,10 +13,9 @@ import Menus from '../components/Menus';
 import { push } from 'react-router-redux';
 import * as RoutingURL from '../core/RoutingURL/RoutingURL';
 // import * as IM from '../core/IM/';
-import * as IMAction from '../actions/IMAction';
 import { dispatch } from '../store';
 
-import styles from '../assets/stylesheets/RootContainer.scss';
+import styles from '../assets/stylesheets/RootContainer.css';
 
 class AppContainer extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
@@ -24,7 +23,7 @@ class AppContainer extends React.Component {
   }
   componentWillMount() {
     const userId = userInfoStorage.getItem('userId');
-    dispatch(IMAction.getStudiosConversationGroups({ id: userId }));
+    // dispatch(IMAction.getStudiosConversationGroups({ id: userId }));
     // const rongcloudToken = IM.getRongcloudToken();
     // if (rongcloudToken) {
     //   IM.connect(rongcloudToken);

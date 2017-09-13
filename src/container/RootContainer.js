@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import shallowCompare from 'react-addons-shallow-compare';
 // import loginState from '../core/LoginState';
 import * as RoutingURL from '../core/RoutingURL/RoutingURL';
-import * as IM from '../core/IM/';
 
 
 const propTypes = {
@@ -20,11 +19,13 @@ import userInfoStorage from '../core/UserInfoStorage';
 
 class RootContainer extends React.Component {
   componentWillMount() {
-    if (userInfoStorage.getItem('apiToken')) {
-      if (!this.props.location.query.newTab) {this.props.dispatch(push(RoutingURL.App()));}
-    } else {
-      this.props.dispatch(push(RoutingURL.Login()));
-    }
+    // console.log(userInfoStorage.getItem('apiToken'));
+    // if (userInfoStorage.getItem('apiToken')) {
+    //   if (!this.props.location.query.newTab) {this.props.dispatch(push(RoutingURL.App()));}
+    // } else {
+    //   this.props.dispatch(push(RoutingURL.Login()));
+    // }
+    this.props.dispatch(push(RoutingURL.Login()));
   }
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
@@ -41,7 +42,7 @@ RootContainer.propTypes = propTypes;
 const mapStateToProps = (state) => {
   return {
     dispatch: state.dispatch,
-    login: state.UserReducer.get('login'),
+    login: state.LoginReducer.get('login'),
   };
 };
 

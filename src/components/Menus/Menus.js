@@ -5,7 +5,6 @@ import { Menu, Icon } from 'antd';
 import MenusHeader from './MenusHeader';
 import { push } from 'react-router-redux';
 import * as RoutingURL from '../../core/RoutingURL/RoutingURL';
-import * as Authentication from '../../core/Authentication';
 import styles from '../../assets/stylesheets/Menus/Menus.css';
 
 const SubMenu = Menu.SubMenu;
@@ -33,6 +32,7 @@ class Menus extends React.PureComponent {
   render() {
     return (
       <View>
+        {console.log('31231')}
         <MenusHeader />
           <View style={{ height: '85vh', overflow: 'scroll' }}>
             <Menu

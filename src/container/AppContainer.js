@@ -12,24 +12,12 @@ import Menus from '../components/Menus';
 // import Panel from '../components/Panel';
 import { push } from 'react-router-redux';
 import * as RoutingURL from '../core/RoutingURL/RoutingURL';
-// import * as IM from '../core/IM/';
 import { dispatch } from '../store';
 
 import styles from '../assets/stylesheets/RootContainer.css';
 
-class AppContainer extends React.Component {
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
-  }
+class AppContainer extends React.PureComponent {
   componentWillMount() {
-    const userId = userInfoStorage.getItem('userId');
-    // dispatch(IMAction.getStudiosConversationGroups({ id: userId }));
-    // const rongcloudToken = IM.getRongcloudToken();
-    // if (rongcloudToken) {
-    //   IM.connect(rongcloudToken);
-    // } else {
-    //   dispatch(push(RoutingURL.Login()));
-    // }
   }
   render() {
     return (

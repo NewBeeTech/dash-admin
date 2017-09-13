@@ -9,20 +9,10 @@ import styles from '../../assets/stylesheets/Login/Login.css';
 
 const FormItem = Form.Item;
 
-/**
- * 修改日志:
- *   将LoginForm stateless function 改为 React Class, 以支持ref
- * 修改人: Leiyou
- * 修改时间: 16/4/17
- */
-
-class LoginForm extends React.Component {
+class LoginForm extends React.PureComponent {
   constructor(props, context) {
     super(props, context);
     this._handleSubmit = this._handleSubmit.bind(this);
-  }
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
   }
   _handleSubmit(e) {
     e.preventDefault();

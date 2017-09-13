@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => ({
   dispatch: state.dispatch,
-  userName: state.UserReducer.get('userName'),
+  userName: state.LoginReducer.get('userName'),
 });
 
 

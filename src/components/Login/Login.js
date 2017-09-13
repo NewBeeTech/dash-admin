@@ -16,7 +16,7 @@ const Login = (props) => {
   return (
     <View className={ styles.login }>
       <View className={ styles.loginHeader } >
-        <LoginHeader slogan="H.S.O." />
+        <LoginHeader />
       </View>
       <View className={ styles.loginForm } >
         <LoginForm loginAction={loginAction(props.dispatch)} />

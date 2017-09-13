@@ -19,13 +19,14 @@ import userInfoStorage from '../core/UserInfoStorage';
 
 class RootContainer extends React.Component {
   componentWillMount() {
-    // console.log(userInfoStorage.getItem('apiToken'));
-    // if (userInfoStorage.getItem('apiToken')) {
-    //   if (!this.props.location.query.newTab) {this.props.dispatch(push(RoutingURL.App()));}
-    // } else {
-    //   this.props.dispatch(push(RoutingURL.Login()));
-    // }
-    this.props.dispatch(push(RoutingURL.Login()));
+    if (userInfoStorage.getItem('apiToken')) {
+      if (!this.props.location.query.newTab) {
+        console.log('12');
+        this.props.dispatch(push(RoutingURL.App()));
+      }
+    } else {
+      this.props.dispatch(push(RoutingURL.Login()));
+    }
   }
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);

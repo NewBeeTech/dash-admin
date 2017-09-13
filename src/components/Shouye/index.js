@@ -3,9 +3,9 @@ import React, { PropTypes } from 'react';
 
 const Shouye = (props) => {
   return (
-    <View className={ styles.login }>
+    <div>
       登录首页
-    </View>
+    </div>
   );
 };
 Shouye.propTypes = {

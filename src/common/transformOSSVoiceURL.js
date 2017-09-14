@@ -6,7 +6,7 @@
    if (url) {
      GET(URL.getOssVoicePath, { voiceUrl: url })
     .then(data => {
-      if (data.code === 0) {
+      if (data.code === '001') {
         resolve(data.data.voiceUri);
       } else {
         resolve();

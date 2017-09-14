@@ -32,7 +32,6 @@ class Menus extends React.PureComponent {
   render() {
     return (
       <View>
-        {console.log('31231')}
         <MenusHeader />
           <View style={{ height: '85vh', overflow: 'scroll' }}>
             <Menu

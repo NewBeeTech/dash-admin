@@ -19,7 +19,7 @@
       imgURL = `${url}?x-oss-process=image/resize,m_${resizeType},w_${width},h_${height},limit_0`;
       GET(URL.getOssImgPath, { objectUrl: imgURL })
       .then(data => {
-        if (data.code === 0) {
+        if (data.code === '001') {
           resolve(data.data);
         } else {
           resolve(defaultErrorURL);

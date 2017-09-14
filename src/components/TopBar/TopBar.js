@@ -22,10 +22,7 @@ class TopBar extends React.Component {
     return shallowCompare(this, nextProps, nextState);
   }
   _logoutAction = () => {
-    // IM.disconnect();
-    // userInfoStorage.clear();
-    userInfoStorage.removeItem('apiToken');
-    userInfoStorage.removeItem('userId');
+    userInfoStorage.removeItem('id');
     userInfoStorage.removeItem('userName');
     this.props.dispatch(push(RoutingURL.Login()));
   }

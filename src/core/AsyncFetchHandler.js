@@ -20,7 +20,7 @@ const AsyncFetchHandler = (
   });
   fetchResultPromise
     .then(data => {
-      if (data.code === 0) {
+      if (data.code === '001') {
         dispatch({
           type: FetchState.SUCCESS(actionName),
           data: sideEffect(data.data),

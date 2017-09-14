@@ -18,9 +18,8 @@ const userName = userInfoStorage.getItem('userName');
 const defaultState = Immutable.Map({
   isFetching: false,
   errMsg: '',
-  apiToken,
-  userId,
-  userName,
+  id: '',
+  userName: '',
   login: false,
 });
 
@@ -28,11 +27,12 @@ const getLoginHandler = new ActionHandler.handleAction(LoginAction.GET_LOGIN)
   .request((state) => {
     return state.set('isFetching', true).set('errMsg', '');
   }).success((state, action) => {
-    userInfoStorage.setItem('userId', action.data.userId);
+    userInfoStorage.setItem('id', action.data.id);
     userInfoStorage.setItem('userName', action.data.userName);
     return Immutable.fromJS(action.data).set('login', true)
       .set('isFetching', false)
-      .set('apiToken', action.data.apiToken)
+      .set('id', action.data.id)
+      .set('userName', action.data.userName)
       .set('errMsg', '');
   }).failure((state, action) => {
     return state.set('login', false)

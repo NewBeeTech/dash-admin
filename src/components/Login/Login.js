@@ -8,8 +8,8 @@ import styles from '../../assets/stylesheets/Login/Login.css';
 
 import * as LoginAction from '../../actions/LoginAction';
 
-const loginAction = (dispatch: Function) => (userName: string, password: string) => {
-  dispatch(LoginAction.getLOGIN(userName, password));
+const loginAction = (dispatch: Function) => (params: Object) => {
+  dispatch(LoginAction.getLOGIN(params));
 };
 
 const Login = (props) => {

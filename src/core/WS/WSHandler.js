@@ -60,16 +60,13 @@ export const GET = async (path: string, params = {}) => {
 
 export const POSTJSON = async (path: string, json = {}) => {
   const RequestURL = path;
-  // console.error('POSTJSON RequestURL', RequestURL);
-  const apiToken = userInfoStorage.getItem('apiToken') ? userInfoStorage.getItem('apiToken') : '';
-  const paramsWithToken = Object.assign({}, json, { apiToken });
-  const body = JSON.stringify(paramsWithToken);
+  const paramsWithToken = Object.assign({}, json);
+  const body = _param(paramsWithToken);
   try {
     const response = await fetch(RequestURL, {
       method: 'POST',
       headers: {
-        Accept: '*/*',
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
       body,
     });
@@ -97,7 +94,6 @@ export const GETURL = (path: string, params : Object = {}) => {
   const paramsWithToken = Object.assign(
     {},
     params,
-    { apiToken: userInfoStorage.getItem('apiToken') }
   );
   const RequestURL = `${path}?${_param(paramsWithToken)}`;
   return RequestURL;

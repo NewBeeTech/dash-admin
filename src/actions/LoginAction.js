@@ -12,11 +12,11 @@ import NotificationAction from '../common/NotificationAction';
 // action define
 export const GET_LOGIN = 'GET_LOGIN';
 
-export const getLOGIN = (userName: string, password: string) => (dispatch) => {
-  const result = POSTJSON(URL.LoginPath, { userName, password });
+export const getLOGIN = (params: Object) => (dispatch) => {
+  const result = POSTJSON(URL.LoginPath, params);
   AsyncFetchHandler(GET_LOGIN, result, dispatch);
   result.then(data => {
-    if (data.code === 0) {
+    if (data.code === '001') {
       dispatch(NotificationAction(
         { type: 'SUCCESS',
           device: 'pc',

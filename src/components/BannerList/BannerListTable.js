@@ -63,7 +63,7 @@ class BannerListTable extends React.Component {
         title: data.get('title'),
         smallTitle: data.get('smallTitle'),
         url: data.get('url'),
-        img: data.get('img'),
+        img: this.showImg(data.get('img')),
         status: data.get('status') ? '上线' : '下线',
         createTime: data.get('createTime'),
         operation: (
@@ -100,6 +100,15 @@ class BannerListTable extends React.Component {
       });
     });
     return dataSource;
+  }
+  showImg(img) {
+    const views = [];
+    if(img) {
+      views.push(
+        <img src={img} style={{ height: '80px', width: '160px' }} />
+      );
+    }
+    return views;
   }
 
   render() {

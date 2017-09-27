@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import styles from '../../assets/stylesheets/CommonStyle/image.css';
+import styles from './gallery.css';
 import * as imgURL from '../CommonImgURL';
 
 class Image extends React.Component {

@@ -1,0 +1,24 @@
+.imgBody {
+  display: inline-block;
+  margin: 0 8px 8px 0;
+}
+.imgBox {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  border: 1px solid #d9d9d9;
+  overflow: hidden;
+}
+
+.imgBox > a:hover > img {
+  transform: scale3d(1.1, 1.1, 1.1);
+}
+
+.imgBox a img {
+  transition: transform 0.15s ease 0s;
+  transform: scale3d(1, 1, 1);
+  width: 100%;
+  height: 100%;
+}

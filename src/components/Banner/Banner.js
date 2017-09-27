@@ -8,7 +8,9 @@ import * as BannerAction from '../../actions/BannerAction';
 import { push } from 'react-router-redux';
 import * as RoutingURL from '../../core/RoutingURL/RoutingURL';
 import { isDisabled } from '../../core/CommonFun/CoreState';
+import UploadComponents from '../../common/Upload/UploadComponents';
 import amumu from 'amumu';
+import moment from 'moment';
 import { Form, Input, Select, Radio } from 'antd';
 
 const FormItem = Form.Item;
@@ -21,7 +23,7 @@ class Banner extends React.Component {
   static propTypes = {
     isFetching: PropTypes.bool.isRequired,
     errMsg: PropTypes.string.isRequired,
-    bannerList: PropTypes.instanceOf(Immutable.Map).isRequired,
+    bannerInfo: PropTypes.instanceOf(Immutable.Map).isRequired,
     getValue: PropTypes.func,
     dispatch: PropTypes.func,
     changeAction: PropTypes.func,
@@ -69,7 +71,7 @@ class Banner extends React.Component {
     }));
   }
   componentWillUnmount() {
-    this.clearBannerInfo();
+    // this.clearBannerInfo();
   }
   
   render() {
@@ -188,21 +190,16 @@ class Banner extends React.Component {
                 label="Banner图片"
                 hasFeedback
               >
-                {
-                  this.isDisabled() ?
-                  <text>{this.props.getValue('HospitalInfoReducer/info/alias')}</text> :
-                  getFieldDecorator('alias', {
-                    initialValue: this.props.getValue(
-                      'HospitalInfoReducer/info/alias'),
-                    onChange: (e) => {
-                      this.props.changeAction(
-                      'HospitalInfoReducer/info/alias', e.target.value);
-                    },
-                  })(
-                  <Input
-                    placeholder="Banner图片"
-                  />
-                )}
+              <UploadComponents
+                 multiple={false}
+                 imgURLArray={this.props.bannerInfo.get('img')}
+                 type="public"
+                 onChange={(value) => {
+                   this.props.changeAction(
+                     `BannerReducer/BannerInfo/img`, value);
+                 }}
+                 dir={`prescription/${moment().format('YYYY_MM')}`}
+               />
               </FormItem>
             </View>
           </Form>

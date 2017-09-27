@@ -15,18 +15,18 @@ class Menus extends React.PureComponent {
     dispatch: PropTypes.func.isRequired,
   };
   state = {
-    current: '后台系统首页1',
+    current: 'Banner轮播广告位',
   };
   _handleClick(e) {
     this.setState({
       current: e.key,
     });
-    if (e.key === '后台系统首页1') {
-      this.props.dispatch(push(RoutingURL.Shouye()));
-    } else if (e.key === '后台系统首页2') {
-      this.props.dispatch(push(RoutingURL.Shouye()));
-    } else if (e.key === '后台系统首页3') {
-      this.props.dispatch(push(RoutingURL.Shouye()));
+    if (e.key === 'Banner轮播广告位') {
+      this.props.dispatch(push(RoutingURL.BannerList()));
+    } else if (e.key === '活动管理') {
+      this.props.dispatch(push(RoutingURL.DashList()));
+    } else if (e.key === '用户管理') {
+      this.props.dispatch(push(RoutingURL.UserList()));
     }
   }
   render() {
@@ -40,24 +40,36 @@ class Menus extends React.PureComponent {
               mode="inline"
             >
                 <SubMenu
-                  key="后台系统首页"
+                  key="Banner轮播广告位"
                   title={<div className={styles.subTitle}>
-                  档案查询</div>}
+                  Banner轮播广告位</div>}
                 >
                       <Item
-                        key="后台系统首页1"
+                        key="Banner轮播广告位"
                       >
-                        • 后台系统首页1
+                        • Banner轮播广告位
                       </Item>
+                </SubMenu>
+                <SubMenu
+                  key="活动管理"
+                  title={<div className={styles.subTitle}>
+                  活动管理</div>}
+                >
                       <Item
-                        key="后台系统首页2"
+                        key="活动管理"
                       >
-                        • 后台系统首页2
+                        • 活动管理
                       </Item>
+                </SubMenu>
+                <SubMenu
+                  key="用户管理"
+                  title={<div className={styles.subTitle}>
+                  用户管理</div>}
+                >
                       <Item
-                        key="后台系统首页3"
+                        key="用户管理"
                       >
-                        • 后台系统首页3
+                        • 用户管理
                       </Item>
                 </SubMenu>
             </Menu>

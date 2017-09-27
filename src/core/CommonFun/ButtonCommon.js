@@ -4,7 +4,7 @@
  */
 import React from 'react';
 import { Button, Popconfirm } from 'antd';
-import mainStyles from '../../assets/stylesheets/main.scss';
+import mainStyles from '../../assets/stylesheets/Common.css';
 
 export const revertButton = (actionName: Function) => (params : Object = {}) => {
   return (

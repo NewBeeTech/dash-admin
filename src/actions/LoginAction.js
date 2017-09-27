@@ -1,6 +1,3 @@
-/**
- * Created by leiyouwho on 15/4/2016.
- */
 
 import { POSTJSON } from '../core/WS/WSHandler';
 import * as URL from '../core/WS/URL';

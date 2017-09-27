@@ -8,12 +8,15 @@ import * as DashAction from '../../actions/DashAction';
 import { push } from 'react-router-redux';
 import * as RoutingURL from '../../core/RoutingURL/RoutingURL';
 import { isDisabled } from '../../core/CommonFun/CoreState';
+import UploadComponents from '../../common/Upload/UploadComponents';
 import amumu from 'amumu';
-import { Form, Input, Select, Radio } from 'antd';
+import { Form, Input, Select, Radio, DatePicker, InputNumber } from 'antd';
+import moment from 'moment';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
+const RangePicker = DatePicker.RangePicker;
 
 @amumu.redux.ConnectStore
 @amumu.decorators.Loading('pc')
@@ -31,7 +34,7 @@ class DashInfo extends React.Component {
     if(this.props.params.id){
       // this.props.dispatch(BannerAction.getBannerInfo({id: this.props.params.id}));
     } else {
-      this.clearDashInfo();
+      // this.clearDashInfo();
     }
   }
   /**
@@ -81,7 +84,21 @@ class DashInfo extends React.Component {
     }));
   }
   componentWillUnmount() {
-    this.clearDashInfo();
+    // this.clearDashInfo();
+  }
+  showSignupPeople(signupPeople) {
+    const views = [];
+    if(signupPeople) {
+      signupPeople.map((item, key) => {
+        views.push(
+          <div key={key} style={{ margin: '20px' }}>
+              <div>{item.get('name')}</div>
+              <div>{item.get('sex')}</div>
+          </div>
+        );
+      })
+    }
+    return views;
   }
   
   render() {
@@ -136,7 +153,7 @@ class DashInfo extends React.Component {
               </FormItem>
               <FormItem
                 {...formItemLayout}
-                label="小标题"
+                label="副标题"
                 hasFeedback
               >
                 {
@@ -150,7 +167,7 @@ class DashInfo extends React.Component {
                     },
                   })(
                   <Input
-                    placeholder="小标题"
+                    placeholder="副标题"
                   />
                 )}
               </FormItem>
@@ -159,20 +176,16 @@ class DashInfo extends React.Component {
                 label="活动banner"
                 hasFeedback
               >
-                {
-                  this.isDisabled() ?
-                  <text>{this.props.dashInfo.get('photos')}</text> :
-                  getFieldDecorator('photos', {
-                    initialValue: this.props.dashInfo.get('photos'),
-                    onChange: (e) => {
-                      this.props.changeAction(
-                      'DashReducer/dashInfo/photos', e.target.value);
-                    },
-                  })(
-                  <Input
-                    placeholder="活动banner"
-                  />
-                )}
+                <UploadComponents
+                   multiple={false}
+                   imgURLArray={this.props.dashInfo.get('photos')}
+                   type="public"
+                   onChange={(value) => {
+                     this.props.changeAction(
+                       `DashReducer/dashInfo/photos`, value);
+                   }}
+                   dir={`prescription/${moment().format('YYYY_MM')}`}
+                 />
               </FormItem>
               <FormItem
                 {...formItemLayout}
@@ -217,46 +230,63 @@ class DashInfo extends React.Component {
                 )}
               </FormItem>
               <FormItem
+                label="活动时间："
                 {...formItemLayout}
-                label="活动时间"
-                hasFeedback
               >
-                {
-                  this.isDisabled() ?
-                  <text>{this.props.dashInfo.get('type') ? '上线' : '下线'}</text> :
-                  getFieldDecorator('type', {
-                    initialValue: this.props.dashInfo.get('type'),
-                    onChange: (e) => {
-                      this.props.changeAction(
-                      'DashReducer/dashInfo/type', e.target.value);
-                    },
-                  })(
-                    <RadioGroup>
-                      <Radio value={1}>联谊</Radio>
-                      <Radio value={2}>聚餐</Radio>
-                    </RadioGroup>
-                )}
+              <RangePicker
+                showTime
+                format="YYYY-MM-DD HH:mm:ss"
+                style={{ width: '300px' }}
+                disabled={this.isDisabled()}
+                value={
+                  [this.props.dashInfo.get('startTime') ?
+                   moment(this.props.dashInfo.get('startTime'),
+                    'YYYY-MM-DD') : undefined,
+                    this.props.dashInfo.get('endTime') ?
+                    moment(this.props.dashInfo.get('endTime'),
+                     'YYYY-MM-DD') : undefined,
+                  ]}
+                onChange={(date, dateString) => {
+                  this.props.changeAction(
+                     'DashReducer/dashInfo/startTime',
+                      dateString[0],
+                    );
+                  this.props.changeAction(
+                     'DashReducer/dashInfo/endTime',
+                     dateString[1],
+                    );
+                }}
+              />
               </FormItem>
+              
               <FormItem
+                label="报名时间："
                 {...formItemLayout}
-                label="报名时间"
-                hasFeedback
               >
-                {
-                  this.isDisabled() ?
-                  <text>{this.props.dashInfo.get('type') ? '上线' : '下线'}</text> :
-                  getFieldDecorator('type', {
-                    initialValue: this.props.dashInfo.get('type'),
-                    onChange: (e) => {
-                      this.props.changeAction(
-                      'DashReducer/dashInfo/type', e.target.value);
-                    },
-                  })(
-                    <RadioGroup>
-                      <Radio value={1}>联谊</Radio>
-                      <Radio value={2}>聚餐</Radio>
-                    </RadioGroup>
-                )}
+              <RangePicker
+                showTime
+                format="YYYY-MM-DD HH:mm:ss"
+                style={{ width: '300px' }}
+                disabled={this.isDisabled()}
+                value={
+                  [this.props.dashInfo.get('signupStartTime') ?
+                   moment(this.props.dashInfo.get('signupStartTime'),
+                    'YYYY-MM-DD') : undefined,
+                    this.props.dashInfo.get('signupEndTime') ?
+                    moment(this.props.dashInfo.get('signupEndTime'),
+                     'YYYY-MM-DD') : undefined,
+                  ]}
+                onChange={(date, dateString) => {
+                  this.props.changeAction(
+                     'DashReducer/dashInfo/signupStartTime',
+                      dateString[0],
+                    );
+                  this.props.changeAction(
+                     'DashReducer/dashInfo/signupEndTime',
+                     dateString[1],
+                    );
+                }}
+              />
               </FormItem>
               
               <FormItem
@@ -264,21 +294,20 @@ class DashInfo extends React.Component {
                 label="活动人数（男）"
                 hasFeedback
               >
-                {
-                  this.isDisabled() ?
-                  <text>{this.props.dashInfo.get('type') ? '上线' : '下线'}</text> :
-                  getFieldDecorator('type', {
-                    initialValue: this.props.dashInfo.get('type'),
-                    onChange: (e) => {
-                      this.props.changeAction(
-                      'DashReducer/dashInfo/type', e.target.value);
-                    },
-                  })(
-                    <RadioGroup>
-                      <Radio value={1}>联谊</Radio>
-                      <Radio value={2}>聚餐</Radio>
-                    </RadioGroup>
-                )}
+              {
+                this.isDisabled() ?
+                <text>{this.props.dashInfo.get('boyNum')}</text> :
+                getFieldDecorator('boyNum', {
+                  initialValue: this.props.dashInfo.get('boyNum'),
+                  onChange: (e) => {
+                    this.props.changeAction(
+                    'DashReducer/dashInfo/boyNum', e.target.value);
+                  },
+                })(
+                <InputNumber
+                  placeholder="男生人数"
+                />
+              )}
               </FormItem>
               <FormItem
                 {...formItemLayout}
@@ -287,18 +316,17 @@ class DashInfo extends React.Component {
               >
                 {
                   this.isDisabled() ?
-                  <text>{this.props.dashInfo.get('type') ? '上线' : '下线'}</text> :
-                  getFieldDecorator('type', {
-                    initialValue: this.props.dashInfo.get('type'),
+                  <text>{this.props.dashInfo.get('girlNum')}</text> :
+                  getFieldDecorator('girlNum', {
+                    initialValue: this.props.dashInfo.get('girlNum'),
                     onChange: (e) => {
                       this.props.changeAction(
-                      'DashReducer/dashInfo/type', e.target.value);
+                      'DashReducer/dashInfo/girlNum', e.target.value);
                     },
                   })(
-                    <RadioGroup>
-                      <Radio value={1}>联谊</Radio>
-                      <Radio value={2}>聚餐</Radio>
-                    </RadioGroup>
+                  <InputNumber
+                    placeholder="女生人数"
+                  />
                 )}
               </FormItem>
               <FormItem
@@ -306,21 +334,19 @@ class DashInfo extends React.Component {
                 label="活动费用（男）"
                 hasFeedback
               >
-                {
-                  this.isDisabled() ?
-                  <text>{this.props.dashInfo.get('type') ? '上线' : '下线'}</text> :
-                  getFieldDecorator('type', {
-                    initialValue: this.props.dashInfo.get('type'),
-                    onChange: (e) => {
-                      this.props.changeAction(
-                      'DashReducer/dashInfo/type', e.target.value);
-                    },
-                  })(
-                    <RadioGroup>
-                      <Radio value={1}>联谊</Radio>
-                      <Radio value={2}>聚餐</Radio>
-                    </RadioGroup>
-                )}
+              {
+                this.isDisabled() ?
+                <text>{this.props.dashInfo.get('girlMoney')}</text> :
+                getFieldDecorator('girlMoney', {
+                  initialValue: this.props.dashInfo.get('girlMoney'),
+                  onChange: (e) => {
+                    this.props.changeAction(
+                    'DashReducer/dashInfo/girlMoney', e.target.value);
+                  },
+                })(
+                <InputNumber
+                />
+              )}
               </FormItem>
               <FormItem
                 {...formItemLayout}
@@ -329,18 +355,16 @@ class DashInfo extends React.Component {
               >
                 {
                   this.isDisabled() ?
-                  <text>{this.props.dashInfo.get('type') ? '上线' : '下线'}</text> :
-                  getFieldDecorator('type', {
-                    initialValue: this.props.dashInfo.get('type'),
+                  <text>{this.props.dashInfo.get('girlMoney')}</text> :
+                  getFieldDecorator('girlMoney', {
+                    initialValue: this.props.dashInfo.get('girlMoney'),
                     onChange: (e) => {
                       this.props.changeAction(
-                      'DashReducer/dashInfo/type', e.target.value);
+                      'DashReducer/dashInfo/girlMoney', e.target.value);
                     },
                   })(
-                    <RadioGroup>
-                      <Radio value={1}>联谊</Radio>
-                      <Radio value={2}>聚餐</Radio>
-                    </RadioGroup>
+                  <InputNumber
+                  />
                 )}
               </FormItem>
               <FormItem
@@ -348,20 +372,20 @@ class DashInfo extends React.Component {
                 label="活动流程"
                 hasFeedback
               >
-                {
-                  this.isDisabled() ?
-                  <text>{this.props.dashInfo.get('activityFlow')}</text> :
-                  getFieldDecorator('activityFlow', {
+                {getFieldDecorator('activityFlow',
+                  {
+                    rules: [
+                      { required: true, message: '活动流程不能为空' },
+                    ],
                     initialValue: this.props.dashInfo.get('activityFlow'),
-                    onChange: (e) => {
-                      this.props.changeAction(
-                      'DashReducer/dashInfo/activityFlow', e.target.value);
-                    },
+                    onChange: (e) => this.props.changeAction(
+                      'DashReducer/dashInfo/activityFlow', e.target.value),
                   })(
-                    <RadioGroup>
-                      <Radio value={1}>联谊</Radio>
-                      <Radio value={2}>聚餐</Radio>
-                    </RadioGroup>
+                      <Input
+                        type="textarea"
+                        rows="5"
+                        disabled={this.isDisabled()}
+                      />
                 )}
               </FormItem>
               <FormItem
@@ -369,23 +393,24 @@ class DashInfo extends React.Component {
                 label="友情提示"
                 hasFeedback
               >
-                {
-                  this.isDisabled() ?
-                  <text>{this.props.dashInfo.get('tips')}</text> :
-                  getFieldDecorator('tips', {
+                {getFieldDecorator('tips',
+                  {
+                    rules: [
+                      { required: true, message: '友情提示不能为空' },
+                    ],
                     initialValue: this.props.dashInfo.get('tips'),
-                    onChange: (e) => {
-                      this.props.changeAction(
-                      'DashReducer/dashInfo/tips', e.target.value);
-                    },
+                    onChange: (e) => this.props.changeAction(
+                      'DashReducer/dashInfo/tips', e.target.value),
                   })(
-                    <RadioGroup>
-                      <Radio value={1}>联谊</Radio>
-                      <Radio value={2}>聚餐</Radio>
-                    </RadioGroup>
+                      <Input
+                        type="textarea"
+                        rows="5"
+                        disabled={this.isDisabled()}
+                      />
                 )}
               </FormItem>
               </View>
+              {/* 发起人信息 */}
               <View className={ Contentstyles.formHeader } >
                 发起人信息
               </View>
@@ -395,91 +420,84 @@ class DashInfo extends React.Component {
                 label="发起人ID"
                 hasFeedback
               >
-                {
-                  this.isDisabled() ?
-                  <text>{this.props.dashInfo.get('originUserId')}</text> :
-                  getFieldDecorator('originUserId', {
-                    initialValue: this.props.dashInfo.get('originUserId'),
-                    onChange: (e) => {
-                      this.props.changeAction(
-                      'DashReducer/dashInfo/originUserId', e.target.value);
-                    },
-                  })(
-                    <RadioGroup>
-                      <Radio value={1}>联谊</Radio>
-                      <Radio value={2}>聚餐</Radio>
-                    </RadioGroup>
-                )}
+              {
+                this.isDisabled() ?
+                <text>{this.props.dashInfo.get('originUserId')}</text> :
+                getFieldDecorator('originUserId', {
+                  initialValue: this.props.dashInfo.get('originUserId'),
+                  onChange: (e) => {
+                    this.props.changeAction(
+                    'DashReducer/dashInfo/originUserId', e.target.value);
+                  },
+                })(
+                <Input
+                  placeholder="发起人ID"
+                />
+              )}
               </FormItem>
               <FormItem
                 {...formItemLayout}
                 label="发起人名字"
                 hasFeedback
               >
-                {
-                  this.isDisabled() ?
-                  <text>{this.props.dashInfo.get('originUserName')}</text> :
-                  getFieldDecorator('originUserName', {
-                    initialValue: this.props.dashInfo.get('originUserName'),
-                    onChange: (e) => {
-                      this.props.changeAction(
-                      'DashReducer/dashInfo/originUserName', e.target.value);
-                    },
-                  })(
-                    <RadioGroup>
-                      <Radio value={1}>联谊</Radio>
-                      <Radio value={2}>聚餐</Radio>
-                    </RadioGroup>
-                )}
+              {
+                this.isDisabled() ?
+                <text>{this.props.dashInfo.get('originUserName')}</text> :
+                getFieldDecorator('originUserName', {
+                  initialValue: this.props.dashInfo.get('originUserName'),
+                  onChange: (e) => {
+                    this.props.changeAction(
+                    'DashReducer/dashInfo/originUserName', e.target.value);
+                  },
+                })(
+                <Input
+                  placeholder="发起人名字"
+                />
+              )}
               </FormItem>
               <FormItem
                 {...formItemLayout}
                 label="发起人头像"
                 hasFeedback
               >
-                {
-                  this.isDisabled() ?
-                  <text>{this.props.dashInfo.get('originUserImg')}</text> :
-                  getFieldDecorator('originUserImg', {
-                    initialValue: this.props.dashInfo.get('originUserImg'),
-                    onChange: (e) => {
-                      this.props.changeAction(
-                      'DashReducer/dashInfo/originUserImg', e.target.value);
-                    },
-                  })(
-                    <RadioGroup>
-                      <Radio value={1}>联谊</Radio>
-                      <Radio value={2}>聚餐</Radio>
-                    </RadioGroup>
-                )}
+                <UploadComponents
+                   multiple={false}
+                   imgURLArray={this.props.dashInfo.get('originUserImg')}
+                   type="public"
+                   onChange={(value) => {
+                     this.props.changeAction(
+                       `DashReducer/dashInfo/originUserImg`, value);
+                   }}
+                   dir={`prescription/${moment().format('YYYY_MM')}`}
+                 />
               </FormItem>
               <FormItem
                 {...formItemLayout}
                 label="发起人描述"
                 hasFeedback
               >
-                {
-                  this.isDisabled() ?
-                  <text>{this.props.dashInfo.get('originUserDesc')}</text> :
-                  getFieldDecorator('originUserDesc', {
+                {getFieldDecorator('originUserDesc',
+                  {
                     initialValue: this.props.dashInfo.get('originUserDesc'),
-                    onChange: (e) => {
-                      this.props.changeAction(
-                      'DashReducer/dashInfo/originUserDesc', e.target.value);
-                    },
+                    onChange: (e) => this.props.changeAction(
+                      'DashReducer/dashInfo/originUserDesc', e.target.value),
                   })(
-                    <RadioGroup>
-                      <Radio value={1}>联谊</Radio>
-                      <Radio value={2}>聚餐</Radio>
-                    </RadioGroup>
+                      <Input
+                        type="textarea"
+                        rows="5"
+                        disabled={this.isDisabled()}
+                      />
                 )}
               </FormItem>
             </View>
+            {/* 报名人数 */}
             <View className={ Contentstyles.formHeader } >
               报名人信息
             </View>
             <View className={ Contentstyles.formContent } >
-                报名人信息
+                 <div style={{ display: 'flex' }}>
+                    {this.showSignupPeople(this.props.dashInfo.get('signupPeople'))}
+                 </div>
             </View>
           </Form>
         </View>

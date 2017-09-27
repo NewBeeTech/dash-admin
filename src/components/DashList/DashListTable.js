@@ -8,13 +8,11 @@ import Immutable from 'immutable';
 import styles from '../../assets/stylesheets/Common.css';
 import { push } from 'react-router-redux';
 import * as RoutingURL from '../../core/RoutingURL/RoutingURL';
+import {getActivityTime} from '../../core/CommonFun/moment';
 
 const propTypes = {
   dataSource: PropTypes.instanceOf(Immutable.List).isRequired,
   dispatch: PropTypes.func,
-  // goAccountAction: PropTypes.func.isRequired,
-  // goUpdateAccountAction: PropTypes.func.isRequired,
-  // DeleteAccountAction: PropTypes.func.isRequired,
 };
 
 class DashListTable extends React.Component {
@@ -25,7 +23,7 @@ class DashListTable extends React.Component {
       dataIndex: 'operation',
       key: 'operation',
     }, {
-      title: '活动id',
+      title: '活动ID',
       dataIndex: 'id',
       key: 'id',
     }, {
@@ -33,13 +31,17 @@ class DashListTable extends React.Component {
       dataIndex: 'title',
       key: 'title',
     }, {
-      title: '小标题',
+      title: '副标题',
       dataIndex: 'smallTitle',
       key: 'smallTitle',
     }, {
+      title: '活动图片',
+      dataIndex: 'photos',
+      key: 'photos',
+    }, {
       title: '地址',
-      dataIndex: 'url',
-      key: 'url',
+      dataIndex: 'address',
+      key: 'address',
     }, {
       title: '活动类型',
       dataIndex: 'type',
@@ -50,13 +52,13 @@ class DashListTable extends React.Component {
       key: 'status',
     }, {
       title: '活动时间',
-      dataIndex: 'createTime',
-      key: 'createTime',
-    },{
-      title: '活动图片',
-      dataIndex: 'img',
-      key: 'img',
-    }];
+      dataIndex: 'activityTime',
+      key: 'activityTime',
+    }, {
+      title: '报名时间',
+      dataIndex: 'signupTime',
+      key: 'signupTime',
+    }, ];
   }
   _renderDataSource(datas) {
     const dataSource = [];
@@ -66,11 +68,12 @@ class DashListTable extends React.Component {
         id: data.get('id'),
         title: data.get('title'),
         smallTitle: data.get('smallTitle'),
-        url: data.get('url'),
-        img: data.get('img'),
+        address: data.get('address'),
+        photos: this.showImg(data.get('photos')),
         status: data.get('status') ? '上线' : '下线',
         type: data.get('type'),
-        createTime: data.get('createTime'),
+        activityTime: getActivityTime(data.get('startTime'), data.get('endTime')),
+        signupTime: data.get('signupEndTime') ? `${data.get('signupStartTime')} 至 ${data.get('signupEndTime')}` : '',
         operation: (
           <View>
             <a
@@ -106,7 +109,16 @@ class DashListTable extends React.Component {
     });
     return dataSource;
   }
-  
+  showImg(img) {
+    const views = [];
+    if(img) {
+      views.push(
+        <img src={img} style={{ height: '60px', width: '120px' }} />
+      );
+    }
+    return views;
+  }
+
   render() {
     return (
       <View>

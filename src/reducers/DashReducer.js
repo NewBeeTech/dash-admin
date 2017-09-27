@@ -20,6 +20,7 @@ const defaultState = Immutable.Map({
         Immutable.Map({
           id: 1,
           type: 1, // 活动类型
+          address: '望京',
           photos: 'https://img.shaka.hsohealth.com/avatar/20170301_free.png',
           status: 1, // 活动状态
           title: '标题1',
@@ -34,14 +35,15 @@ const defaultState = Immutable.Map({
         Immutable.Map({
           id: 2,
           type: 1, // 活动类型
+          address: '望京',
           photos: 'https://img.shaka.hsohealth.com/avatar/20170301_free.png',
           status: 1, // 活动状态
           title: '标题1',
           smallTitle: '小标题',
-          startTime: '', // 活动开始时间
-          endTime: '', // 活动报名时间
-          signupStartTime	: '', // 报名开始时间
-          signupEndTime: '', // 报名报名时间
+          startTime: '2017-09-23 09:00:00', // 活动开始时间
+          endTime: '2017-09-23 11:00:00', // 活动报名时间
+          signupStartTime	: '2017-09-23 09:00:00', // 报名开始时间
+          signupEndTime: '2017-09-23 09:00:00', // 报名报名时间
           originUserName: '发起人名字',
           originUserImg: '发起人头像',
         }),
@@ -56,10 +58,10 @@ const defaultState = Immutable.Map({
     status: 1, // 活动状态
     title: '标题1',
     smallTitle: '小标题',
-    startTime: '', // 活动开始时间
-    endTime: '', // 活动报名时间
-    signupStartTime	: '', // 报名开始时间
-    signupEndTime: '', // 报名报名时间
+    startTime: '2017-09-27', // 活动开始时间
+    endTime: '2017-09-27', // 活动报名时间
+    signupStartTime	: '2017-09-27', // 报名开始时间
+    signupEndTime: '2017-09-27', // 报名报名时间
     boyNum: 3,
     girlNum : 3,
     boyMoney: 200,
@@ -72,19 +74,25 @@ const defaultState = Immutable.Map({
     originUserImg: '发起人头像',
     signupPeople: Immutable.List([
       Immutable.Map({
-        name: '名字',
-        gender: 1,              
+        name: '名字1',
+        sex: 1,              
       }),
       Immutable.Map({
-        name: '名字',
-        gender: 0,              
+        name: '名字2',
+        sex: 0,              
       }),
       Immutable.Map({
-        name: '名字',
-        gender: 1,              
+        name: '名字3',
+        sex: 1,              
       }),
     ]),
   }),
+  searchData: Immutable.Map({
+    id: '',
+    title: '',
+    status: '',
+    page: 1,
+  })
 });
 
 const getDashListHandler = new ActionHandler.handleAction(DashAction.GET_DASHLIST)

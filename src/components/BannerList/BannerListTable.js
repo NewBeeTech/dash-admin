@@ -12,9 +12,6 @@ import * as RoutingURL from '../../core/RoutingURL/RoutingURL';
 const propTypes = {
   dataSource: PropTypes.instanceOf(Immutable.List).isRequired,
   dispatch: PropTypes.func,
-  // goAccountAction: PropTypes.func.isRequired,
-  // goUpdateAccountAction: PropTypes.func.isRequired,
-  // DeleteAccountAction: PropTypes.func.isRequired,
 };
 
 class BannerListTable extends React.Component {
@@ -105,7 +102,7 @@ class BannerListTable extends React.Component {
     const views = [];
     if(img) {
       views.push(
-        <img src={img} style={{ height: '80px', width: '160px' }} />
+        <img src={img} style={{ height: '60px', width: '120px' }} />
       );
     }
     return views;

@@ -51,6 +51,11 @@ const defaultState = Immutable.Map({
     tags: '爱好1,爱好2,爱好3',
     photos: '', // 上传的照片
   }),
+  searchData: Immutable.Map({
+    id: '',
+    sex: '',
+    page: 1,
+  })
 });
 
 const getUserListHandler = new ActionHandler.handleAction(UserAction.GET_USERLIST)

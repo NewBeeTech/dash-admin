@@ -22,7 +22,7 @@
 
 .contentListSearch{
   padding: 1vh 0;
-  background: $white-color;
+  background: var(--WhiteColor);
 }
 
 .contentListTable{

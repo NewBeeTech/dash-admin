@@ -7,6 +7,7 @@ const mapStateToProps = (state) => ({
   errMsg: state.UserReducer.get('errMsg'),
   isFetching: state.UserReducer.get('isFetching'),
   userList: state.UserReducer.get('userList'),
+  searchData: state.UserReducer.get('searchData'),
 });
 
 export default connect(mapStateToProps)(UserList);

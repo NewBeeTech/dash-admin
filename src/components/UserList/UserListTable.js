@@ -56,13 +56,14 @@ class UserListTable extends React.Component {
   _renderDataSource(datas) {
     const dataSource = [];
     datas.forEach((data, index) => {
+      const sex = data.get('sex');
       dataSource.push({
         key: index,
         id: data.get('id'),
         nickName: data.get('nickName'),
-        portrait: data.get('portrait'),
+        portrait: this.showImg(data.get('portrait')),
         age: data.get('age'),
-        sex: data.get('sex'),
+        sex: sex ? (sex == 1 ? '男' : '女') : '未知',
         status: data.get('status') ? '正常' : '屏蔽',
         likeCount: data.get('likeCount'),
         phone: data.get('phone'),
@@ -88,6 +89,15 @@ class UserListTable extends React.Component {
       });
     });
     return dataSource;
+  }
+  showImg(img) {
+    const views = [];
+    if(img) {
+      views.push(
+        <img src={img} style={{ height: '40px', width: '40px' }} />
+      );
+    }
+    return views;
   }
 
   render() {

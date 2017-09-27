@@ -1,6 +1,7 @@
 
 import React, { PropTypes } from 'react';
 import DashListHeader from './DashListHeader';
+import DashListSearch from './DashListSearch';
 import DashListTable from './DashListTable';
 import PageNav from '../../common/PageNav';
 import { View } from 'isomorphic';
@@ -18,6 +19,7 @@ class DashList extends React.Component {
     isFetching: PropTypes.bool.isRequired,
     errMsg: PropTypes.string.isRequired,
     dashList: PropTypes.instanceOf(Immutable.Map).isRequired,
+    searchData: PropTypes.instanceOf(Immutable.Map).isRequired,
     dispatch: PropTypes.func,
   };
   componentWillMount() {
@@ -26,6 +28,10 @@ class DashList extends React.Component {
   _goCreateAction = (dispatch: Function) => () => {
     dispatch(push(RoutingURL.DashInfo()));
   }
+  _searchAction = (dispatch: Function) => (params: {}, current = 1) => {
+    dispatch(DashAction.getDashList(params, current));
+    this.props.changeAction('DashReducer/searchData/page', current);
+  };
   render() {
     return (
       <View className={ styles.contentList } >
@@ -35,6 +41,12 @@ class DashList extends React.Component {
           />
         </View>
         <View className={ styles.contentListContent } >
+          <View className={ styles.contentListSearch } >
+              <DashListSearch
+                searchAction={this._searchAction(this.props.dispatch)}
+                searchData={this.props.searchData}
+              />
+            </View>
           <View className={ styles.contentListTable } >
              <DashListTable
                  dataSource={this.props.dashList.get('dashListData')}
@@ -45,9 +57,9 @@ class DashList extends React.Component {
             <PageNav
               pageSize={10}
               total={this.props.dashList.get('total')}
-              params={[]}
+              params={this.props.searchData.toJS()}
               current={this.props.dashList.get('currentPage')}
-              searchAction={() => console.log(111)}
+              searchAction={() => this._searchAction(this.props.dispatch)}
             />
           </View>
         </View>

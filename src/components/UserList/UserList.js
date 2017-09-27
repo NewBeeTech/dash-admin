@@ -1,6 +1,7 @@
 
 import React, { PropTypes } from 'react';
 import UserListHeader from './UserListHeader';
+import UserListSearch from './UserListSearch';
 import UserListTable from './UserListTable';
 import PageNav from '../../common/PageNav';
 import { View } from 'isomorphic';
@@ -18,11 +19,16 @@ class UserList extends React.Component {
     isFetching: PropTypes.bool.isRequired,
     errMsg: PropTypes.string.isRequired,
     userList: PropTypes.instanceOf(Immutable.Map).isRequired,
+    searchData: PropTypes.instanceOf(Immutable.Map).isRequired,
     dispatch: PropTypes.func,
   };
   componentWillMount() {
     // this.props.dispatch(UserAction.getUserList());
   }
+  _searchAction = (dispatch: Function) => (params: {}, current = 1) => {
+    dispatch(UserAction.getUserList(params, current));
+    this.props.changeAction('UserReducer/searchData/page', current);
+  };
   render() {
     return (
       <View className={ styles.contentList } >
@@ -30,6 +36,12 @@ class UserList extends React.Component {
           <UserListHeader />
         </View>
         <View className={ styles.contentListContent } >
+           <View className={ styles.contentListSearch } >
+              <UserListSearch
+                searchAction={this._searchAction(this.props.dispatch)}
+                searchData={this.props.searchData}
+              />
+            </View>
           <View className={ styles.contentListTable } >
              <UserListTable
                  dataSource={this.props.userList.get('userListData')}
@@ -40,9 +52,9 @@ class UserList extends React.Component {
             <PageNav
               pageSize={10}
               total={this.props.userList.get('total')}
-              params={[]}
+              params={this.props.searchData.toJS(0)}
               current={this.props.userList.get('currentPage')}
-              searchAction={() => console.log(111)}
+              searchAction={() => this._searchAction(this.props.dispatch)}
             />
           </View>
         </View>

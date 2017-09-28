@@ -145,7 +145,8 @@ export const Upload = (baseURL, params, filename, file) => new Promise((resolve,
 
 
 export const UploadFileToOSS = async (params = {}) => {
-  const signature = await GET(URL.GetOSSSignature, params);
+  let signature = await GET(URL.GetOSSSignature, params);
+  signature = signature.data;
   const localName = `/${random_string(6)}-${params.filename}`;
   // localName = encodeURIComponent(localName);
   let fileURL = `${signature.host}/${signature.dir}${localName}`;
@@ -160,6 +161,7 @@ export const UploadFileToOSS = async (params = {}) => {
     callback: signature.callback,
     signature: signature.signature,
   };
+  console.log(uploadParams);
   const uploadResult = await Upload(signature.host, uploadParams, localName, params.file);
   if (!uploadResult) {
     fileURL = '';

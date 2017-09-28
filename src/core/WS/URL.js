@@ -76,3 +76,6 @@ export const getUserInfoPath: string = `${rootURL}`;
  * @type {string}
  */
 export const updateUserPath: string = `${rootURL}`;
+
+// 获取OSS签名
+export const GetOSSSignature: string = `${rootURL}oss/sign`;

@@ -12,6 +12,7 @@ import * as RoutingURL from '../../core/RoutingURL/RoutingURL';
 const propTypes = {
   dataSource: PropTypes.instanceOf(Immutable.List).isRequired,
   dispatch: PropTypes.func,
+  goDeleteAction: PropTypes.func,
 };
 
 class BannerListTable extends React.Component {
@@ -30,9 +31,9 @@ class BannerListTable extends React.Component {
       dataIndex: 'title',
       key: 'title',
     }, {
-      title: '小标题',
-      dataIndex: 'smallTitle',
-      key: 'smallTitle',
+      title: '副标题',
+      dataIndex: 'secondTitle',
+      key: 'secondTitle',
     }, {
       title: '地址',
       dataIndex: 'url',
@@ -46,23 +47,40 @@ class BannerListTable extends React.Component {
       dataIndex: 'status',
       key: 'status',
     }, {
-      title: '时间',
+      title: '顺序',
+      dataIndex: 'sort',
+      key: 'sort',
+    }, {
+      title: '开始时间',
+      dataIndex: 'startTime',
+      key: 'startTime',
+    },{
+      title: '结束时间',
+      dataIndex: 'endTime',
+      key: 'endTime',
+    },{
+      title: '创建时间',
       dataIndex: 'createTime',
       key: 'createTime',
     }];
   }
   _renderDataSource(datas) {
     const dataSource = [];
+    if(datas) {
+      
     datas.forEach((data, index) => {
       dataSource.push({
         key: index,
         id: data.get('id'),
         title: data.get('title'),
-        smallTitle: data.get('smallTitle'),
+        secondTitle: data.get('secondTitle'),
         url: data.get('url'),
+        sort: data.get('sort'),
         img: this.showImg(data.get('img')),
-        status: data.get('status') ? '上线' : '下线',
+        status: data.get('status') ? '上架' : '下架',
         createTime: data.get('createTime'),
+        startTime: data.get('startTime'),
+        endTime: data.get('endTime'),
         operation: (
           <View>
             <a
@@ -83,7 +101,7 @@ class BannerListTable extends React.Component {
               title="确认要进行删除操作?"
               okText="确认删除"
               cancelText="不删除"
-              // onConfirm={() => this.okButton(index, account.get('userId'))}
+              onConfirm={() => this.props.goDeleteAction({ id: data.get('id') })}
             >
               <a
                 style={{ color: '#FF7316' }}
@@ -96,6 +114,7 @@ class BannerListTable extends React.Component {
         ),
       });
     });
+  }
     return dataSource;
   }
   showImg(img) {

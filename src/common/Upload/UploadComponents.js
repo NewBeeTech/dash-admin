@@ -186,7 +186,7 @@ class UploadComponents extends React.Component {
         const suffix = file.name.replace(/.+\./, '');
         const reg = new RegExp('^(JPEG|jpeg|JPG|jpg|GIF|gif|BMP|bmp|PNG|png)$');
         if (!reg.test(suffix)) {
-          return message.error('上传报告单必须为图片');
+          return message.error('上传必须为图片');
         }
         const result = UploadFileToOSS({
           dir: that.props.dir,

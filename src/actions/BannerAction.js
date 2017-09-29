@@ -32,7 +32,7 @@ export const getBannerInfo = (params: Object) => (dispatch) => {
 
 // 添加banner
 export const ADD_BANNER = 'ADD_BANNER';
-export const addBannerInfo = (params: Object) => (dispatch) => {
+export const addBanner = (params: Object) => (dispatch) => {
   const result = GET(URL.addBannerPath, params);
   AsyncFetchHandler(ADD_BANNER, result, dispatch);
   result.then(data => {
@@ -103,6 +103,7 @@ export const deleteBanner = (params: Object) => (dispatch) => {
         'success',
         2,
       );
+      dispatch(getBannerList({ type: 1 }));
     } else {
       NotificationCenter.NotificationCard(
         '删除失败',

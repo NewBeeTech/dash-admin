@@ -11,11 +11,12 @@ import { isDisabled } from '../../core/CommonFun/CoreState';
 import UploadComponents from '../../common/Upload/UploadComponents';
 import amumu from 'amumu';
 import moment from 'moment';
-import { Form, Input, Select, Radio } from 'antd';
+import { Form, Input, Select, Radio, DatePicker, InputNumber } from 'antd';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
+const RangePicker = DatePicker.RangePicker;
 
 @amumu.redux.ConnectStore
 @amumu.decorators.Loading('pc')
@@ -30,9 +31,8 @@ class Banner extends React.Component {
     form: PropTypes.any,
   };
   componentWillMount() {
-    console.log(this.props.params.id);
     if(this.props.params.id){
-      // this.props.dispatch(BannerAction.getBannerInfo({id: this.props.params.id}));
+      this.props.dispatch(BannerAction.getBannerInfo({id: this.props.params.id}));
     } else {
       this.clearBannerInfo();
     }
@@ -49,10 +49,10 @@ class Banner extends React.Component {
     dispatch(push(RoutingURL.Banner(id, true)));
   }
   _createAction = (dispatch) => (params: {}) => {
-    dispatch(BannerAction.addBannerInfo(params));
+    dispatch(BannerAction.addBanner(params));
   }
   _updateAction = (dispatch) => (params: {}) => {
-    dispatch(BannerAction.updateBannerInfo(params));
+    dispatch(BannerAction.updateBanner(params));
   }
   isDisabled() {
     return isDisabled(this.props.params.id, this.props.location.query.editing);
@@ -63,15 +63,18 @@ class Banner extends React.Component {
       id: '',
       img: '',
       title: '',
-      smallTitle: '',
+      secondTitle: '',
       url: '',
       createTime: '',
       status: '',
       type: '',
+      startTime: '',
+      endTime: '',
+      sort: 0,
     }));
   }
   componentWillUnmount() {
-    // this.clearBannerInfo();
+    this.clearBannerInfo();
   }
   
   render() {
@@ -89,8 +92,8 @@ class Banner extends React.Component {
             editing={this.props.location.query.editing}
             goBackAction={this._goBackAction(this.props.dispatch)}
             goUpdateAction={this._goUpdateAction(this.props.dispatch)}
-            updateAction={this._createAction(this.props.dispatch)}
-            createAction={this._updateAction(this.props.dispatch)}
+            createAction={this._createAction(this.props.dispatch)}
+            updateAction={this._updateAction(this.props.dispatch)}
             params={this.props.bannerInfo.toJS()}
           />
         </View>
@@ -113,6 +116,9 @@ class Banner extends React.Component {
                   this.isDisabled() ?
                   <text>{this.props.bannerInfo.get('title')}</text> :
                   getFieldDecorator('title', {
+                    rules: [
+                       { required: true, message: '标题不能为空' },
+                    ],
                     initialValue: this.props.bannerInfo.get('title'),
                     onChange: (e) => {
                       this.props.changeAction(
@@ -126,21 +132,24 @@ class Banner extends React.Component {
               </FormItem>
               <FormItem
                 {...formItemLayout}
-                label="小标题"
+                label="副标题"
                 hasFeedback
               >
                 {
                   this.isDisabled() ?
-                  <text>{this.props.bannerInfo.get('smallTitle')}</text> :
-                  getFieldDecorator('smallTitle', {
-                    initialValue: this.props.bannerInfo.get('smallTitle'),
+                  <text>{this.props.bannerInfo.get('secondTitle')}</text> :
+                  getFieldDecorator('secondTitle', {
+                    rules: [
+                       { required: true, message: '副标题不能为空' },
+                    ],
+                    initialValue: this.props.bannerInfo.get('secondTitle'),
                     onChange: (e) => {
                       this.props.changeAction(
-                      'BannerReducer/bannerInfo/smallTitle', e.target.value);
+                      'BannerReducer/bannerInfo/secondTitle', e.target.value);
                     },
                   })(
                   <Input
-                    placeholder="小标题"
+                    placeholder="副标题"
                   />
                 )}
               </FormItem>
@@ -171,8 +180,11 @@ class Banner extends React.Component {
               >
                 {
                   this.isDisabled() ?
-                  <text>{this.props.bannerInfo.get('status') ? '上线' : '下线'}</text> :
+                  <text>{this.props.bannerInfo.get('status') ? '上架' : '下架'}</text> :
                   getFieldDecorator('status', {
+                    rules: [
+                       { required: true, message: '状态必选' },
+                    ],
                     initialValue: this.props.bannerInfo.get('status'),
                     onChange: (e) => {
                       this.props.changeAction(
@@ -180,8 +192,8 @@ class Banner extends React.Component {
                     },
                   })(
                     <RadioGroup>
-                      <Radio value={0}>上线</Radio>
-                      <Radio value={1}>下线</Radio>
+                      <Radio value={0}>下架</Radio>
+                      <Radio value={1}>上架</Radio>
                     </RadioGroup>
                 )}
               </FormItem>
@@ -190,16 +202,65 @@ class Banner extends React.Component {
                 label="Banner图片"
                 hasFeedback
               >
-              <UploadComponents
-                 multiple={false}
-                 imgURLArray={this.props.bannerInfo.get('img')}
-                 type="public"
-                 onChange={(value) => {
-                   this.props.changeAction(
-                     `BannerReducer/BannerInfo/img`, value);
-                 }}
-                 dir={`prescription/${moment().format('YYYY_MM')}`}
-               />
+                <UploadComponents
+                   multiple={false}
+                   isDisable={this.isDisabled()}
+                   imgURLArray={this.props.bannerInfo.get('img')}
+                   type="public"
+                   onChange={(value) => {
+                     this.props.changeAction(
+                       `BannerReducer/bannerInfo/img`, value);
+                   }}
+                   dir={`prescription/${moment().format('YYYY_MM')}`}
+                 />
+              </FormItem>
+              <FormItem
+                label="时间："
+                {...formItemLayout}
+              >
+              <RangePicker
+                showTime
+                format="YYYY-MM-DD HH:mm:ss"
+                style={{ width: '300px' }}
+                disabled={this.isDisabled()}
+                value={
+                  [this.props.bannerInfo.get('startTime') ?
+                   moment(this.props.bannerInfo.get('startTime'),
+                    'YYYY-MM-DD') : undefined,
+                    this.props.bannerInfo.get('endTime') ?
+                    moment(this.props.bannerInfo.get('endTime'),
+                     'YYYY-MM-DD') : undefined,
+                  ]}
+                onChange={(date, dateString) => {
+                  this.props.changeAction(
+                     'BannerReducer/bannerInfo/startTime',
+                      dateString[0],
+                    );
+                  this.props.changeAction(
+                     'BannerReducer/bannerInfo/endTime',
+                     dateString[1],
+                    );
+                }}
+              />
+              </FormItem>
+              <FormItem
+                {...formItemLayout}
+                label="显示顺序："
+              >
+                {
+                  this.isDisabled() ?
+                  <text>{this.props.bannerInfo.get('sort')}</text> :
+                  getFieldDecorator('sort', {
+                    initialValue: this.props.bannerInfo.get('sort'),
+                    onChange: (e) => {
+                      this.props.changeAction(
+                      'BannerReducer/bannerInfo/sort', e);
+                    },
+                  })(
+                  <InputNumber
+                    min={0}
+                  />
+                )}
               </FormItem>
             </View>
           </Form>

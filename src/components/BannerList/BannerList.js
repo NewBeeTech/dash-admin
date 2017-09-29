@@ -19,14 +19,17 @@ class BannerList extends React.Component {
   static propTypes = {
     isFetching: PropTypes.bool.isRequired,
     errMsg: PropTypes.string.isRequired,
-    bannerList: PropTypes.instanceOf(Immutable.Map).isRequired,
+    bannerList: PropTypes.instanceOf(Immutable.List).isRequired,
     dispatch: PropTypes.func,
   };
   componentWillMount() {
-    // this.props.dispatch(BannerAction.getBannerList());
+    this.props.dispatch(BannerAction.getBannerList());
   }
   _goCreateAction = (dispatch: Function) => () => {
     dispatch(push(RoutingURL.Banner()));
+  }
+  _goDeleteAction = (dispatch: Function) => (params) => {
+    dispatch(BannerAction.deleteBanner(params));
   }
   render() {
     return (
@@ -39,18 +42,10 @@ class BannerList extends React.Component {
         <View className={ styles.contentListContent } >
           <View className={ styles.contentListTable } >
              <BannerListTable
-                 dataSource={this.props.bannerList.get('bannerListData')}
+                 dataSource={this.props.bannerList}
+                 goDeleteAction={this._goDeleteAction(this.props.dispatch)}
                  dispatch={this.props.dispatch}
              />
-          </View>
-          <View className={ styles.pageNav }>
-            <PageNav
-              pageSize={10}
-              total={this.props.bannerList.get('total')}
-              params={[]}
-              current={this.props.bannerList.get('currentPage')}
-              searchAction={() => console.log(111)}
-            />
           </View>
         </View>
       </View>

@@ -20,7 +20,9 @@ import NotificationCenter from '../../common/NotificationCenter';
  */
 const _param = (params: {}): string => {
   return Object.keys(params).map((key) => {
-    return `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`;
+    if(params[key]) {
+      return `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`;
+    }
   }).join('&');
 };
 
@@ -28,7 +30,6 @@ export const GET = async (path: string, params = {}) => {
   const paramsWithToken = Object.assign(
     {},
     params,
-    { apiToken: userInfoStorage.getItem('apiToken') }
   );
   const RequestURL = `${path}?${_param(paramsWithToken)}`;
   // console.log('RequestURL', RequestURL);
@@ -48,10 +49,8 @@ export const GET = async (path: string, params = {}) => {
       );
     }
     const result = await response.json();
-    // console.log('get webservice result: ', result);
     return result;
   } catch (err) {
-    // console.warn(`WSHandler -> GET -> err: ${err}`);
     return {
       message: err,
     };
@@ -147,8 +146,7 @@ export const Upload = (baseURL, params, filename, file) => new Promise((resolve,
 export const UploadFileToOSS = async (params = {}) => {
   let signature = await GET(URL.GetOSSSignature, params);
   signature = signature.data;
-  const localName = `/${random_string(6)}-${params.filename}`;
-  // localName = encodeURIComponent(localName);
+  const localName = `${random_string(6)}-${params.filename}`;
   let fileURL = `${signature.host}/${signature.dir}${localName}`;
   fileURL = encodeURI(fileURL);
 
@@ -158,18 +156,14 @@ export const UploadFileToOSS = async (params = {}) => {
     policy: signature.policy,
     OSSAccessKeyId: signature.accessid,
     success_action_status: '200',
-    callback: signature.callback,
     signature: signature.signature,
   };
-  console.log(uploadParams);
   const uploadResult = await Upload(signature.host, uploadParams, localName, params.file);
-  if (!uploadResult) {
-    fileURL = '';
-  }
+
   const result = {
     filename: params.filename,
     fileURL,
-    fileOriginUrl: fileURL,
   };
+  console.log(result);
   return result;
 };

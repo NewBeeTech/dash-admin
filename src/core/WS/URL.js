@@ -10,7 +10,7 @@ export const LoginPath: string = `${rootURL}admin/login`;
  * 获取bannerList
  * @type {string}
  */
-export const getBannerListPath: string = `${rootURL}banner/list`;
+export const getBannerListPath: string = `${rootURL}admin/banner/list`;
 /**
  * 获取bannerInfo
  * @type {string}

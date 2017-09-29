@@ -5,13 +5,7 @@ import Immutable from 'immutable';
 import userInfoStorage from '../core/UserInfoStorage';
 import { redux } from 'amumu';
 const ActionHandler = redux.ActionHandler;
-// 添加活动、活动id（可筛选）、活动类型、活动图片上传、上线/下线（可筛选）、标题（可筛选）、
-// 副标题、
-// 活动信息（活动时间、地点、人数、费用、活动流程、友情提示）、
-// 活动详情、报名用户、
-// 可标记为“问题订单”（可筛选）（问题订单为需要运营人员手动处理的订单）、）、编辑（活动一经发布无法再次编辑）、
-// 查看、删除、抓取橄榄枝匹配的用户，
-// 发起人（名称、默认头像、上传头像和详情介绍）。
+
 const defaultState = Immutable.Map({
   isFetching: false,
   errMsg: '',
@@ -49,7 +43,7 @@ const defaultState = Immutable.Map({
         }),
       ]),
       total: 10,
-      currentPage: 1,
+      pageSize: 1,
   }),
   dashInfo: Immutable.Map({
     id: 2,
@@ -91,13 +85,17 @@ const defaultState = Immutable.Map({
     id: '',
     title: '',
     status: '',
-    page: 1,
+    pageNum: 1,
+    pageSize: 10,
   })
 });
 
 const getDashListHandler = new ActionHandler.handleAction(DashAction.GET_DASHLIST)
   .success((state, action) => {
-    return state.set('dashList', Immutable.fromJS(action.data))
+    console.log(action.data);
+    return state.setIn(['dashList', 'dashListData'], Immutable.fromJS(action.data.list))
+      .setIn(['dashList', 'total'], Immutable.fromJS(action.data.totalRow))
+      .setIn(['dashList', 'pageSize'], Immutable.fromJS(action.data.pageSize))
       .set('isFetching', false).set('errMsg', '');
   });
   

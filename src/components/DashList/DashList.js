@@ -23,14 +23,20 @@ class DashList extends React.Component {
     dispatch: PropTypes.func,
   };
   componentWillMount() {
-    // this.props.dispatch(DashAction.getDashList());
+    this.props.dispatch(DashAction.getDashList(
+      { pageNum: this.props.searchData.get('pageNum'), pageSize: this.props.searchData.get('pageSize') }
+    ));
   }
   _goCreateAction = (dispatch: Function) => () => {
     dispatch(push(RoutingURL.DashInfo()));
   }
+  _goDeleteAction = (dispatch: Function) => (params) => {
+    dispatch(DashAction.deleteDash(params));
+  }
   _searchAction = (dispatch: Function) => (params: {}, current = 1) => {
-    dispatch(DashAction.getDashList(params, current));
-    this.props.changeAction('DashReducer/searchData/page', current);
+    const localParams = Object.assign(params, { pageNum: current, pageSize: this.props.searchData.get('pageSize') });
+    dispatch(DashAction.getDashList(localParams));
+    this.props.changeAction('DashReducer/searchData/pageNum', current);
   };
   render() {
     return (

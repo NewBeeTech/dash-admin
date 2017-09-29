@@ -39,6 +39,7 @@ export const GET = async (path: string, params = {}) => {
       headers: {
       },
       mode: 'cors',
+      // credentials: 'include',
     });
     if (response.status >= 500 && response.status < 600) {
       NotificationCenter.NotificationCard(
@@ -68,6 +69,7 @@ export const POSTJSON = async (path: string, json = {}) => {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body,
+      credentials: 'include',
     });
     if (response.status >= 500 && response.status < 600) {
       NotificationCenter.NotificationCard(

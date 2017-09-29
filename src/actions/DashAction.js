@@ -6,34 +6,34 @@ import * as RoutingURL from '../core/RoutingURL/RoutingURL';
 import AsyncFetchHandler from '../core/AsyncFetchHandler';
 import NotificationAction from '../common/NotificationAction';
 
-// 获取bannerList
-export const GET_BANNERLIST = 'GET_BANNERLIST';
-export const getBannerList = (params: Object) => (dispatch) => {
-  const result = GET(URL.getBannerListPath, params);
+// 获取dashList
+export const GET_DASHLIST = 'GET_DASHLIST';
+export const getDashList = (params: Object) => (dispatch) => {
+  const result = GET(URL.getDashListPath, params);
   AsyncFetchHandler(
-    GET_BANNERLIST,
+    GET_DASHLIST,
     result,
     dispatch
   );
 };
 
-// 获取bannerInfo
-export const GET_BANNERINFO = 'GET_BANNERINFO';
-export const getBannerInfo = (params: Object) => (dispatch) => {
-  const result = GET(URL.getBannerInfoPath, params);
+// 获取dashInfo
+export const GET_DASHINFO = 'GET_DASHINFO';
+export const getDashInfo = (params: Object) => (dispatch) => {
+  const result = GET(URL.getDashInfoPath, params);
   AsyncFetchHandler(
-    GET_BANNERINFO,
+    GET_DASHINFO,
     result,
     dispatch
   );
 };
 
 
-// 添加banner
-export const ADD_BANNER = 'ADD_BANNER';
-export const addBannerInfo = (params: Object) => (dispatch) => {
-  const result = GET(URL.addBannerPath, params);
-  AsyncFetchHandler(ADD_BANNER, result, dispatch);
+// 添加dash
+export const ADD_DASH = 'ADD_DASH';
+export const addDashInfo = (params: Object) => (dispatch) => {
+  const result = GET(URL.addDashPath, params);
+  AsyncFetchHandler(ADD_DASH, result, dispatch);
   result.then(data => {
     if (data.code === '001') {
       NotificationCenter.NotificationCard(
@@ -46,7 +46,7 @@ export const addBannerInfo = (params: Object) => (dispatch) => {
     } else {
       NotificationCenter.NotificationCard(
         '创建失败',
-        '请填写正确的Banner信息',
+        '请填写正确的活动信息',
         'error',
         3,
       );
@@ -55,12 +55,12 @@ export const addBannerInfo = (params: Object) => (dispatch) => {
 };
 
 
-// 修改banner
-export const UPDATE_BANNER = 'UPDATE_BANNER';
-export const updateBanner = (params: Object) => (dispatch) => {
-  const result = GET(URL.updateBannerPath, params);
+// 修改dash
+export const UPDATE_DASH = 'UPDATE_DASH';
+export const updateDash = (params: Object) => (dispatch) => {
+  const result = GET(URL.updateDashPath, params);
   AsyncFetchHandler(
-    UPDATE_BANNER,
+    UPDATE_DASH,
     result,
     dispatch
   );
@@ -76,7 +76,7 @@ export const updateBanner = (params: Object) => (dispatch) => {
     } else {
       NotificationCenter.NotificationCard(
         '修改失败',
-        '请填写正确的Banner信息',
+        '请填写正确的活动信息',
         'error',
         3,
       );
@@ -85,12 +85,12 @@ export const updateBanner = (params: Object) => (dispatch) => {
 };
 
 
-// 删除banner
-export const DELETE_BANNER = 'DELETE_BANNER';
-export const deleteBanner = (params: Object) => (dispatch) => {
-  const result = GET(URL.deleteBannerPath, params);
+// 删除活动
+export const DELETE_DASH = 'DELETE_DASH';
+export const deleteDash = (params: Object) => (dispatch) => {
+  const result = GET(URL.deleteDashPath, params);
   AsyncFetchHandler(
-    DELETE_BANNER,
+    DELETE_DASH,
     result,
     dispatch
   );
@@ -102,6 +102,7 @@ export const deleteBanner = (params: Object) => (dispatch) => {
         'success',
         2,
       );
+      dispatch(getDashList());
     } else {
       NotificationCenter.NotificationCard(
         '删除失败',

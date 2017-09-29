@@ -37,7 +37,7 @@ export const deleteBannerPath: string = `${rootURL}admin/banner/deleteById`;
  * 活动列表
  * @type {string}
  */
-export const getDashListPath: string = `${rootURL}/admin/activity/list`;
+export const getDashListPath: string = `${rootURL}admin/activity/list`;
 /**
  * 活动详情
  * @type {string}
@@ -47,12 +47,12 @@ export const dashInfoPath: string = `${rootURL}`;
  * 新增活动
  * @type {string}
  */
-export const addDashPath: string = `${rootURL}`;
+export const addDashPath: string = `${rootURL}admin/activity/addOrUpdate`;
 /**
  * 修改活动
  * @type {string}
  */
-export const updateDashPath: string = `${rootURL}`;
+export const updateDashPath: string = `${rootURL}admin/activity/addOrUpdate`;
 /**
  * 删除活动
  * @type {string}

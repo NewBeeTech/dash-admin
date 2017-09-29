@@ -62,6 +62,7 @@ class DashListTable extends React.Component {
   }
   _renderDataSource(datas) {
     const dataSource = [];
+    if(datas){
     datas.forEach((data, index) => {
       dataSource.push({
         key: index,
@@ -107,6 +108,7 @@ class DashListTable extends React.Component {
         ),
       });
     });
+    }
     return dataSource;
   }
   showImg(img) {

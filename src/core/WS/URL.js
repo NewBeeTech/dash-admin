@@ -72,10 +72,15 @@ export const getUserListPath: string = `${rootURL}admin/user/list`;
  * 用户详情
  * @type {string}
  */
-export const getUserInfoPath: string = `${rootURL}`;
+export const getUserInfoPath: string = `${rootURL}user/getById`;
 /**
  * 修改用户
  * @type {string}
  */
 export const updateUserPath: string = `${rootURL}admin/user/addOrUpdate`;
+
+// 获取报名活动列表
+export const getActivityListPath: string = `${rootURL}admin/activitySignup/list`;
+// 运营拒绝
+export const changeActivityStatusPath: string = `${rootURL}admin/activitySignup/update`;
 

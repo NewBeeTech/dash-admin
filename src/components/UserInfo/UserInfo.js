@@ -31,9 +31,9 @@ class UserInfo extends React.Component {
   };
   componentWillMount() {
     if(this.props.params.id){
-      // this.props.dispatch(UserAction.getUserInfo({id: this.props.params.id}));
+      this.props.dispatch(UserAction.getUserInfo({id: this.props.params.id}));
     } else {
-      // this.clearUserInfo();
+      this.clearUserInfo();
     }
   }
   /**
@@ -75,7 +75,7 @@ class UserInfo extends React.Component {
     }));
   }
   componentWillUnmount() {
-    // this.clearUserInfo();
+    this.clearUserInfo();
   }
   showImgList(imgs) {
     const views = [];
@@ -165,14 +165,14 @@ class UserInfo extends React.Component {
             <table style={{ marginTop: '20px' }}>
               <tbody>
                 <tr>
-                  <td>身高：{this.props.userInfo.get('boyInfo').get('height')}</td>
-                  <td>职业： {this.props.userInfo.get('boyInfo').get('profession')}</td>
-                  <td>职位：{this.props.userInfo.get('boyInfo').get('position')}</td>
+                  <td>身高：{this.props.userInfo.get('var2')}</td>
+                  <td>职业： {this.props.userInfo.get('profession')}</td>
+                  <td>职位：{this.props.userInfo.get('position')}</td>
                 </tr>
                 <tr>
-                  <td>家乡：{this.props.userInfo.get('boyInfo').get('home')}</td>
-                  <td>收入：{this.props.userInfo.get('boyInfo').get('income')}</td>
-                  <td>特长：{this.props.userInfo.get('boyInfo').get('specialty')}</td>
+                  <td>家乡：{this.props.userInfo.get('var3')}</td>
+                  <td>收入：{this.props.userInfo.get('income')}</td>
+                  <td>特长：{this.props.userInfo.get('var4')}</td>
                 </tr>
               </tbody>
             </table>: <div />}

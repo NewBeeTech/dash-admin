@@ -21,6 +21,8 @@ export const Banner = (id : string = '', editing : boolean = false): string => {
 /* **************************  活动管理模块  ******************************************** */
 export const DashList = (): string => prefix('dash-list');
 
+export const ActivityList = ():string =>  prefix('activity-list');
+
 export const DashInfo = (id : string = '', editing : boolean = false): string => {
   if (editing) {
     return prefix(`dash/${id}?editing=true`);

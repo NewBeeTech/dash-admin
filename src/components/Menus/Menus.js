@@ -27,6 +27,8 @@ class Menus extends React.PureComponent {
       this.props.dispatch(push(RoutingURL.DashList()));
     } else if (e.key === '用户管理') {
       this.props.dispatch(push(RoutingURL.UserList()));
+    } else if (e.key === '报名活动管理') {
+      this.props.dispatch(push(RoutingURL.ActivityList()));
     }
   }
   render() {
@@ -70,6 +72,17 @@ class Menus extends React.PureComponent {
                         key="用户管理"
                       >
                         • 用户管理
+                      </Item>
+                </SubMenu>
+                <SubMenu
+                  key="报名活动管理"
+                  title={<div className={styles.subTitle}>
+                  报名活动管理</div>}
+                >
+                      <Item
+                        key="报名活动管理"
+                      >
+                        • 报名活动管理
                       </Item>
                 </SubMenu>
             </Menu>

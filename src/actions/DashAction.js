@@ -96,7 +96,6 @@ export const updateDash = (params: Object) => (dispatch) => {
 // 删除活动
 export const DELETE_DASH = 'DELETE_DASH';
 export const deleteDash = (params: Object) => (dispatch) => {
-  console.log(params);
   const result = GET(URL.deleteDashPath, {id: params.id});
   AsyncFetchHandler(
     DELETE_DASH,
@@ -115,6 +114,47 @@ export const deleteDash = (params: Object) => (dispatch) => {
     } else {
       NotificationCenter.NotificationCard(
         '删除失败',
+        data.message,
+        'error',
+        3,
+      );
+    }
+  });
+};
+
+
+// 获取activityList
+export const GET_ACTIVITYLIST = 'GET_ACTIVITYLIST';
+export const getActivityList = (params: Object) => (dispatch) => {
+  const result = GET(URL.getActivityListPath, params);
+  AsyncFetchHandler(
+    GET_ACTIVITYLIST,
+    result,
+    dispatch
+  );
+};
+
+// 运营拒绝
+export const CHANGE_STATUS = 'CHANGE_STATUS';
+export const changeStatus = (params: Object) => (dispatch) => {
+  const result = GET(URL.changeActivityStatusPath, params);
+  AsyncFetchHandler(
+    CHANGE_STATUS,
+    result,
+    dispatch
+  );
+  result.then(data => {
+    if (data.code === '001') {
+      NotificationCenter.NotificationCard(
+        '已拒绝',
+        '',
+        'success',
+        2,
+      );
+      dispatch(getActivityList({pageNum: params.pageNum, pageSize: params.pageSize }));
+    } else {
+      NotificationCenter.NotificationCard(
+        '操作失败',
         data.message,
         'error',
         3,

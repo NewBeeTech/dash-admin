@@ -67,7 +67,7 @@ class UserListTable extends React.Component {
         id: data.get('id'),
         wxName: data.get('wxName'),
         wxPortrait: this.showImg(data.get('wxPortrait')),
-        wxAccount: this.showImg(data.get('wxAccount')),
+        wxAccount: data.get('wxAccount'),
         age: data.get('age'),
         sex: sex ? (sex == 1 ? '男' : '女') : '未知',
         status: data.get('status') ? '正常' : '屏蔽',

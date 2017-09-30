@@ -32,16 +32,13 @@ const UserInfoHeader = (props) => {
   const _rednerBtn = () => {
     if (props.id) {
       if (props.editing) {
-        return confirmButton(handleSubmit)(props.updateAction);
+        return false;
       }
       return modifyButton(props.goUpdateAction)(props.id);
     }
     return false;
   };
   const _returnBtn = () => {
-    if (props.id && !props.editing) {
-      return revertButton(props.goBackAction)();
-    }
     return cancelButton(showCancel)(props.goBackAction, props.id, props.params);
   };
   return (

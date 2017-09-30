@@ -13,7 +13,7 @@ const PageNav = (props) => {
         total={props.total}
         pageSize={props.pageSize}
         defaultCurrent={1}
-        showQuickJumper
+        // showQuickJumper
         current={props.current}
       />
     </View>

@@ -100,7 +100,15 @@ const defaultState = Immutable.Map({
     status: '',
     pageNum: 1,
     pageSize: 10,
-  })
+  }),
+  activityList: Immutable.Map({
+    activityListData: Immutable.List([]),
+  }),
+  searchData1: Immutable.Map({
+    status: '',
+    pageNum: 1,
+    pageSize: 10,
+  }),
 });
 
 const getDashListHandler = new ActionHandler.handleAction(DashAction.GET_DASHLIST)
@@ -111,7 +119,7 @@ const getDashListHandler = new ActionHandler.handleAction(DashAction.GET_DASHLIS
         dashList.push({
           id: item.id,
           title: item.name,
-          smallTitle: item.var5,
+          smallTitle: item.var3,
           photos: item.photos,
           address: item.address,
           type: item.type,
@@ -163,7 +171,6 @@ const getDashInfoHandler = new ActionHandler.handleAction(DashAction.GET_DASHINF
           collectUseList: data.collectUseList,
         };
       }
-      console.log('dashInfo:', dashInfo);
       return state.set('dashInfo', Immutable.fromJS(dashInfo))
         .set('isFetching', false).set('errMsg', '');
     });
@@ -172,9 +179,20 @@ const addDashHandler = new ActionHandler.handleAction(DashAction.ADD_DASH);
 const updateDashHandler = new ActionHandler.handleAction(DashAction.UPDATE_DASH);
 const deleteDashHandler = new ActionHandler.handleAction(DashAction.DELETE_DASH);
 
+const getActivityListHandler = new ActionHandler.handleAction(DashAction.GET_ACTIVITYLIST)
+  .success((state, action) => {
+    return state.setIn(['activityList', 'activityListData'], Immutable.fromJS(action.data.list))
+      .setIn(['activityList', 'total'], Immutable.fromJS(action.data.totalRow))
+      .setIn(['activityList', 'pageSize'], Immutable.fromJS(action.data.pageSize))
+      .setIn(['searchData1', 'pageNum'], Immutable.fromJS(action.data.pageNumber))
+      .set('isFetching', false).set('errMsg', '');
+  });
+  
+
 
 export default ActionHandler.handleActions(
-  [getDashListHandler, getDashInfoHandler, addDashHandler, updateDashHandler, deleteDashHandler],
+  [getDashListHandler, getDashInfoHandler, addDashHandler,
+     updateDashHandler, deleteDashHandler, getActivityListHandler],
   defaultState,
   /^DashReducer\//
 );

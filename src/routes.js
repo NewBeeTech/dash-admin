@@ -15,17 +15,19 @@ import DashList from './components/DashList';
 import DashInfo from './components/DashInfo';
 import UserList from './components/UserList';
 import UserInfo from './components/UserInfo';
+import ActivityList from './components/ActivityList';
 
 const routes = (
   <Route path={RoutingURL.PrefixURL()} component={RootContainer} >
     <Route path={RoutingURL.App()} component={AppContainer} >
-      <IndexRoute component={DashList} />
+      <IndexRoute component={BannerList} />
       <Route path={RoutingURL.BannerList()} component={BannerList} />
       <Route path={RoutingURL.Banner('(:id)')} component={Banner} />
       <Route path={RoutingURL.DashList()} component={DashList} />
       <Route path={RoutingURL.DashInfo('(:id)')} component={DashInfo} />
       <Route path={RoutingURL.UserList()} component={UserList} />
       <Route path={RoutingURL.UserInfo('(:id)')} component={UserInfo} />
+      <Route path={RoutingURL.ActivityList()} component={ActivityList} />
     </Route>
     <Route path={RoutingURL.Login()} component={LoginContainer} />
   </Route>

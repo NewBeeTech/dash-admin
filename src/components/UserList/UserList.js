@@ -23,10 +23,13 @@ class UserList extends React.Component {
     dispatch: PropTypes.func,
   };
   componentWillMount() {
-    // this.props.dispatch(UserAction.getUserList({ pageNum: 1, pageSize: 10 }));
+    this.props.dispatch(UserAction.getUserList(
+      { pageNum: this.props.searchData.get('pageNum'), pageSize: this.props.searchData.get('pageSize') }
+    ));
   }
   _searchAction = (dispatch: Function) => (params: {}, current = 1) => {
-    dispatch(UserAction.getUserList(params, current));
+    const localParams = Object.assign(params, { pageNum: current, pageSize: this.props.searchData.get('pageSize') });
+    dispatch(UserAction.getUserList(localParams));
     this.props.changeAction('UserReducer/searchData/pageNum', current);
   };
   render() {
@@ -52,7 +55,7 @@ class UserList extends React.Component {
             <PageNav
               pageSize={this.props.searchData.get('pageSize')}
               total={this.props.userList.get('total')}
-              params={this.props.searchData.toJS(0)}
+              params={this.props.searchData.toJS()}
               current={this.props.searchData.get('pageNum')}
               searchAction={this._searchAction(this.props.dispatch)}
             />

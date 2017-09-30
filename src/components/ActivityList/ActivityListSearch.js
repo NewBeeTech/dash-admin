@@ -10,23 +10,22 @@ const Option = Select.Option;
 
 @amumu.decorators.PureComponent
 @amumu.redux.ConnectStore
-class UserListSearch extends React.Component {
+class ActivityListSearch extends React.Component {
   static propTypes = {
     searchAction: PropTypes.func.isRequired,
     form: PropTypes.any,
     bindReducer: PropTypes.func.isRequired,
     changeAction: PropTypes.func.isRequired,
-    searchData: PropTypes.instanceOf(Immutable.Map).isRequired,
+    searchData1: PropTypes.instanceOf(Immutable.Map).isRequired,
   };
   componentWillMount() {
     this.searchData();
   }
   searchData() {
-    if (this.props.searchData.count() > 1) {
-      const dataSource1 = this.props.searchData;
+    if (this.props.searchData1.count() > 1) {
+      const dataSource1 = this.props.searchData1;
       return this.props.form.setFieldsValue({
-        id: dataSource1.get('id'),
-        sex: dataSource1.get('sex'),
+        status: dataSource1.get('status'),
       });
     }
     return false;
@@ -45,32 +44,14 @@ class UserListSearch extends React.Component {
         <Row>
           <Col span="8" >
             <FormItem
-              label="用户ID："
+              label="状态："
               {...formItemLayout}
             >
-              {getFieldDecorator('id', {
-                  initialValue: this.props.searchData.get('id'),
+              {getFieldDecorator('status', {
+                  initialValue: this.props.searchData1.get('status'),
                   onChange: (e) => {
                     this.props.changeAction(
-                    'UserReducer/searchData/id', e.target.value);
-                  },
-                })(
-                <Input
-                  placeholder="ID"
-                />
-              )}
-            </FormItem>
-          </Col>
-          <Col span="8" >
-            <FormItem
-              label="性别："
-              {...formItemLayout}
-            >
-              {getFieldDecorator('sex', {
-                  initialValue: this.props.searchData.get('sex'),
-                  onChange: (e) => {
-                    this.props.changeAction(
-                    'UserReducer/searchData/sex', e);
+                    'DashReducer/searchData1/status', e);
                   },
                 })(
                   <Select
@@ -78,9 +59,9 @@ class UserListSearch extends React.Component {
                     optionFilterProp="children"
                     filterOption={false}
                   >
-                    <Option value="" >全部</Option>
-                    <Option value={1}>男</Option>
-                    <Option value={2}>女</Option>
+                    <Option value={''}>全部</Option>
+                    <Option value={1}>没问题订单</Option>
+                    <Option value={2}>有问题订单</Option>
                   </Select>
               )}
             </FormItem>
@@ -94,7 +75,7 @@ class UserListSearch extends React.Component {
               type="primary"
               htmlType="submit"
               onClick={() => {
-                this.props.searchAction(this.props.searchData.toJS());
+                this.props.searchAction(this.props.searchData1.toJS(), this.props.searchData1.get('pageNum'));
               }}
             >
               筛选</Button>
@@ -105,4 +86,4 @@ class UserListSearch extends React.Component {
   }
 }
 
-export default Form.create()(UserListSearch);
+export default Form.create()(ActivityListSearch);

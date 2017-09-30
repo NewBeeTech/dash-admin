@@ -46,7 +46,7 @@ export const getDashListPath: string = `${rootURL}admin/activity/list`;
  * 活动详情
  * @type {string}
  */
-export const dashInfoPath: string = `${rootURL}activity/getInfoById`;
+export const getDashInfoPath: string = `${rootURL}activity/getInfoById`;
 /**
  * 新增活动
  * @type {string}

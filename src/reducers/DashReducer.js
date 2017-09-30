@@ -44,41 +44,55 @@ const defaultState = Immutable.Map({
     //   pageSize: 1,
   }),
   dashInfo: Immutable.Map({
-    id: 2,
-    type: 1, // 活动类型
-    photos: 'https://img.shaka.hsohealth.com/avatar/20170301_free.png',
-    status: 1, // 活动状态
-    name: '标题1',
-    var3: '小标题',
-    startTime: '2017-09-27', // 活动开始时间
-    endTime: '2017-09-27', // 活动报名时间
-    signupStartTime	: '2017-09-27', // 报名开始时间
-    signupEndTime: '2017-09-27', // 报名报名时间
-    boyNum: 3,
-    girlNum : 3,
-    boyMoney: 200,
-    girlMoney: 100,
-    desc: '活动介绍',
-    activityFlow: '',
-    tips: '',
-    originUserId: '发起人ID',
-    originUserDesc: '发起人描述',
-    originUserName: '发起人名字',
-    originUserImg: '发起人头像',
-    signupPeople: Immutable.List([
-      Immutable.Map({
-        name: '名字1',
-        sex: 1,              
-      }),
-      Immutable.Map({
-        name: '名字2',
-        sex: 0,              
-      }),
-      Immutable.Map({
-        name: '名字3',
-        sex: 1,              
-      }),
-    ]),
+    // id: 2,
+    // type: 1, // 活动类型
+    // photos: 'https://img.shaka.hsohealth.com/avatar/20170301_free.png',
+    // status: 1, // 活动状态
+    // name: '标题1',
+    // var3: '小标题',
+    // startTime: '2017-09-27', // 活动开始时间
+    // endTime: '2017-09-27', // 活动报名时间
+    // signupStartTime	: '2017-09-27', // 报名开始时间
+    // signupEndTime: '2017-09-27', // 报名报名时间
+    // boyNum: 3,
+    // girlNum : 3,
+    // cost: 200,
+    // var4: 100,
+    // desc: '活动介绍',
+    // activityFlow: '',
+    // tips: '',
+    // originUserId: '发起人ID',
+    // originUserDesc: '发起人描述',
+    // originUserName: '发起人名字',
+    // originUserImg: '发起人头像',
+    // signupPeople: Immutable.List([
+    //   Immutable.Map({
+    //     wxName: '名字1',
+    //     sex: 1,
+    //     id: 1,
+    //     wxPortrait: 'https://img.shaka.hsohealth.com/avatar/20170301_free.png',      
+    //   }),
+    //   Immutable.Map({
+    //     wxName: '名字1',
+    //     sex: 2,
+    //     id: 2,
+    //     wxPortrait: 'https://img.shaka.hsohealth.com/avatar/20170301_free.png',        
+    //   }),
+    // ]),
+    // collectUseList: Immutable.List([
+    //   Immutable.Map({
+    //     wxName: '名字1',
+    //     sex: 2,
+    //     id: 3,
+    //     wxPortrait: 'https://img.shaka.hsohealth.com/avatar/20170301_free.png',         
+    //   }),
+    //   Immutable.Map({
+    //     wxName: '名字1',
+    //     sex: 2,
+    //     id: 4,
+    //     wxPortrait: 'https://img.shaka.hsohealth.com/avatar/20170301_free.png',          
+    //   }),
+    // ])
   }),
   searchData: Immutable.Map({
     id: '',
@@ -119,7 +133,38 @@ const getDashListHandler = new ActionHandler.handleAction(DashAction.GET_DASHLIS
   
 const getDashInfoHandler = new ActionHandler.handleAction(DashAction.GET_DASHINFO)
     .success((state, action) => {
-      return state.set('dashInfo', Immutable.fromJS(action.data))
+      // 拼接数据
+      let dashInfo = [];
+      if(action.data) {
+        const data = action.data;
+        dashInfo = {
+          id: data.id,
+          type: data.type, // 活动类型
+          photos: data.photos,
+          status: data.status, // 活动状态
+          name: data.name,
+          var3: data.var3,
+          startTime: data.startTime,
+          endTime: data.endTime,
+          signupStartTime: data.signupStartTime,
+          signupEndTime: data.signupEndTime,
+          boyNum: data.sexRate ? data.sexRate.split(':')[0] : 0,
+          girlNum : data.sexRate ? data.sexRate.split(':')[1] : 0,
+          cost: data.cost,
+          var4: data.var4,
+          desc: data.desc,
+          var1: data.var1,
+          var2: data.var2,
+          originUserId: data.originUserId,
+          originUserDesc: data.originUserDesc,
+          originUserName: data.originUserName,
+          originUserPortrait: data.originUserPortrait,
+          signupPeople: data.signupPeople,
+          collectUseList: data.collectUseList,
+        };
+      }
+      console.log('dashInfo:', dashInfo);
+      return state.set('dashInfo', Immutable.fromJS(dashInfo))
         .set('isFetching', false).set('errMsg', '');
     });
     

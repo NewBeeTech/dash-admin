@@ -24,7 +24,7 @@ class DashInfo extends React.Component {
   static propTypes = {
     isFetching: PropTypes.bool.isRequired,
     errMsg: PropTypes.string.isRequired,
-    dashList: PropTypes.instanceOf(Immutable.Map).isRequired,
+    dashList: PropTypes.instanceOf(Immutable.Map),
     getValue: PropTypes.func,
     dispatch: PropTypes.func,
     changeAction: PropTypes.func,
@@ -32,7 +32,7 @@ class DashInfo extends React.Component {
   };
   componentWillMount() {
     if(this.props.params.id){
-      this.props.dispatch(DashAction.getDashInfo({id: this.props.params.id}));
+      this.props.dispatch(DashAction.getDashInfo({activityId: this.props.params.id}));
     } else {
       this.clearDashInfo();
     }
@@ -73,14 +73,15 @@ class DashInfo extends React.Component {
       boyNum: '',
       girlNum : '',
       boyMoney: '',
-      girlMoney: '',
-      activityFlow: '',
-      tips: '',
+      var4: '',
+      var1: '',
+      var2: '',
       originUserId: '',
       originUserDesc: '',
       originUserName: '',
       originUserImg: '',
       signupPeople: Immutable.List([]),
+      collectUseList: Immutable.List([]),
     }));
   }
   componentWillUnmount() {
@@ -91,9 +92,11 @@ class DashInfo extends React.Component {
     if(signupPeople) {
       signupPeople.map((item, key) => {
         views.push(
-          <div key={key} style={{ margin: '20px' }}>
-              <div>{item.get('name')}</div>
-              <div>{item.get('sex')}</div>
+          <div key={key} style={{ margin: '10px', width: '60px', heigth: '100px'}}>
+              <div style={{ width: '60px', height: '60px', border: '1px solid #ccc', marginBottom: '10px'}}>
+                  <img src={item.get('wxPortrait')} width="100%" height="100%"/>
+              </div>
+              <div>{item.get('wxName')}({item.get('sex') ? (item.get('sex') == 1 ? '男' : '女') : '未知'})</div>
           </div>
         );
       })
@@ -185,6 +188,7 @@ class DashInfo extends React.Component {
                        `DashReducer/dashInfo/photos`, value);
                    }}
                    dir={`prescription/${moment().format('YYYY_MM')}`}
+                   isDisable={this.isDisabled()}
                  />
               </FormItem>
               <FormItem
@@ -225,7 +229,6 @@ class DashInfo extends React.Component {
                   })(
                     <RadioGroup>
                       <Radio value={1}>联谊</Radio>
-                      <Radio value={2}>聚餐</Radio>
                     </RadioGroup>
                 )}
               </FormItem>
@@ -336,12 +339,12 @@ class DashInfo extends React.Component {
               >
               {
                 this.isDisabled() ?
-                <text>{this.props.dashInfo.get('boyMoney')}</text> :
-                getFieldDecorator('boyMoney', {
-                  initialValue: this.props.dashInfo.get('boyMoney'),
+                <text>{this.props.dashInfo.get('cost')}</text> :
+                getFieldDecorator('cost', {
+                  initialValue: this.props.dashInfo.get('cost'),
                   onChange: (e) => {
                     this.props.changeAction(
-                    'DashReducer/dashInfo/boyMoney', e);
+                    'DashReducer/dashInfo/cost', e);
                   },
                 })(
                 <InputNumber
@@ -356,12 +359,12 @@ class DashInfo extends React.Component {
               >
                 {
                   this.isDisabled() ?
-                  <text>{this.props.dashInfo.get('girlMoney')}</text> :
-                  getFieldDecorator('girlMoney', {
-                    initialValue: this.props.dashInfo.get('girlMoney'),
+                  <text>{this.props.dashInfo.get('var4')}</text> :
+                  getFieldDecorator('var4', {
+                    initialValue: this.props.dashInfo.get('var4'),
                     onChange: (e) => {
                       this.props.changeAction(
-                      'DashReducer/dashInfo/girlMoney', e);
+                      'DashReducer/dashInfo/var4', e);
                     },
                   })(
                   <InputNumber
@@ -395,14 +398,14 @@ class DashInfo extends React.Component {
                 label="活动流程"
                 hasFeedback
               >
-                {getFieldDecorator('activityFlow',
+                {getFieldDecorator('var1',
                   {
                     rules: [
                       { required: true, message: '活动流程不能为空' },
                     ],
-                    initialValue: this.props.dashInfo.get('activityFlow'),
+                    initialValue: this.props.dashInfo.get('var1'),
                     onChange: (e) => this.props.changeAction(
-                      'DashReducer/dashInfo/activityFlow', e.target.value),
+                      'DashReducer/dashInfo/var1', e.target.value),
                   })(
                       <Input
                         type="textarea"
@@ -416,14 +419,14 @@ class DashInfo extends React.Component {
                 label="友情提示"
                 hasFeedback
               >
-                {getFieldDecorator('tips',
+                {getFieldDecorator('var2',
                   {
                     rules: [
                       { required: true, message: '友情提示不能为空' },
                     ],
-                    initialValue: this.props.dashInfo.get('tips'),
+                    initialValue: this.props.dashInfo.get('var2'),
                     onChange: (e) => this.props.changeAction(
-                      'DashReducer/dashInfo/tips', e.target.value),
+                      'DashReducer/dashInfo/var2', e.target.value),
                   })(
                       <Input
                         type="textarea"
@@ -480,22 +483,6 @@ class DashInfo extends React.Component {
               </FormItem>
               <FormItem
                 {...formItemLayout}
-                label="发起人头像"
-                hasFeedback
-              >
-                <UploadComponents
-                   multiple={false}
-                   imgURLArray={this.props.dashInfo.get('originUserImg')}
-                   type="public"
-                   onChange={(value) => {
-                     this.props.changeAction(
-                       `DashReducer/dashInfo/originUserImg`, value);
-                   }}
-                   dir={`prescription/${moment().format('YYYY_MM')}`}
-                 />
-              </FormItem>
-              <FormItem
-                {...formItemLayout}
                 label="发起人描述"
                 hasFeedback
               >
@@ -512,16 +499,46 @@ class DashInfo extends React.Component {
                       />
                 )}
               </FormItem>
+              <FormItem
+                {...formItemLayout}
+                label="发起人头像"
+                hasFeedback
+              >
+                <UploadComponents
+                   multiple={false}
+                   imgURLArray={this.props.dashInfo.get('originUserPortrait') ? this.props.dashInfo.get('originUserPortrait') : ''}
+                   type="public"
+                   onChange={(value) => {
+                     this.props.changeAction(
+                       `DashReducer/dashInfo/originUserPortrait`, value);
+                   }}
+                   dir={`prescription/${moment().format('YYYY_MM')}`}
+                   isDisable={this.isDisabled()}
+                 />
+              </FormItem>
             </View>
             {/* 报名人数 */}
-            <View className={ Contentstyles.formHeader } >
-              报名人信息
-            </View>
-            <View className={ Contentstyles.formContent } >
-                 <div style={{ display: 'flex' }}>
-                    {this.showSignupPeople(this.props.dashInfo.get('signupPeople'))}
-                 </div>
-            </View>
+            {this.props.params.id ? 
+              <div>
+              <View className={ Contentstyles.formHeader } >
+                报名人列表
+              </View>
+              <View className={ Contentstyles.formContent } >
+                   <div style={{ display: 'flex' }}>
+                      {this.showSignupPeople(this.props.dashInfo.get('signupPeople'))}
+                   </div>
+              </View>
+              {/* 关注人数 */}
+              <View className={ Contentstyles.formHeader } >
+                关注人列表
+              </View>
+              <View className={ Contentstyles.formContent } >
+                   <div style={{ display: 'flex' }}>
+                      {this.showSignupPeople(this.props.dashInfo.get('collectUseList'))}
+                   </div>
+              </View></div> : <div />
+            }
+            
           </Form>
         </View>
       </View>

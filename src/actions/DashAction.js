@@ -33,6 +33,9 @@ export const getDashInfo = (params: Object) => (dispatch) => {
 // 添加dash
 export const ADD_DASH = 'ADD_DASH';
 export const addDash = (params: Object) => (dispatch) => {
+  const boyNum = params.boyNum;
+  const girlNum = params.girlNum;
+  params.sexRate = `${boyNum}:${girlNum}`;
   const result = GET(URL.addDashPath, params);
   AsyncFetchHandler(ADD_DASH, result, dispatch);
   result.then(data => {
@@ -59,6 +62,10 @@ export const addDash = (params: Object) => (dispatch) => {
 // 修改dash
 export const UPDATE_DASH = 'UPDATE_DASH';
 export const updateDash = (params: Object) => (dispatch) => {
+  const boyNum = params.boyNum;
+  const girlNum = params.girlNum;
+  params.sexRate = `${boyNum}:${girlNum}`;
+  console.log(params);
   const result = GET(URL.updateDashPath, params);
   AsyncFetchHandler(
     UPDATE_DASH,
@@ -89,7 +96,8 @@ export const updateDash = (params: Object) => (dispatch) => {
 // 删除活动
 export const DELETE_DASH = 'DELETE_DASH';
 export const deleteDash = (params: Object) => (dispatch) => {
-  const result = GET(URL.deleteDashPath, params);
+  console.log(params);
+  const result = GET(URL.deleteDashPath, {id: params.id});
   AsyncFetchHandler(
     DELETE_DASH,
     result,
@@ -103,7 +111,7 @@ export const deleteDash = (params: Object) => (dispatch) => {
         'success',
         2,
       );
-      dispatch(getDashList());
+      dispatch(getDashList({pageNum: params.pageNum, pageSize: params.pageSize }));
     } else {
       NotificationCenter.NotificationCard(
         '删除失败',

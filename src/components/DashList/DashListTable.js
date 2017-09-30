@@ -11,7 +11,7 @@ import * as RoutingURL from '../../core/RoutingURL/RoutingURL';
 import {getActivityTime} from '../../core/CommonFun/moment';
 
 const propTypes = {
-  dataSource: PropTypes.instanceOf(Immutable.List).isRequired,
+  dataSource: PropTypes.instanceOf(Immutable.List),
   dispatch: PropTypes.func,
   goDeleteAction: PropTypes.func,
 };

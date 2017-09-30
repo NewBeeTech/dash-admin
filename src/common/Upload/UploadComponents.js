@@ -153,6 +153,7 @@ class UploadComponents extends React.Component {
       const display = this.state.display;
       if (display === 'one') {
         if (type === 'success') {
+          console.log(fileURL);
           this.props.onChange(fileURL);
         }
         this.setState({ showImgs: [{ type, url: fileURL }] });

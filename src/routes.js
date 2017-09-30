@@ -19,7 +19,7 @@ import UserInfo from './components/UserInfo';
 const routes = (
   <Route path={RoutingURL.PrefixURL()} component={RootContainer} >
     <Route path={RoutingURL.App()} component={AppContainer} >
-      <IndexRoute component={UserList} />
+      <IndexRoute component={DashList} />
       <Route path={RoutingURL.BannerList()} component={BannerList} />
       <Route path={RoutingURL.Banner('(:id)')} component={Banner} />
       <Route path={RoutingURL.DashList()} component={DashList} />

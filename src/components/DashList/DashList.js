@@ -31,7 +31,8 @@ class DashList extends React.Component {
     dispatch(push(RoutingURL.DashInfo()));
   }
   _goDeleteAction = (dispatch: Function) => (params) => {
-    dispatch(DashAction.deleteDash(params));
+    const localParams = Object.assign(params, { pageNum: this.props.searchData.get('pageNum'), pageSize: this.props.searchData.get('pageSize') });
+    dispatch(DashAction.deleteDash(localParams));
   }
   _searchAction = (dispatch: Function) => (params: {}, current = 1) => {
     const localParams = Object.assign(params, { pageNum: current, pageSize: this.props.searchData.get('pageSize') });
@@ -63,7 +64,7 @@ class DashList extends React.Component {
           <View className={ styles.pageNav }>
             <PageNav
               pageSize={this.props.searchData.get('pageSize')}
-              total={this.props.dashList.get('total')}
+              total={Number(this.props.dashList.get('total'))}
               params={this.props.searchData.toJS()}
               current={this.props.searchData.get('pageNum')}
               searchAction={this._searchAction(this.props.dispatch)}

@@ -176,6 +176,26 @@ class DashInfo extends React.Component {
               </FormItem>
               <FormItem
                 {...formItemLayout}
+                label="活动地点"
+                hasFeedback
+              >
+                {
+                  this.isDisabled() ?
+                  <text>{this.props.dashInfo.get('address')}</text> :
+                  getFieldDecorator('address', {
+                    initialValue: this.props.dashInfo.get('address'),
+                    onChange: (e) => {
+                      this.props.changeAction(
+                      'DashReducer/dashInfo/address', e.target.value);
+                    },
+                  })(
+                  <Input
+                    placeholder="活动地点"
+                  />
+                )}
+              </FormItem>
+              <FormItem
+                {...formItemLayout}
                 label="活动banner"
                 hasFeedback
               >

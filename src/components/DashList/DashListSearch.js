@@ -26,22 +26,11 @@ class DashListSearch extends React.Component {
       const dataSource1 = this.props.searchData;
       return this.props.form.setFieldsValue({
         id: dataSource1.get('id'),
-        title: dataSource1.get('title'),
+        name: dataSource1.get('name'),
         status: dataSource1.get('status'),
       });
     }
     return false;
-  }
-  _resetSearchData() {
-    this.props.changeAction(
-      'DashListReducer/searchData',
-      Immutable.Map({
-        id: '',
-        title: '',
-        status: '',
-        page: 1,
-      }),
-    );
   }
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -78,11 +67,11 @@ class DashListSearch extends React.Component {
               label="标题："
               {...formItemLayout}
             >
-            {getFieldDecorator('title', {
-                initialValue: this.props.searchData.get('title'),
+            {getFieldDecorator('name', {
+                initialValue: this.props.searchData.get('name'),
                 onChange: (e) => {
                   this.props.changeAction(
-                  'DashReducer/searchData/title', e.target.value);
+                  'DashReducer/searchData/name', e.target.value);
                 },
               })(
               <Input
@@ -108,9 +97,9 @@ class DashListSearch extends React.Component {
                     optionFilterProp="children"
                     filterOption={false}
                   >
-                    <Option value="" >全部</Option>
-                    <Option value={1}>下线</Option>
-                    <Option value={2}>上线</Option>
+                    <Option value={''}>全部</Option>
+                    <Option value={0}>下架</Option>
+                    <Option value={1}>上架</Option>
                   </Select>
               )}
             </FormItem>
@@ -119,20 +108,12 @@ class DashListSearch extends React.Component {
         <Row style={{ marginTop: '10px' }} >
           <Col span="13" offset="10" style={{ textAlign: 'right' }} >
             <Button
-              type="ghost"
-              className={ mainStyles.whiteButton }
-              style={{ marginRight: '20px' }}
-              onClick={() => {this._resetSearchData();}}
-            >
-              重置
-            </Button>
-            <Button
               style={{ marginRight: '20px' }}
               className={ mainStyles.blueButton }
               type="primary"
               htmlType="submit"
               onClick={() => {
-                this.props.searchAction(this.props.searchData.toJS());
+                this.props.searchAction(this.props.searchData.toJS(), this.props.searchData.get('pageNum'));
               }}
             >
               筛选</Button>

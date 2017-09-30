@@ -5,9 +5,7 @@ import Immutable from 'immutable';
 import userInfoStorage from '../core/UserInfoStorage';
 import { redux } from 'amumu';
 const ActionHandler = redux.ActionHandler;
-// 用户id（可筛选）、用户昵称、用户微信头像、用户上传的个人图片、年龄、性别（可筛选）、
-// 男性别（身高、职业、职位、家乡、收入、特长）、查看、编辑、屏蔽、收到橄榄枝数量、
-// 相关活动（想去、参加过的、取消报名）、手机号、标签。
+
 const defaultState = Immutable.Map({
   isFetching: false,
   errMsg: '',
@@ -15,8 +13,9 @@ const defaultState = Immutable.Map({
     userListData: Immutable.List([
         Immutable.Map({
           id: 1,
-          portrait: 'https://img.shaka.hsohealth.com/avatar/20170301_free.png',
-          nickName: 'nickName',
+          wxPortrait: 'https://img.shaka.hsohealth.com/avatar/20170301_free.png',
+          wxAccount: 'fdfss',
+          wxName: 'nickName',
           age: 27,
           sex: 1,
           status: 1, // 0冻结  1正常
@@ -26,8 +25,9 @@ const defaultState = Immutable.Map({
         }),
         Immutable.Map({
           id: 2,
-          portrait: 'https://img.shaka.hsohealth.com/avatar/20170301_free.png',
-          nickName: 'nickName',
+          wxPortrait: 'https://img.shaka.hsohealth.com/avatar/20170301_free.png',
+          wxAccount: 'fdfss',
+          wxName: 'nickName',
           age: 27,
           sex: 1,
           status: 1, // 0冻结  1正常
@@ -41,26 +41,70 @@ const defaultState = Immutable.Map({
   }),
   userInfo: Immutable.Map({
     id: 1,
-    portrait: 'https://img.shaka.hsohealth.com/avatar/20170301_free.png',
-    nickName: 'nickName',
+    wxPortrait: 'https://img.shaka.hsohealth.com/avatar/20170301_free.png',
+    wxAccount: 'fdfss',
+    wxName: 'nickName',
+    userName: '',
     age: 27,
     sex: 1,
     status: 1, // 0冻结  1正常
     likeCount: 10, //收到橄榄枝数量
     phone: 1034923482,
     tags: '爱好1,爱好2,爱好3',
-    photos: '', // 上传的照片
+    photos: 'https://img.shaka.hsohealth.com/avatar/20170301_free.png,https://img.shaka.hsohealth.com/avatar/20170301_free.png,https://img.shaka.hsohealth.com/avatar/20170301_free.png', // 上传的照片
+    boyInfo: Immutable.Map({
+        height: '160',
+        profession: '互联网',
+        position: 'leader', // 职位
+        home: '北京', // 家乡
+        income: '100k', // 收入
+        specialty: '可爱 会做饭', // 特长
+    }),
+    dashList: Immutable.List([
+      Immutable.Map({
+        id: 1,
+        type: 1, // 活动类型
+        address: '望京',
+        photos: 'https://img.shaka.hsohealth.com/avatar/20170301_free.png',
+        status: 1, // 活动状态
+        name: '标题1',
+        smallTitle: '小标题',
+        startTime: '', // 活动开始时间
+        endTime: '', // 活动报名时间
+        signupStartTime	: '', // 报名开始时间
+        signupEndTime: '', // 报名报名时间
+        createTime: '',
+      }),
+      Immutable.Map({
+        id: 2,
+        type: 1, // 活动类型
+        address: '望京',
+        photos: 'https://img.shaka.hsohealth.com/avatar/20170301_free.png',
+        status: 1, // 活动状态
+        title: '标题1',
+        smallTitle: '小标题',
+        startTime: '2017-09-23 09:00:00', // 活动开始时间
+        endTime: '2017-09-23 11:00:00', // 活动报名时间
+        signupStartTime	: '2017-09-23 09:00:00', // 报名开始时间
+        signupEndTime: '2017-09-23 09:00:00', // 报名报名时间
+        createTime: '',
+      }),
+    ]),
   }),
   searchData: Immutable.Map({
     id: '',
     sex: '',
-    page: 1,
+    pageNum: 1,
+    pageSize: 10,
   })
 });
 
 const getUserListHandler = new ActionHandler.handleAction(UserAction.GET_USERLIST)
   .success((state, action) => {
-    return state.set('userList', Immutable.fromJS(action.data))
+    return state.setIn(['userList', 'userListData'], Immutable.fromJS(action.data.list))
+      .set(['userList', 'total'], Immutable.fromJS(action.data.totalRow))
+      .setIn(['userList', 'pageSize'], Immutable.fromJS(action.data.pageSize))
+      .setIn(['userList', 'pageNum'], Immutable.fromJS(action.data.pageNumber))
       .set('isFetching', false).set('errMsg', '');
   });
   

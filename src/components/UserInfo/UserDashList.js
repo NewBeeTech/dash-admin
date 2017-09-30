@@ -12,18 +12,12 @@ import {getActivityTime} from '../../core/CommonFun/moment';
 
 const propTypes = {
   dataSource: PropTypes.instanceOf(Immutable.List).isRequired,
-  dispatch: PropTypes.func,
-  goDeleteAction: PropTypes.func,
 };
 
-class DashListTable extends React.Component {
+class UserDashList extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.columns = [{
-      title: '操作',
-      dataIndex: 'operation',
-      key: 'operation',
-    }, {
       title: '活动ID',
       dataIndex: 'id',
       key: 'id',
@@ -81,37 +75,6 @@ class DashListTable extends React.Component {
         activityTime: getActivityTime(data.get('startTime'), data.get('endTime')),
         createTime: data.get('createTime'),
         signupTime: data.get('signupEndTime') ? `${data.get('signupStartTime')} 至 ${data.get('signupEndTime')}` : '',
-        operation: (
-          <View>
-            <a
-              onClick={(e) => {
-                e.preventDefault();
-                this.props.dispatch(push(RoutingURL.DashInfo(data.get('id'))));
-              }}
-            >
-              查看
-            </a> | <a
-              onClick={(e) => {
-                e.preventDefault();
-                this.props.dispatch(push(RoutingURL.DashInfo(data.get('id'), true)));
-              }}
-            >
-              编辑
-            </a> | <Popconfirm
-              title="确认要进行删除操作?"
-              okText="确认删除"
-              cancelText="不删除"
-              onConfirm={() => this.props.goDeleteAction({id: data.get('id')})}
-            >
-              <a
-                style={{ color: '#FF7316' }}
-                href="#"
-              >
-                删除
-              </a>
-            </Popconfirm>
-          </View>
-        ),
       });
     });
     }
@@ -146,6 +109,6 @@ class DashListTable extends React.Component {
     );
   }
 }
-DashListTable.propTypes = propTypes;
+UserDashList.propTypes = propTypes;
 
-export default DashListTable;
+export default UserDashList;

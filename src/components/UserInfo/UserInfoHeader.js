@@ -20,11 +20,11 @@ const UserInfoHeader = (props) => {
     if (props.id) {
       if (props.editing) {
         return (
-          <View>{`修改活动内容  ID: ${props.id}`}</View>
+          <View>{`修改用户状态  ID: ${props.id}`}</View>
         );
       }
       return (
-        <View>{`活动详情  ID: ${props.id}`}</View>
+        <View>{`用户信息  ID: ${props.id}`}</View>
       );
     }
     return false;

@@ -1,6 +1,7 @@
 
 import React, { PropTypes } from 'react';
 import UserInfoHeader from './UserInfoHeader';
+import UserDashList from './UserDashList';
 import { View } from 'isomorphic';
 import Immutable from 'immutable';
 import * as Contentstyles from '../../assets/stylesheets/FromContent.css';
@@ -10,7 +11,7 @@ import * as RoutingURL from '../../core/RoutingURL/RoutingURL';
 import { isDisabled } from '../../core/CommonFun/CoreState';
 import UploadComponents from '../../common/Upload/UploadComponents';
 import amumu from 'amumu';
-import { Form, Input, Select, Radio } from 'antd';
+import { Form, Input, Select, Radio, Switch } from 'antd';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -65,6 +66,12 @@ class UserInfo extends React.Component {
       phone: '',
       tags: '',
       photos: '', // 上传的照片
+      wxPortrait: '',
+      wxAccount: '',
+      wxName: '',
+      userName: '',
+      boyInfo: {},
+      dashList: [],
     }));
   }
   componentWillUnmount() {
@@ -73,16 +80,25 @@ class UserInfo extends React.Component {
   showImgList(imgs) {
     const views = [];
     if(imgs) {
-      
+      const imgArr = imgs.split(',');
+      imgArr.map((item) => {
+        views.push(<div className={Contentstyles.userPhoto}><img src={item} width="100%" heigth="100%" /></div>)
+      });
     }
     return views;
   }
   showTagList(tags) {
     const views = [];
     if(tags) {
-      
+      const tagArr = tags.split(',');
+      tagArr.map((item) => {
+        views.push(<div className={Contentstyles.userTag}>{item}</div>)
+      });
     }
     return views;
+  }
+  isDisabled() {
+    return isDisabled(this.props.params.id, this.props.location.query.editing);
   }
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -112,95 +128,72 @@ class UserInfo extends React.Component {
           <View className={ Contentstyles.formHeader } >
             基本信息
           </View>
-          <View className={ Contentstyles.formContent } >
-            <FormItem
-              {...formItemLayout}
-              label="用户ID"
-              hasFeedback
-            >
-              <text>{this.props.userInfo.get('id')}</text>
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="用户昵称"
-              hasFeedback
-            >
-              <text>{this.props.userInfo.get('nickName')}</text>
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="用户微信头像"
-              hasFeedback
-            >
-              <img src={this.props.userInfo.get('portrait')} style={{ width: '80px', height: '80px'}}/>
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="手机号"
-              hasFeedback
-            >
-              <text>{this.props.userInfo.get('phone')}</text>
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="年龄"
-              hasFeedback
-            >
-              <text>{this.props.userInfo.get('age')}</text>
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="性别"
-              hasFeedback
-            >
-              <text>{this.props.userInfo.get('age') ? (this.props.userInfo.get('age') == 1 ? '男' : '女') : '未知'}</text>
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="账号状态"
-              hasFeedback
-            >
-            {
-              this.isDisabled() ?
-              <text>{this.props.userInfo.get('status') ? '正常' : '屏蔽'}</text> :
-              getFieldDecorator('status', {
-                initialValue: this.props.userInfo.get('status'),
-                onChange: (e) => {
-                  this.props.changeAction(
-                  'UserReducer/userInfo/status', e.target.value);
-                },
-              })(
-                <RadioGroup>
-                  <Radio value={1}>正常</Radio>
-                  <Radio value={0}>屏蔽</Radio>
-                </RadioGroup>
-            )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="收到橄榄枝的数量"
-              hasFeedback
-            >
-              <text>{this.props.userInfo.get('likeCount')}</text>
-            </FormItem>
-          </View>
+          <div>用户状态:&nbsp;&nbsp;
+              <Switch
+                checked={Boolean(this.props.userInfo.get('status'))}
+                onChange={(e) => {
+                  this.props.dispatch(UserAction.updateUser({ id: this.props.userInfo.get('id'), status: Number(e) }))
+                }}
+                disabled={this.isDisabled()}
+                checkedChildren="屏蔽"
+                unCheckedChildren="解冻"
+              />
+          </div>
+          <View className={Contentstyles.basicTable}>
+            <table>
+              <tbody><tr>
+                <td>用户ID：{this.props.userInfo.get('id')}</td>
+                <td>用户昵称{this.props.userInfo.get('nickName')}</td>
+                <td>手机号：{this.props.userInfo.get('phone')}</td>
+              </tr>
+              <tr>
+                <td>微信号：{this.props.userInfo.get('wxAccount')}</td>
+                <td>微信昵称：{this.props.userInfo.get('wxName')}</td>
+                <td>微信头像：
+                    <img src={this.props.userInfo.get('wxPortrait')} 
+                       style={{ width: '60px', height: '60px', border: '1px solid #ccc', borderRadius: '60px' }}
+                    />
+                </td>
+              </tr>
+              <tr>
+                <td>性别：{this.props.userInfo.get('sex') ? (this.props.userInfo.get('sex') == 1 ? '男' : '女') : '未知'}</td>
+                <td>年龄：{this.props.userInfo.get('age')}</td>
+                <td>收到橄榄枝的数量：{this.props.userInfo.get('likeCount')}</td>
+              </tr></tbody>
+            </table>
+            {this.props.userInfo.get('sex') == 1 ? 
+            <table style={{ marginTop: '20px' }}>
+              <tbody>
+                <tr>
+                  <td>身高：{this.props.userInfo.get('boyInfo').get('height')}</td>
+                  <td>职业： {this.props.userInfo.get('boyInfo').get('profession')}</td>
+                  <td>职位：{this.props.userInfo.get('boyInfo').get('position')}</td>
+                </tr>
+                <tr>
+                  <td>家乡：{this.props.userInfo.get('boyInfo').get('home')}</td>
+                  <td>收入：{this.props.userInfo.get('boyInfo').get('income')}</td>
+                  <td>特长：{this.props.userInfo.get('boyInfo').get('specialty')}</td>
+                </tr>
+              </tbody>
+            </table>: <div />}
+        </View>
           <View className={ Contentstyles.formHeader } >
             用户上传个人照片展示
           </View>
-          <View className={ Contentstyles.formContent } >
+          <View className={ Contentstyles.userPhotos } >
               {this.showImgList(this.props.userInfo.get('photos'))}
           </View>
           <View className={ Contentstyles.formHeader } >
             个人标签展示
           </View>
-          <View className={ Contentstyles.formContent } >
+          <View className={ Contentstyles.userTags } >
             {this.showTagList(this.props.userInfo.get('tags'))}
           </View>
           <View className={ Contentstyles.formHeader } >
             相关活动展示
           </View>
           <View className={ Contentstyles.formContent } >
-           相关活动展示
+            <UserDashList dataSource={this.props.userInfo.get('dashList')}/>
           </View>
         </Form>
         </View>

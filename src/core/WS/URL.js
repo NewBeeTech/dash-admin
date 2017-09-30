@@ -1,6 +1,10 @@
 /* @flow */
 const rootURL: string = 'http://120.27.12.128:80/';
 
+
+// 获取OSS签名
+export const GetOSSSignature: string = `${rootURL}oss/sign`;
+
 /**
  * 登录地址
  * @type {string}
@@ -42,7 +46,7 @@ export const getDashListPath: string = `${rootURL}admin/activity/list`;
  * 活动详情
  * @type {string}
  */
-export const dashInfoPath: string = `${rootURL}`;
+export const dashInfoPath: string = `${rootURL}activity/getInfoById`;
 /**
  * 新增活动
  * @type {string}
@@ -59,13 +63,11 @@ export const updateDashPath: string = `${rootURL}admin/activity/addOrUpdate`;
  */
 export const deleteDashPath: string = `${rootURL}`;
 
-
-
 /**
  * 用户列表
  * @type {string}
  */
-export const getUserListPath: string = `${rootURL}/admin/user/list`;
+export const getUserListPath: string = `${rootURL}admin/user/list`;
 /**
  * 用户详情
  * @type {string}
@@ -75,7 +77,5 @@ export const getUserInfoPath: string = `${rootURL}`;
  * 修改用户
  * @type {string}
  */
-export const updateUserPath: string = `${rootURL}`;
+export const updateUserPath: string = `${rootURL}admin/user/addOrUpdate`;
 
-// 获取OSS签名
-export const GetOSSSignature: string = `${rootURL}oss/sign`;

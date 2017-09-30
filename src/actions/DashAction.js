@@ -5,6 +5,7 @@ import { push } from 'react-router-redux';
 import * as RoutingURL from '../core/RoutingURL/RoutingURL';
 import AsyncFetchHandler from '../core/AsyncFetchHandler';
 import NotificationAction from '../common/NotificationAction';
+import NotificationCenter from '../common/NotificationCenter';
 
 // 获取dashList
 export const GET_DASHLIST = 'GET_DASHLIST';
@@ -31,7 +32,7 @@ export const getDashInfo = (params: Object) => (dispatch) => {
 
 // 添加dash
 export const ADD_DASH = 'ADD_DASH';
-export const addDashInfo = (params: Object) => (dispatch) => {
+export const addDash = (params: Object) => (dispatch) => {
   const result = GET(URL.addDashPath, params);
   AsyncFetchHandler(ADD_DASH, result, dispatch);
   result.then(data => {
@@ -42,7 +43,7 @@ export const addDashInfo = (params: Object) => (dispatch) => {
         'success',
         2,
       );
-      dispatch(push(RoutingURL.BannerList()));
+      dispatch(push(RoutingURL.DashList()));
     } else {
       NotificationCenter.NotificationCard(
         '创建失败',
@@ -72,7 +73,7 @@ export const updateDash = (params: Object) => (dispatch) => {
         'success',
         2,
       );
-      dispatch(push(RoutingURL.BannerList()));
+      dispatch(push(RoutingURL.DashList()));
     } else {
       NotificationCenter.NotificationCard(
         '修改失败',

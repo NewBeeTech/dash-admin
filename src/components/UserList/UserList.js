@@ -23,11 +23,11 @@ class UserList extends React.Component {
     dispatch: PropTypes.func,
   };
   componentWillMount() {
-    // this.props.dispatch(UserAction.getUserList());
+    // this.props.dispatch(UserAction.getUserList({ pageNum: 1, pageSize: 10 }));
   }
   _searchAction = (dispatch: Function) => (params: {}, current = 1) => {
     dispatch(UserAction.getUserList(params, current));
-    this.props.changeAction('UserReducer/searchData/page', current);
+    this.props.changeAction('UserReducer/searchData/pageNum', current);
   };
   render() {
     return (
@@ -50,11 +50,11 @@ class UserList extends React.Component {
           </View>
           <View className={ styles.pageNav }>
             <PageNav
-              pageSize={10}
+              pageSize={this.props.searchData.get('pageSize')}
               total={this.props.userList.get('total')}
               params={this.props.searchData.toJS(0)}
-              current={this.props.userList.get('currentPage')}
-              searchAction={() => this._searchAction(this.props.dispatch)}
+              current={this.props.searchData.get('pageNum')}
+              searchAction={this._searchAction(this.props.dispatch)}
             />
           </View>
         </View>

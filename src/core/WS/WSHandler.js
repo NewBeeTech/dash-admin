@@ -20,7 +20,7 @@ import NotificationCenter from '../../common/NotificationCenter';
  */
 const _param = (params: {}): string => {
   return Object.keys(params).map((key) => {
-    if(params[key]) {
+    if(params[key] === 0 || params[key]) {
       return `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`;
     }
   }).join('&');

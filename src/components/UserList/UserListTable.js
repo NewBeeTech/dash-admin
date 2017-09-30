@@ -24,13 +24,17 @@ class UserListTable extends React.Component {
       dataIndex: 'id',
       key: 'id',
     }, {
-      title: '用户昵称',
-      dataIndex: 'nickName',
-      key: 'nickName',
+      title: '用户微信昵称',
+      dataIndex: 'wxName',
+      key: 'wxName',
+    }, {
+      title: '微信号',
+      dataIndex: 'wxAccount',
+      key: 'wxAccount',
     }, {
       title: '用户微信头像',
-      dataIndex: 'portrait',
-      key: 'portrait',
+      dataIndex: 'wxPortrait',
+      key: 'wxPortrait',
     }, {
       title: '年龄',
       dataIndex: 'age',
@@ -55,13 +59,15 @@ class UserListTable extends React.Component {
   }
   _renderDataSource(datas) {
     const dataSource = [];
+    if(datas) {
     datas.forEach((data, index) => {
       const sex = data.get('sex');
       dataSource.push({
         key: index,
         id: data.get('id'),
-        nickName: data.get('nickName'),
-        portrait: this.showImg(data.get('portrait')),
+        wxName: data.get('wxName'),
+        wxPortrait: this.showImg(data.get('wxPortrait')),
+        wxAccount: this.showImg(data.get('wxAccount')),
         age: data.get('age'),
         sex: sex ? (sex == 1 ? '男' : '女') : '未知',
         status: data.get('status') ? '正常' : '屏蔽',
@@ -88,6 +94,7 @@ class UserListTable extends React.Component {
         ),
       });
     });
+    }
     return dataSource;
   }
   showImg(img) {

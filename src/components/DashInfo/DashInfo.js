@@ -32,9 +32,9 @@ class DashInfo extends React.Component {
   };
   componentWillMount() {
     if(this.props.params.id){
-      // this.props.dispatch(BannerAction.getBannerInfo({id: this.props.params.id}));
+      this.props.dispatch(DashAction.getDashInfo({id: this.props.params.id}));
     } else {
-      // this.clearDashInfo();
+      this.clearDashInfo();
     }
   }
   /**
@@ -49,10 +49,10 @@ class DashInfo extends React.Component {
     dispatch(push(RoutingURL.DashInfo(id, true)));
   }
   _createAction = (dispatch) => (params: {}) => {
-    dispatch(DashAction.addDashInfo(params));
+    dispatch(DashAction.addDash(params));
   }
   _updateAction = (dispatch) => (params: {}) => {
-    dispatch(DashAction.updateDashInfo(params));
+    dispatch(DashAction.updateDash(params));
   }
   isDisabled() {
     return isDisabled(this.props.params.id, this.props.location.query.editing);
@@ -64,8 +64,8 @@ class DashInfo extends React.Component {
       type: '', // 活动类型
       photos: '',
       status: '', // 活动状态
-      title: '',
-      smallTitle: '',
+      name: '',
+      var3: '',
       startTime: '', // 活动开始时间
       endTime: '', // 活动报名时间
       signupStartTime	: '', // 报名开始时间
@@ -84,7 +84,7 @@ class DashInfo extends React.Component {
     }));
   }
   componentWillUnmount() {
-    // this.clearDashInfo();
+    this.clearDashInfo();
   }
   showSignupPeople(signupPeople) {
     const views = [];
@@ -138,12 +138,12 @@ class DashInfo extends React.Component {
               >
                 {
                   this.isDisabled() ?
-                  <text>{this.props.dashInfo.get('title')}</text> :
-                  getFieldDecorator('title', {
-                    initialValue: this.props.dashInfo.get('title'),
+                  <text>{this.props.dashInfo.get('name')}</text> :
+                  getFieldDecorator('name', {
+                    initialValue: this.props.dashInfo.get('name'),
                     onChange: (e) => {
                       this.props.changeAction(
-                      'DashReducer/dashInfo/title', e.target.value);
+                      'DashReducer/dashInfo/name', e.target.value);
                     },
                   })(
                   <Input
@@ -158,12 +158,12 @@ class DashInfo extends React.Component {
               >
                 {
                   this.isDisabled() ?
-                  <text>{this.props.dashInfo.get('smallTitle')}</text> :
-                  getFieldDecorator('smallTitle', {
-                    initialValue: this.props.dashInfo.get('smallTitle'),
+                  <text>{this.props.dashInfo.get('var3')}</text> :
+                  getFieldDecorator('var3', {
+                    initialValue: this.props.dashInfo.get('var3'),
                     onChange: (e) => {
                       this.props.changeAction(
-                      'DashReducer/dashInfo/smallTitle', e.target.value);
+                      'DashReducer/dashInfo/var3', e.target.value);
                     },
                   })(
                   <Input
@@ -203,8 +203,8 @@ class DashInfo extends React.Component {
                     },
                   })(
                     <RadioGroup>
-                      <Radio value={0}>上线</Radio>
-                      <Radio value={1}>下线</Radio>
+                      <Radio value={0}>下架</Radio>
+                      <Radio value={1}>上架</Radio>
                     </RadioGroup>
                 )}
               </FormItem>
@@ -215,7 +215,7 @@ class DashInfo extends React.Component {
               >
                 {
                   this.isDisabled() ?
-                  <text>{this.props.dashInfo.get('type') ? '上线' : '下线'}</text> :
+                  <text>{this.props.dashInfo.get('type') === 1 ? '联谊' : ''}</text> :
                   getFieldDecorator('type', {
                     initialValue: this.props.dashInfo.get('type'),
                     onChange: (e) => {
@@ -301,11 +301,11 @@ class DashInfo extends React.Component {
                   initialValue: this.props.dashInfo.get('boyNum'),
                   onChange: (e) => {
                     this.props.changeAction(
-                    'DashReducer/dashInfo/boyNum', e.target.value);
+                    'DashReducer/dashInfo/boyNum', e);
                   },
                 })(
                 <InputNumber
-                  placeholder="男生人数"
+                   min={0}
                 />
               )}
               </FormItem>
@@ -321,11 +321,11 @@ class DashInfo extends React.Component {
                     initialValue: this.props.dashInfo.get('girlNum'),
                     onChange: (e) => {
                       this.props.changeAction(
-                      'DashReducer/dashInfo/girlNum', e.target.value);
+                      'DashReducer/dashInfo/girlNum', e);
                     },
                   })(
                   <InputNumber
-                    placeholder="女生人数"
+                    min={0}
                   />
                 )}
               </FormItem>
@@ -336,15 +336,16 @@ class DashInfo extends React.Component {
               >
               {
                 this.isDisabled() ?
-                <text>{this.props.dashInfo.get('girlMoney')}</text> :
-                getFieldDecorator('girlMoney', {
-                  initialValue: this.props.dashInfo.get('girlMoney'),
+                <text>{this.props.dashInfo.get('boyMoney')}</text> :
+                getFieldDecorator('boyMoney', {
+                  initialValue: this.props.dashInfo.get('boyMoney'),
                   onChange: (e) => {
                     this.props.changeAction(
-                    'DashReducer/dashInfo/girlMoney', e.target.value);
+                    'DashReducer/dashInfo/boyMoney', e);
                   },
                 })(
                 <InputNumber
+                   min={0}
                 />
               )}
               </FormItem>
@@ -360,11 +361,33 @@ class DashInfo extends React.Component {
                     initialValue: this.props.dashInfo.get('girlMoney'),
                     onChange: (e) => {
                       this.props.changeAction(
-                      'DashReducer/dashInfo/girlMoney', e.target.value);
+                      'DashReducer/dashInfo/girlMoney', e);
                     },
                   })(
                   <InputNumber
+                     min={0}
                   />
+                )}
+              </FormItem>
+              <FormItem
+                {...formItemLayout}
+                label="活动内容介绍"
+                hasFeedback
+              >
+                {getFieldDecorator('desc',
+                  {
+                    rules: [
+                      { required: true, message: '活动内容介绍不能为空' },
+                    ],
+                    initialValue: this.props.dashInfo.get('desc'),
+                    onChange: (e) => this.props.changeAction(
+                      'DashReducer/dashInfo/desc', e.target.value),
+                  })(
+                      <Input
+                        type="textarea"
+                        rows="5"
+                        disabled={this.isDisabled()}
+                      />
                 )}
               </FormItem>
               <FormItem

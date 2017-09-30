@@ -35,7 +35,7 @@ class DashList extends React.Component {
   }
   _searchAction = (dispatch: Function) => (params: {}, current = 1) => {
     const localParams = Object.assign(params, { pageNum: current, pageSize: this.props.searchData.get('pageSize') });
-    dispatch(DashAction.getDashList(localParams));
+    this.props.dispatch(DashAction.getDashList(localParams));
     this.props.changeAction('DashReducer/searchData/pageNum', current);
   };
   render() {
@@ -56,16 +56,17 @@ class DashList extends React.Component {
           <View className={ styles.contentListTable } >
              <DashListTable
                  dataSource={this.props.dashList.get('dashListData')}
+                 goDeleteAction={this._goDeleteAction(this.props.dispatch)}
                  dispatch={this.props.dispatch}
              />
           </View>
           <View className={ styles.pageNav }>
             <PageNav
-              pageSize={10}
+              pageSize={this.props.searchData.get('pageSize')}
               total={this.props.dashList.get('total')}
               params={this.props.searchData.toJS()}
-              current={this.props.dashList.get('currentPage')}
-              searchAction={() => this._searchAction(this.props.dispatch)}
+              current={this.props.searchData.get('pageNum')}
+              searchAction={this._searchAction(this.props.dispatch)}
             />
           </View>
         </View>

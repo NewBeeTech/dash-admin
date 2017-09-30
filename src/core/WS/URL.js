@@ -61,7 +61,7 @@ export const updateDashPath: string = `${rootURL}admin/activity/addOrUpdate`;
  * 删除活动
  * @type {string}
  */
-export const deleteDashPath: string = `${rootURL}`;
+export const deleteDashPath: string = `${rootURL}admin/activity/deleteById`;
 
 /**
  * 用户列表

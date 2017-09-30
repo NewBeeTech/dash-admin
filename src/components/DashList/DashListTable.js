@@ -90,14 +90,14 @@ class DashListTable extends React.Component {
               }}
             >
               查看
-            </a> | <a
+            </a> | {data.get('status') ? <div /> : <a
               onClick={(e) => {
                 e.preventDefault();
                 this.props.dispatch(push(RoutingURL.DashInfo(data.get('id'), true)));
               }}
             >
               编辑
-            </a> | <Popconfirm
+            </a> }| <Popconfirm
               title="确认要进行删除操作?"
               okText="确认删除"
               cancelText="不删除"

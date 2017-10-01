@@ -1,5 +1,5 @@
 /* @flow */
-const rootURL: string = 'http://120.27.12.128:80/';
+const rootURL: string = '/';
 
 
 // 获取OSS签名
@@ -83,4 +83,3 @@ export const updateUserPath: string = `${rootURL}admin/user/addOrUpdate`;
 export const getActivityListPath: string = `${rootURL}admin/activitySignup/list`;
 // 运营拒绝
 export const changeActivityStatusPath: string = `${rootURL}admin/activitySignup/update`;
-

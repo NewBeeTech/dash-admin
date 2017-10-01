@@ -103,6 +103,7 @@
   },
   "scripts": {
     "dev": "webpack-dev-server --config webpack.config.dev.js -d --inline --progress --colors --content-base src/",
+    "proxy": "webpack-dev-server --config webpack.config.proxy.js -d --inline --progress --colors --content-base src/",
     "test": "webpack --config webpack.config.test.js  --inline --progress --colors",
     "build": "webpack --config webpack.config.prod.js  --inline --progress --colors",
     "build-prod": "APPENV=prod webpack --progress --config webpack.config.production.js",

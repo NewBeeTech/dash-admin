@@ -222,12 +222,7 @@ module.exports = {
 
   devServer: {
     proxy: { // proxy URLs to backend development server
-      '/user/*': {
-        changeOrigin: true,
-        target:  'http://120.27.12.128:80',
-        secure: false
-      },
-      '/wx/*': {
+      '/admin/*': {
         changeOrigin: true,
         target:  'http://120.27.12.128:80',
         secure: false

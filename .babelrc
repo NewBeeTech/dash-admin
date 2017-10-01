@@ -5,10 +5,13 @@
     "stage-0"
   ],
   "plugins": [
-    "transform-flow-strip-types",
-    "syntax-jsx",
-    "transform-es2015-modules-commonjs",
+    "transform-runtime",
     "transform-decorators-legacy",
+    "syntax-async-functions",
+    "syntax-dynamic-import",
+    "transform-async-to-generator",
+    "transform-regenerator",
+    "transform-runtime",
     ["import", {
       "libraryName": "antd",
     "libraryDirectory": "lib",

@@ -39,10 +39,6 @@ class TopBar extends React.Component {
     );
     return (
       <View className={styles.TopBarContainer}>
-        <View> 
-          <a href="http://feedback.hsohealth.com" target="_blank" className={styles.changeButton}>
-          意见反馈</a>
-        </View>
         <Dropdown overlay={menu}>
           <div className={styles.user}>
             <Icon type="user" className={styles.icon} />

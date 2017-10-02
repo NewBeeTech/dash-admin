@@ -10,7 +10,9 @@ import * as URL from './URL';
 import userInfoStorage from '../UserInfoStorage';
 import { random_string } from '../Util';
 import NotificationCenter from '../../common/NotificationCenter';
-
+import { dispatch } from '../../store';
+import { push } from 'react-router-redux';
+import * as RoutingURL from '../../core/RoutingURL/RoutingURL';
 
 /**
  * 将Object转为url params string
@@ -39,7 +41,7 @@ export const GET = async (path: string, params = {}) => {
       headers: {
       },
       mode: 'cors',
-      // credentials: 'include',
+      credentials: 'include',
     });
     if (response.status >= 500 && response.status < 600) {
       NotificationCenter.NotificationCard(
@@ -50,6 +52,10 @@ export const GET = async (path: string, params = {}) => {
       );
     }
     const result = await response.json();
+    // 未登录
+    if (result.code === '004') {
+      dispatch(push(RoutingURL.Login()))
+    }
     return result;
   } catch (err) {
     return {
@@ -80,6 +86,10 @@ export const POSTJSON = async (path: string, json = {}) => {
       );
     }
     const result = await response.json();
+    // 未登录
+    if (result.code === '004') {
+      dispatch(push(RoutingURL.Login()))
+    }
     // console.log('postjson webservice result: ', result);
     return result;
   } catch (err) {

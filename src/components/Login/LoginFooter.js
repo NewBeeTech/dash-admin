@@ -12,7 +12,6 @@ const propTypes = {
 const LoginFooter = (props) => {
   return (
     <View className={ styles.LoginFooter }>
-      <Text className={styles.slogan}>{props.slogan}<a href="https://mail.mxhichina.com/">问题反馈</a></Text>
     </View>
   );
 };

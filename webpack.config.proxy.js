@@ -231,6 +231,16 @@ module.exports = {
         changeOrigin: true,
         target:  'http://120.27.12.128:80',
         secure: false
+      },
+      '/user/*': {
+        changeOrigin: true,
+        target:  'http://120.27.12.128:80',
+        secure: false
+      },
+      '/oss/*': {
+        changeOrigin: true,
+        target:  'http://120.27.12.128:80',
+        secure: false
       }
     },
     host: 'localhost',

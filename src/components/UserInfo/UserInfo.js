@@ -12,6 +12,7 @@ import { isDisabled } from '../../core/CommonFun/CoreState';
 import UploadComponents from '../../common/Upload/UploadComponents';
 import amumu from 'amumu';
 import { Form, Input, Select, Radio, Switch } from 'antd';
+import Gallery from '../../common/CommonImage/Gallery'
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -82,7 +83,21 @@ class UserInfo extends React.Component {
     if(imgs) {
       const imgArr = imgs.split(',');
       imgArr.map((item) => {
-        views.push(<div className={Contentstyles.userPhoto}><img src={item} width="100%" heigth="100%" /></div>)
+        views.push(<div className={Contentstyles.userPhoto}>
+          <Gallery
+            device="pc"
+            width="100"
+            height="100"
+            imageSource={[{
+              src: item,
+              thumbnail: item,
+              thumbnailWidth: 100,
+              thumbnailHeight: 100,
+              caption: '点击图片进行旋转',
+            }]}
+          />
+          {/* <img src={item} width="100%" heigth="100%" /> */}
+        </div>)
       });
     }
     return views;
@@ -150,7 +165,7 @@ class UserInfo extends React.Component {
                 <td>微信号：{this.props.userInfo.get('wxAccount')}</td>
                 <td>微信昵称：{this.props.userInfo.get('wxName')}</td>
                 <td>微信头像：
-                    <img src={this.props.userInfo.get('wxPortrait')} 
+                    <img src={this.props.userInfo.get('wxPortrait')}
                        style={{ width: '60px', height: '60px', border: '1px solid #ccc', borderRadius: '60px' }}
                     />
                 </td>
@@ -161,7 +176,7 @@ class UserInfo extends React.Component {
                 <td>收到橄榄枝的数量：{this.props.userInfo.get('likeCount')}</td>
               </tr></tbody>
             </table>
-            {this.props.userInfo.get('sex') == 1 ? 
+            {this.props.userInfo.get('sex') == 1 ?
             <table style={{ marginTop: '20px' }}>
               <tbody>
                 <tr>

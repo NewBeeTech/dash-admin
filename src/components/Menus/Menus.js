@@ -75,12 +75,12 @@ class Menus extends React.PureComponent {
                       </Item>
                 </SubMenu>
                 <SubMenu
-                  key="报名活动管理"
+                  key="订单管理"
                   title={<div className={styles.subTitle}>
                   报名活动管理</div>}
                 >
                       <Item
-                        key="报名活动管理"
+                        key="订单管理"
                       >
                         • 报名活动管理
                       </Item>

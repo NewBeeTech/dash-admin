@@ -7,6 +7,7 @@ const mapStateToProps = (state) => ({
   errMsg: state.DashReducer.get('errMsg'),
   isFetching: state.DashReducer.get('isFetching'),
   dashInfo: state.DashReducer.get('dashInfo'),
+  status: state.DashReducer.get('status'),
 });
 
 export default connect(mapStateToProps)(DashInfo);

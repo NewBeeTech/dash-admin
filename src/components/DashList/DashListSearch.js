@@ -28,6 +28,7 @@ class DashListSearch extends React.Component {
         id: dataSource1.get('id'),
         name: dataSource1.get('name'),
         status: dataSource1.get('status'),
+        address: dataSource1.get('address'),
       });
     }
     return false;
@@ -76,6 +77,24 @@ class DashListSearch extends React.Component {
               })(
               <Input
                 placeholder="标题"
+              />
+            )}
+            </FormItem>
+          </Col>
+          <Col span="8" >
+            <FormItem
+              label="活动地点："
+              {...formItemLayout}
+            >
+            {getFieldDecorator('address', {
+                initialValue: this.props.searchData.get('address'),
+                onChange: (e) => {
+                  this.props.changeAction(
+                  'DashReducer/searchData/address', e.target.value);
+                },
+              })(
+              <Input
+                placeholder="活动地点"
               />
             )}
             </FormItem>

@@ -24,6 +24,7 @@ class DashInfo extends React.Component {
   static propTypes = {
     isFetching: PropTypes.bool.isRequired,
     errMsg: PropTypes.string.isRequired,
+    status: PropTypes.number,
     dashList: PropTypes.instanceOf(Immutable.Map),
     getValue: PropTypes.func,
     dispatch: PropTypes.func,
@@ -117,6 +118,7 @@ class DashInfo extends React.Component {
             id={this.props.params.id}
             form={this.props.form}
             editing={this.props.location.query.editing}
+            status={this.props.status}
             goBackAction={this._goBackAction(this.props.dispatch)}
             goUpdateAction={this._goUpdateAction(this.props.dispatch)}
             updateAction={this._createAction(this.props.dispatch)}

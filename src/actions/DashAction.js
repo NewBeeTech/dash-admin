@@ -62,10 +62,11 @@ export const addDash = (params: Object) => (dispatch) => {
 // 修改dash
 export const UPDATE_DASH = 'UPDATE_DASH';
 export const updateDash = (params: Object) => (dispatch) => {
-  const boyNum = params.boyNum;
-  const girlNum = params.girlNum;
-  params.sexRate = `${boyNum}:${girlNum}`;
-  console.log(params);
+  if(params.boyNum) {
+    const boyNum = params.boyNum;
+    const girlNum = params.girlNum;
+    params.sexRate = `${boyNum}:${girlNum}`;
+  }
   const result = GET(URL.updateDashPath, params);
   AsyncFetchHandler(
     UPDATE_DASH,
@@ -81,6 +82,7 @@ export const updateDash = (params: Object) => (dispatch) => {
         2,
       );
       dispatch(push(RoutingURL.DashList()));
+      dispatch(getDashList({pageNum: params.pageNum, pageSize: params.pageSize }));
     } else {
       NotificationCenter.NotificationCard(
         '修改失败',

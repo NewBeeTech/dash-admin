@@ -94,8 +94,11 @@ const defaultState = Immutable.Map({
   searchData: Immutable.Map({
     id: '',
     sex: '',
+    wxName: '',
+    phone: '',
+    tags: '',
     pageNum: 1,
-    pageSize: 10,
+    pageSize: 20,
   })
 });
 
@@ -107,13 +110,13 @@ const getUserListHandler = new ActionHandler.handleAction(UserAction.GET_USERLIS
       .setIn(['searchData', 'pageNum'], Immutable.fromJS(action.data.pageNumber))
       .set('isFetching', false).set('errMsg', '');
   });
-  
+
 const getUserInfoHandler = new ActionHandler.handleAction(UserAction.GET_USERINFO)
     .success((state, action) => {
       return state.set('userInfo', Immutable.fromJS(action.data))
         .set('isFetching', false).set('errMsg', '');
     });
-    
+
 const updateUserHandler = new ActionHandler.handleAction(UserAction.UPDATE_USER);
 
 

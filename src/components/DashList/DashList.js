@@ -39,6 +39,10 @@ class DashList extends React.Component {
     this.props.dispatch(DashAction.getDashList(localParams));
     this.props.changeAction('DashReducer/searchData/pageNum', current);
   };
+  _goUpdateAction = (dispatch) => (params) => {
+    const localParams = Object.assign(params, { pageNum: this.props.searchData.get('pageNum'), pageSize: this.props.searchData.get('pageSize') });
+    dispatch(DashAction.updateDash(localParams));
+  }
   render() {
     return (
       <View className={ styles.contentList } >
@@ -58,6 +62,7 @@ class DashList extends React.Component {
              <DashListTable
                  dataSource={this.props.dashList.get('dashListData')}
                  goDeleteAction={this._goDeleteAction(this.props.dispatch)}
+                 goUpdateAction={this._goUpdateAction(this.props.dispatch)}
                  dispatch={this.props.dispatch}
              />
           </View>

@@ -36,6 +36,10 @@ class UserListTable extends React.Component {
       dataIndex: 'wxPortrait',
       key: 'wxPortrait',
     }, {
+      title: '手机号',
+      dataIndex: 'phone',
+      key: 'phone',
+    }, {
       title: '年龄',
       dataIndex: 'age',
       key: 'age',
@@ -44,13 +48,13 @@ class UserListTable extends React.Component {
       dataIndex: 'sex',
       key: 'sex',
     }, {
-      title: '收到橄榄枝的数量',
+      title: '橄榄枝数',
       dataIndex: 'likeCount',
       key: 'likeCount',
-    },{
-      title: '手机号',
-      dataIndex: 'phone',
-      key: 'phone',
+    }, {
+      title: '标签',
+      dataIndex: 'tags',
+      key: 'tags',
     }, {
       title: '状态',
       dataIndex: 'status',
@@ -73,6 +77,7 @@ class UserListTable extends React.Component {
         status: data.get('status') ? '正常' : '屏蔽',
         likeCount: data.get('likeCount'),
         phone: data.get('phone'),
+        tags: data.get('tags'),
         operation: (
           <View>
             <a

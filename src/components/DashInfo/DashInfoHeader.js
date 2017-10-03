@@ -34,13 +34,17 @@ const DashInfoHeader = (props) => {
     );
   };
   const _rednerBtn = () => {
-    if (props.id) {
-      if (props.editing) {
-        return confirmButton(handleSubmit)(props.updateAction);
+    if(props.status == 0) {
+      if (props.id) {
+          if (props.editing) {
+            return confirmButton(handleSubmit)(props.updateAction);
+          }
+          return modifyButton(props.goUpdateAction)(props.id);
       }
-      return modifyButton(props.goUpdateAction)(props.id);
-    }
-    return SubmitButton(handleSubmit)(props.createAction);
+      return SubmitButton(handleSubmit)(props.createAction);
+   }
+
+   return false;
   };
   const _returnBtn = () => {
     if (props.id && !props.editing) {
@@ -72,6 +76,7 @@ DashInfoHeader.propTypes = {
   goUpdateAction: PropTypes.func.isRequired,
   updateAction: PropTypes.func.isRequired,
   createAction: PropTypes.func.isRequired,
+  status: PropTypes.number,
 };
 
 export default DashInfoHeader;

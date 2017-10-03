@@ -43,6 +43,7 @@ const defaultState = Immutable.Map({
     //   total: 10,
     //   pageSize: 1,
   }),
+  status: 0,
   dashInfo: Immutable.Map({
     // id: 2,
     // type: 1, // 活动类型
@@ -70,13 +71,13 @@ const defaultState = Immutable.Map({
     //     wxName: '名字1',
     //     sex: 1,
     //     id: 1,
-    //     wxPortrait: 'https://img.shaka.hsohealth.com/avatar/20170301_free.png',      
+    //     wxPortrait: 'https://img.shaka.hsohealth.com/avatar/20170301_free.png',
     //   }),
     //   Immutable.Map({
     //     wxName: '名字1',
     //     sex: 2,
     //     id: 2,
-    //     wxPortrait: 'https://img.shaka.hsohealth.com/avatar/20170301_free.png',        
+    //     wxPortrait: 'https://img.shaka.hsohealth.com/avatar/20170301_free.png',
     //   }),
     // ]),
     // collectUseList: Immutable.List([
@@ -84,13 +85,13 @@ const defaultState = Immutable.Map({
     //     wxName: '名字1',
     //     sex: 2,
     //     id: 3,
-    //     wxPortrait: 'https://img.shaka.hsohealth.com/avatar/20170301_free.png',         
+    //     wxPortrait: 'https://img.shaka.hsohealth.com/avatar/20170301_free.png',
     //   }),
     //   Immutable.Map({
     //     wxName: '名字1',
     //     sex: 2,
     //     id: 4,
-    //     wxPortrait: 'https://img.shaka.hsohealth.com/avatar/20170301_free.png',          
+    //     wxPortrait: 'https://img.shaka.hsohealth.com/avatar/20170301_free.png',
     //   }),
     // ])
   }),
@@ -98,6 +99,7 @@ const defaultState = Immutable.Map({
     id: '',
     name: '',
     status: '',
+    address: '',
     pageNum: 1,
     pageSize: 10,
   }),
@@ -138,7 +140,7 @@ const getDashListHandler = new ActionHandler.handleAction(DashAction.GET_DASHLIS
       .setIn(['searchData', 'pageNum'], Immutable.fromJS(action.data.pageNumber))
       .set('isFetching', false).set('errMsg', '');
   });
-  
+
 const getDashInfoHandler = new ActionHandler.handleAction(DashAction.GET_DASHINFO)
     .success((state, action) => {
       // 拼接数据
@@ -171,10 +173,12 @@ const getDashInfoHandler = new ActionHandler.handleAction(DashAction.GET_DASHINF
           collectUseList: data.collectUseList,
         };
       }
+      console.log(action.data.status);
       return state.set('dashInfo', Immutable.fromJS(dashInfo))
+        .set('status', action.data.status)
         .set('isFetching', false).set('errMsg', '');
     });
-    
+
 const addDashHandler = new ActionHandler.handleAction(DashAction.ADD_DASH);
 const updateDashHandler = new ActionHandler.handleAction(DashAction.UPDATE_DASH);
 const deleteDashHandler = new ActionHandler.handleAction(DashAction.DELETE_DASH);
@@ -187,7 +191,7 @@ const getActivityListHandler = new ActionHandler.handleAction(DashAction.GET_ACT
       .setIn(['searchData1', 'pageNum'], Immutable.fromJS(action.data.pageNumber))
       .set('isFetching', false).set('errMsg', '');
   });
-  
+
 
 
 export default ActionHandler.handleActions(

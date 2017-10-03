@@ -14,6 +14,7 @@ const propTypes = {
   dataSource: PropTypes.instanceOf(Immutable.List),
   dispatch: PropTypes.func,
   goDeleteAction: PropTypes.func,
+  goUpdateAction: PropTypes.func,
 };
 
 class DashListTable extends React.Component {
@@ -90,7 +91,14 @@ class DashListTable extends React.Component {
               }}
             >
               查看
-            </a> | {data.get('status') ? <div /> : <a
+            </a> | {data.get('status') ? <a
+              onClick={(e) => {
+                e.preventDefault();
+                this.props.goUpdateAction({ id: data.get('id'), status: 0 });
+              }}
+            >
+              下架
+            </a> : <a
               onClick={(e) => {
                 e.preventDefault();
                 this.props.dispatch(push(RoutingURL.DashInfo(data.get('id'), true)));

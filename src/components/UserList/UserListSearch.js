@@ -27,6 +27,9 @@ class UserListSearch extends React.Component {
       return this.props.form.setFieldsValue({
         id: dataSource1.get('id'),
         sex: dataSource1.get('sex'),
+        wxName: dataSource1.get('wxName'),
+        phone: dataSource1.get('phone'),
+        tags: dataSource1.get('tags'),
       });
     }
     return false;
@@ -57,6 +60,60 @@ class UserListSearch extends React.Component {
                 })(
                 <Input
                   placeholder="ID"
+                />
+              )}
+            </FormItem>
+          </Col>
+          <Col span="8" >
+            <FormItem
+              label="微信昵称："
+              {...formItemLayout}
+            >
+              {getFieldDecorator('wxName', {
+                  initialValue: this.props.searchData.get('wxName'),
+                  onChange: (e) => {
+                    this.props.changeAction(
+                    'UserReducer/searchData/wxName', e.target.value);
+                  },
+                })(
+                <Input
+                  placeholder="微信昵称"
+                />
+              )}
+            </FormItem>
+          </Col>
+          <Col span="8" >
+            <FormItem
+              label="手机号："
+              {...formItemLayout}
+            >
+              {getFieldDecorator('phone', {
+                  initialValue: this.props.searchData.get('phone'),
+                  onChange: (e) => {
+                    this.props.changeAction(
+                    'UserReducer/searchData/phone', e.target.value);
+                  },
+                })(
+                <Input
+                  placeholder="手机号"
+                />
+              )}
+            </FormItem>
+          </Col>
+          <Col span="8" >
+            <FormItem
+              label="用户标签："
+              {...formItemLayout}
+            >
+              {getFieldDecorator('tags', {
+                  initialValue: this.props.searchData.get('tags'),
+                  onChange: (e) => {
+                    this.props.changeAction(
+                    'UserReducer/searchData/tags', e.target.value);
+                  },
+                })(
+                <Input
+                  placeholder="用户标签"
                 />
               )}
             </FormItem>

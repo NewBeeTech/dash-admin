@@ -103,7 +103,7 @@ class DashInfo extends React.Component {
     }
     return views;
   }
-  
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
@@ -256,7 +256,7 @@ class DashInfo extends React.Component {
                 label="活动时间："
                 {...formItemLayout}
               >
-              <RangePicker
+            <RangePicker
                 showTime
                 format="YYYY-MM-DD HH:mm:ss"
                 style={{ width: '300px' }}
@@ -264,10 +264,10 @@ class DashInfo extends React.Component {
                 value={
                   [this.props.dashInfo.get('startTime') ?
                    moment(this.props.dashInfo.get('startTime'),
-                    'YYYY-MM-DD') : undefined,
+                    'YYYY-MM-DD HH:mm:ss') : undefined,
                     this.props.dashInfo.get('endTime') ?
                     moment(this.props.dashInfo.get('endTime'),
-                     'YYYY-MM-DD') : undefined,
+                     'YYYY-MM-DD HH:mm:ss') : undefined,
                   ]}
                 onChange={(date, dateString) => {
                   this.props.changeAction(
@@ -281,7 +281,7 @@ class DashInfo extends React.Component {
                 }}
               />
               </FormItem>
-              
+
               <FormItem
                 label="报名时间："
                 {...formItemLayout}
@@ -294,10 +294,10 @@ class DashInfo extends React.Component {
                 value={
                   [this.props.dashInfo.get('signupStartTime') ?
                    moment(this.props.dashInfo.get('signupStartTime'),
-                    'YYYY-MM-DD') : undefined,
+                    'YYYY-MM-DD HH:mm:ss') : undefined,
                     this.props.dashInfo.get('signupEndTime') ?
                     moment(this.props.dashInfo.get('signupEndTime'),
-                     'YYYY-MM-DD') : undefined,
+                     'YYYY-MM-DD HH:mm:ss') : undefined,
                   ]}
                 onChange={(date, dateString) => {
                   this.props.changeAction(
@@ -311,7 +311,7 @@ class DashInfo extends React.Component {
                 }}
               />
               </FormItem>
-              
+
               <FormItem
                 {...formItemLayout}
                 label="活动人数（男）"
@@ -538,7 +538,7 @@ class DashInfo extends React.Component {
               </FormItem>
             </View>
             {/* 报名人数 */}
-            {this.props.params.id ? 
+            {this.props.params.id ?
               <div>
               <View className={ Contentstyles.formHeader } >
                 报名人列表
@@ -558,7 +558,7 @@ class DashInfo extends React.Component {
                    </div>
               </View></div> : <div />
             }
-            
+
           </Form>
         </View>
       </View>

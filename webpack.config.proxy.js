@@ -226,10 +226,10 @@ module.exports = {
         changeOrigin: true,
         target:  'http://120.27.12.128:80',
         secure: false
-      },
+      }
     },
     host: 'localhost',
-    port: '8080',
+    port: '80',
     contentBase: path.join(__dirname), // boolean | string | array, static file location
     compress: true, // enable gzip compression
     historyApiFallback: true, // true for index.html upon 404, object for multiple paths

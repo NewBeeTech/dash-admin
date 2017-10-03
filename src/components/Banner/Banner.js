@@ -76,7 +76,7 @@ class Banner extends React.Component {
   componentWillUnmount() {
     this.clearBannerInfo();
   }
-  
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
@@ -226,10 +226,10 @@ class Banner extends React.Component {
                 value={
                   [this.props.bannerInfo.get('startTime') ?
                    moment(this.props.bannerInfo.get('startTime'),
-                    'YYYY-MM-DD') : undefined,
+                    'YYYY-MM-DD HH:mm:ss') : undefined,
                     this.props.bannerInfo.get('endTime') ?
                     moment(this.props.bannerInfo.get('endTime'),
-                     'YYYY-MM-DD') : undefined,
+                     'YYYY-MM-DD HH:mm:ss') : undefined,
                   ]}
                 onChange={(date, dateString) => {
                   this.props.changeAction(

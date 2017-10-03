@@ -46,6 +46,10 @@ class ActivityListTable extends React.Component {
       dataIndex: 'orderId',
       key: 'orderId',
     }, {
+      title: '更新时间',
+      dataIndex: 'updateTime',
+      key: 'updateTime',
+    }, {
       title: '用户ID',
       dataIndex: 'userId',
       key: 'userId',
@@ -53,6 +57,10 @@ class ActivityListTable extends React.Component {
       title: '性别',
       dataIndex: 'var1',
       key: 'var1',
+    }, {
+      title: '备注',
+      dataIndex: 'var2',
+      key: 'var2',
     }, {
       title: '状态',
       dataIndex: 'status',
@@ -88,11 +96,14 @@ class ActivityListTable extends React.Component {
         activityName: data.get('activityName'),
         activityTime: `${data.get('startTime')}-${data.get('endTime')}`,
         orderId: data.get('orderId'),
+        updateTime: data.get('updateTime'),
         userId: data.get('userId'),
         var1: sex ? (sex == 1 ? '男' : '女') : '未知',
+        var2: data.get('var2'),
         status: this.getStatus(data.get('status')),
         operation: (
           <View>
+            { data.get('status') == 1 &&
             <Popconfirm
               title="确认要拒绝?"
               okText="确认拒绝"
@@ -106,6 +117,23 @@ class ActivityListTable extends React.Component {
                 标记问题
               </a>
             </Popconfirm>
+            }
+            { data.get('status') == 2 && 
+            <Popconfirm
+              title="确认要恢复?"
+              okText="确认恢复"
+              cancelText="取消"
+              onConfirm={() => this.props.changeStatusAction({id: data.get('id'), status: 1 })}
+            >
+              <a
+                style={{ color: '#40a5ed' }}
+                href="#"
+              >
+                恢复正常
+              </a>
+            </Popconfirm>
+            }
+
           </View>
         ),
       });

@@ -98,13 +98,95 @@ class DashInfo extends React.Component {
                   <img src={item.get('wxPortrait')} width="100%" height="100%"/>
               </div>
               <div>{item.get('wxName')}({item.get('sex') ? (item.get('sex') == 1 ? '男' : '女') : '未知'})</div>
+              <div>{item.get('pingxxId')}</div>
+              {/* <div>{item.get('')}</div> */}
           </div>
         );
       })
     }
     return views;
   }
-
+  changeActivitySignupStatus = (params) => {
+    this.props.dispatch(
+      DashAction.changeActivitySignupStatus(params));
+  }
+  renderBaomingList(peoples) {
+    const views = [];
+    if (peoples) {
+      peoples.map((item, key) => {
+        const status = item.get('status');
+        let statusDesc = '';
+        if (status === 1) {
+          statusDesc = '支付成功';
+        } else if (status === 4) {
+          statusDesc = '活动成功';
+        } else if (status === 5) {
+          statusDesc = '活动失败';
+        }
+        views.push(
+          <div style={{ display: 'flex', flexDirection: 'row', padding: '5px' }}>
+            <div style={{ width: '60px', height: '60px', border: '1px solid #ccc', marginBottom: '10px'}}>
+                <img src={item.get('wxPortrait')} width="100%" height="100%"/>
+            </div>
+            <div style={{ margin: '0 5px' }}>
+              <div>{item.get('wxName')}({item.get('sex') ? (item.get('sex') == 1 ? '男' : '女') : '未知'})</div>
+              <div>pingxxId：{item.get('pingxxId')}</div>
+              <div>状态：{statusDesc}</div>
+            </div>
+            {status === 1 &&
+              <div style={{ margin: '0 5px', color: '#1372D8' }} onClick={() => {
+                this.changeActivitySignupStatus({
+                  activityId: this.props.params.id,
+                  status: 4,
+                  userId: item.get('id'),
+                  var2: '活动成功',
+                });
+              }}>
+                标记活动成功
+              </div>
+            }
+            {status === 1 &&
+              <div style={{ margin: '0 5px', color: 'rgb(255, 115, 22)' }} onClick={() => {
+                this.changeActivitySignupStatus({
+                  activityId: this.props.params.id,
+                  status: 5,
+                  userId: item.get('id'),
+                  var2: '活动失败',
+                });
+              }}>
+                标记活动失败
+              </div>
+            }
+            {status === 5 &&
+              <div style={{ margin: '0 5px', color: '#1372D8' }}  onClick={() => {
+                this.changeActivitySignupStatus({
+                  activityId: this.props.params.id,
+                  status: 4,
+                  userId: item.get('id'),
+                  var2: '活动成功',
+                });
+              }}>
+                标记活动成功
+              </div>
+            }
+            {status === 4 &&
+              <div style={{ margin: '0 5px', color: 'rgb(255, 115, 22)' }}  onClick={() => {
+                this.changeActivitySignupStatus({
+                  activityId: this.props.params.id,
+                  status: 5,
+                  userId: item.get('id'),
+                  var2: '活动失败',
+                });
+              }}>
+                标记活动失败
+              </div>
+            }
+          </div>
+        )
+      });
+    }
+    return views;
+  }
   render() {
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
@@ -546,9 +628,7 @@ class DashInfo extends React.Component {
                 报名人列表
               </View>
               <View className={ Contentstyles.formContent } >
-                   <div style={{ display: 'flex' }}>
-                      {this.showSignupPeople(this.props.dashInfo.get('signupPeople'))}
-                   </div>
+                {this.renderBaomingList(this.props.dashInfo.get('signupPeople'))}
               </View>
               {/* 关注人数 */}
               <View className={ Contentstyles.formHeader } >

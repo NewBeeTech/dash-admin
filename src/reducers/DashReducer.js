@@ -169,7 +169,7 @@ const getDashInfoHandler = new ActionHandler.handleAction(DashAction.GET_DASHINF
           originUserDesc: data.originUserDesc,
           originUserName: data.originUserName,
           originUserPortrait: data.originUserPortrait,
-          signupPeople: data.signupPeople,
+          signupPeople: data.signUseList,
           collectUseList: data.collectUseList,
         };
       }

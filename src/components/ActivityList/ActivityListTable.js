@@ -105,8 +105,8 @@ class ActivityListTable extends React.Component {
           <View>
             { data.get('status') == 1 &&
             <Popconfirm
-              title="确认要拒绝?"
-              okText="确认拒绝"
+              title="确认要标记问题?"
+              okText="确认标记"
               cancelText="取消"
               onConfirm={() => this.props.changeStatusAction({id: data.get('id'), status: 2 })}
             >
@@ -118,7 +118,7 @@ class ActivityListTable extends React.Component {
               </a>
             </Popconfirm>
             }
-            { data.get('status') == 2 && 
+            { data.get('status') == 2 &&
             <Popconfirm
               title="确认要恢复?"
               okText="确认恢复"

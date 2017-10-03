@@ -83,3 +83,5 @@ export const updateUserPath: string = `${rootURL}admin/user/addOrUpdate`;
 export const getActivityListPath: string = `${rootURL}admin/activitySignup/list`;
 // 运营拒绝
 export const changeActivityStatusPath: string = `${rootURL}admin/activitySignup/update`;
+// 修改报名活动状态
+export const changeActivitySignupStatusPath = `${rootURL}admin/activitySignup/updateStatus`;

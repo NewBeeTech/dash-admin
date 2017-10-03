@@ -148,12 +148,41 @@ export const changeStatus = (params: Object) => (dispatch) => {
   result.then(data => {
     if (data.code === '001') {
       NotificationCenter.NotificationCard(
-        '已拒绝',
+        '状态已更改',
         '',
         'success',
         2,
       );
       dispatch(getActivityList({pageNum: params.pageNum, pageSize: params.pageSize }));
+    } else {
+      NotificationCenter.NotificationCard(
+        '操作失败',
+        data.message,
+        'error',
+        3,
+      );
+    }
+  });
+};
+
+// 修改报名活动状态
+export const CHANGE_ACTIVITYSIGNUP_STATUS = 'CHANGE_ACTIVITYSIGNUP_STATUS';
+export const changeActivitySignupStatus = (params: Object) => (dispatch) => {
+  const result = GET(URL.changeActivitySignupStatusPath, params);
+  AsyncFetchHandler(
+    CHANGE_ACTIVITYSIGNUP_STATUS,
+    result,
+    dispatch
+  );
+  result.then(data => {
+    if (data.code === '001') {
+      NotificationCenter.NotificationCard(
+        '状态已更改',
+        '',
+        'success',
+        2,
+      );
+      dispatch(getDashInfo({ activityId: params.activityId }));
     } else {
       NotificationCenter.NotificationCard(
         '操作失败',

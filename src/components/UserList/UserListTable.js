@@ -28,10 +28,6 @@ class UserListTable extends React.Component {
       dataIndex: 'wxName',
       key: 'wxName',
     }, {
-      title: '微信号',
-      dataIndex: 'wxAccount',
-      key: 'wxAccount',
-    }, {
       title: '用户微信头像',
       dataIndex: 'wxPortrait',
       key: 'wxPortrait',
@@ -71,7 +67,6 @@ class UserListTable extends React.Component {
         id: data.get('id'),
         wxName: data.get('wxName'),
         wxPortrait: this.showImg(data.get('wxPortrait')),
-        wxAccount: data.get('wxAccount'),
         age: data.get('age'),
         sex: sex ? (sex == 1 ? '男' : '女') : '未知',
         status: data.get('status') ? '正常' : '屏蔽',

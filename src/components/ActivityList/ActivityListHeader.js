@@ -11,7 +11,7 @@ const ActivityListHeader = (props) => {
   return (
     <View className={ styles.contentHeader }>
       <View className={ styles.contentText }>
-        报名活动列表
+        订单列表
       </View>
     </View>
   );

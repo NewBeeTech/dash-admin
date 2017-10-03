@@ -50,21 +50,19 @@ class LoginForm extends React.PureComponent {
           )}
           </FormItem>
           <FormItem wrapperCol={{ span: 15, offset: 5 }} >
-            <label className="ant-checkbox-inline" style={{ marginTop: '-1vh' }} >
-              <Checkbox />保持登录状态
-            </label>
-          </FormItem>
-          <FormItem wrapperCol={{ span: 15, offset: 5 }} >
             <Button
               type="primary"
               htmlType="submit"
               className={styles.loginButton}
               htmlType="submit"
+              style={{
+                marginTop: '20px',
+              }}
             >
               登录
             </Button>
           </FormItem>
-          <FormItem wrapperCol={{ span: 15, offset: 5 }} className={styles.forget} >
+          <FormItem wrapperCol={{ span: 15, offset: 5 }} className={styles.forget} style={{ marginTop: '10px'}}>
             忘记密码?请直接联系后台工作人员
           </FormItem>
         </Form>

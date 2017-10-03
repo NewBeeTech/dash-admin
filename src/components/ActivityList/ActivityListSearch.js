@@ -66,6 +66,38 @@ class ActivityListSearch extends React.Component {
               )}
             </FormItem>
           </Col>
+          <Col span="8" >
+            <FormItem
+              label="活动ID："
+              {...formItemLayout}
+            >
+              {getFieldDecorator('activityId', {
+                  initialValue: this.props.searchData1.get('activityId'),
+                  onChange: (e) => {
+                    this.props.changeAction(
+                    'DashReducer/searchData1/activityId', e.target.value);
+                  },
+                })(
+                  <Input />
+              )}
+            </FormItem>
+          </Col>
+          <Col span="8" >
+            <FormItem
+              label="活动名称："
+              {...formItemLayout}
+            >
+              {getFieldDecorator('activityName', {
+                  initialValue: this.props.searchData1.get('activityName'),
+                  onChange: (e) => {
+                    this.props.changeAction(
+                    'DashReducer/searchData1/activityName', e.target.value);
+                  },
+                })(
+                  <Input />
+              )}
+            </FormItem>
+          </Col>
         </Row>
         <Row style={{ marginTop: '10px' }} >
           <Col span="13" offset="10" style={{ textAlign: 'right' }} >

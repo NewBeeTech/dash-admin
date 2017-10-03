@@ -555,7 +555,7 @@ class DashInfo extends React.Component {
                 关注人列表
               </View>
               <View className={ Contentstyles.formContent } >
-                   <div style={{ display: 'flex' }}>
+                   <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                       {this.showSignupPeople(this.props.dashInfo.get('collectUseList'))}
                    </div>
               </View></div> : <div />

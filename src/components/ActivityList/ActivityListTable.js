@@ -26,6 +26,10 @@ class ActivityListTable extends React.Component {
       dataIndex: 'id',
       key: 'id',
     }, {
+      title: 'pingxxId',
+      dataIndex: 'pingxxId',
+      key: 'pingxxId',
+    }, {
       title: '活动ID',
       dataIndex: 'activityId',
       key: 'activityId',
@@ -64,7 +68,7 @@ class ActivityListTable extends React.Component {
       text = '成功';
     }
     if(status == 2) {
-      text = '运营拒绝';
+      text = '问题订单';
     }
     if(status == 3) {
       text = '用户取消';
@@ -79,6 +83,7 @@ class ActivityListTable extends React.Component {
       dataSource.push({
         key: index,
         id: data.get('id'),
+        pingxxId: data.get('pingxxId'),
         activityId: data.get('activityId'),
         activityName: data.get('activityName'),
         activityTime: `${data.get('startTime')}-${data.get('endTime')}`,
@@ -98,7 +103,7 @@ class ActivityListTable extends React.Component {
                 style={{ color: '#FF7316' }}
                 href="#"
               >
-                运营拒绝
+                标记问题
               </a>
             </Popconfirm>
           </View>

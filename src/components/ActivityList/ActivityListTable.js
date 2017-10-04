@@ -70,7 +70,7 @@ class ActivityListTable extends React.Component {
   getStatus(status) {
     let text = '';
     if(status == 0) {
-      text = '失败';
+      text = '未支付';
     }
     if(status == 1) {
       text = '成功';

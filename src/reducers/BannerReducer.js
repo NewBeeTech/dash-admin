@@ -10,40 +10,8 @@ const defaultState = Immutable.Map({
   isFetching: false,
   errMsg: '',
   bannerList: Immutable.List([
-    Immutable.Map({
-      id: 1,
-      img: 'https://img.shaka.hsohealth.com/avatar/20170301_free.png',
-      title: '标题1',
-      secondTitle: 'dsf',
-      url: 'http://www.baidu.com',
-      startTime: '',
-      endTime: '',
-      createTime: '2017-09-20',
-      status: 0,
-    }),
-    Immutable.Map({
-      id: 2,
-      img: 'https://img.shaka.hsohealth.com/avatar/20170301_free.png',
-      title: '标题2',
-      secondTitle: 'dsf',
-      url: 'http://www.baidu.com',
-      createTime: '2017-09-20',
-      startTime: '',
-      endTime: '',
-      status: 1,
-    }),
   ]),
   bannerInfo: Immutable.Map({
-    id: 1,
-    img: 'https://img.shaka.hsohealth.com/avatar/20170301_free.png',
-    title: '标题1',
-    secondTitle: 'dsf',
-    url: 'http://www.baidu.com',
-    startTime: '',
-    endTime: '',
-    status: 0,
-    type: 1,
-    sort: 0,
   }),
 });
 
@@ -52,13 +20,13 @@ const getBannerListHandler = new ActionHandler.handleAction(BannerAction.GET_BAN
     return state.set('bannerList', Immutable.fromJS(action.data))
       .set('isFetching', false).set('errMsg', '');
   });
-  
+
 const getBannerInfoHandler = new ActionHandler.handleAction(BannerAction.GET_BANNERINFO)
     .success((state, action) => {
       return state.set('bannerInfo', Immutable.fromJS(action.data))
         .set('isFetching', false).set('errMsg', '');
     });
-    
+
 const addBannerHandler = new ActionHandler.handleAction(BannerAction.ADD_BANNER);
 const updateBannerHandler = new ActionHandler.handleAction(BannerAction.UPDATE_BANNER);
 const deleteBannerHandler = new ActionHandler.handleAction(BannerAction.DELETE_BANNER);

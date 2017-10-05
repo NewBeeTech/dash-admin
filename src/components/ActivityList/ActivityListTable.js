@@ -83,6 +83,35 @@ class ActivityListTable extends React.Component {
     }
     return text;
   }
+  renderTuiKuan(data) {
+    const status = data.get('status');
+    const mark = data.get('var2');
+    if (mark && mark.indexOf('已退款') > -1) {
+    } else {
+      if (status == 2 || status == 3) {
+        return (
+          <Popconfirm
+            title="确认要标记为退款?"
+            okText="确认已退款"
+            cancelText="取消"
+            onConfirm={() => this.props.changeActivityTuiKuanStatus({
+              activityId: data.get('activityId'),
+              userId: data.get('userId'),
+              status: data.get('status'),
+              var2: '已退款'
+            })}
+          >
+            <a
+              style={{ color: '#40a5ed', margin: '0 10px' }}
+              href="#"
+            >
+              已退款
+            </a>
+          </Popconfirm>
+        )
+      }
+    }
+  }
   _renderDataSource(datas) {
     const dataSource = [];
     if(datas){
@@ -133,7 +162,7 @@ class ActivityListTable extends React.Component {
               </a>
             </Popconfirm>
             }
-
+            {this.renderTuiKuan(data)}
           </View>
         ),
       });

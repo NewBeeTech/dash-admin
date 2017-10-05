@@ -193,3 +193,32 @@ export const changeActivitySignupStatus = (params: Object) => (dispatch) => {
     }
   });
 };
+
+// 修改报名活动状态
+export const CHANGE_ACTIVITY_TUIKUAN_STATUS = 'CHANGE_ACTIVITYSIGNUP_STATUS';
+export const changeActivityTuiKuanStatus = (params: Object) => (dispatch) => {
+  const result = GET(URL.changeActivitySignupStatusPath, params);
+  AsyncFetchHandler(
+    CHANGE_ACTIVITYSIGNUP_STATUS,
+    result,
+    dispatch
+  );
+  result.then(data => {
+    if (data.code === '001') {
+      NotificationCenter.NotificationCard(
+        '状态已更改',
+        '',
+        'success',
+        2,
+      );
+      dispatch(getActivityList({ pageNum: 1, pageSize: 10 }));
+    } else {
+      NotificationCenter.NotificationCard(
+        '操作失败',
+        data.message,
+        'error',
+        3,
+      );
+    }
+  });
+};

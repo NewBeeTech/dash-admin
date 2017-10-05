@@ -27,18 +27,6 @@ class BannerListTable extends React.Component {
       dataIndex: 'id',
       key: 'id',
     }, {
-      title: '标题',
-      dataIndex: 'title',
-      key: 'title',
-    }, {
-      title: '副标题',
-      dataIndex: 'secondTitle',
-      key: 'secondTitle',
-    }, {
-      title: '地址',
-      dataIndex: 'url',
-      key: 'url',
-    }, {
       title: '图片',
       dataIndex: 'img',
       key: 'img',
@@ -67,14 +55,11 @@ class BannerListTable extends React.Component {
   _renderDataSource(datas) {
     const dataSource = [];
     if(datas) {
-      
+
     datas.forEach((data, index) => {
       dataSource.push({
         key: index,
         id: data.get('id'),
-        title: data.get('title'),
-        secondTitle: data.get('secondTitle'),
-        url: data.get('url'),
         sort: data.get('sort'),
         img: this.showImg(data.get('img')),
         status: data.get('status') ? '上架' : '下架',

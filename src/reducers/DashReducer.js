@@ -171,6 +171,7 @@ const getDashInfoHandler = new ActionHandler.handleAction(DashAction.GET_DASHINF
           originUserPortrait: data.originUserPortrait,
           signupPeople: data.signUseList,
           collectUseList: data.collectUseList,
+          address: data.address,
         };
       }
       console.log(action.data.status);

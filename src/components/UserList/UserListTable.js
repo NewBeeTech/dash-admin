@@ -24,11 +24,11 @@ class UserListTable extends React.Component {
       dataIndex: 'id',
       key: 'id',
     }, {
-      title: '用户微信昵称',
+      title: '昵称',
       dataIndex: 'wxName',
       key: 'wxName',
     }, {
-      title: '用户微信头像',
+      title: '头像',
       dataIndex: 'wxPortrait',
       key: 'wxPortrait',
     }, {

@@ -107,7 +107,7 @@ class Banner extends React.Component {
               基本信息
             </View>
             <View className={ Contentstyles.formContent } >
-              <FormItem
+              {/* <FormItem
                 {...formItemLayout}
                 label="标题"
                 hasFeedback
@@ -129,8 +129,8 @@ class Banner extends React.Component {
                     placeholder="标题"
                   />
                 )}
-              </FormItem>
-              <FormItem
+              </FormItem> */}
+              {/* <FormItem
                 {...formItemLayout}
                 label="副标题"
                 hasFeedback
@@ -152,8 +152,8 @@ class Banner extends React.Component {
                     placeholder="副标题"
                   />
                 )}
-              </FormItem>
-              <FormItem
+              </FormItem> */}
+              {/* <FormItem
                 {...formItemLayout}
                 label="跳转地址"
                 hasFeedback
@@ -172,7 +172,7 @@ class Banner extends React.Component {
                     placeholder="跳转地址"
                   />
                 )}
-              </FormItem>
+              </FormItem> */}
               <FormItem
                 {...formItemLayout}
                 label="状态"

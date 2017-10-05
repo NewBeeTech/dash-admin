@@ -302,7 +302,7 @@ class DashInfo extends React.Component {
               >
                 {
                   this.isDisabled() ?
-                  <text>{this.props.dashInfo.get('status') ? '上线' : '下线'}</text> :
+                  <text>{this.props.dashInfo.get('status') ? '上架' : '下架'}</text> :
                   getFieldDecorator('status', {
                     initialValue: this.props.dashInfo.get('status'),
                     onChange: (e) => {

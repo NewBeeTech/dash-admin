@@ -18,6 +18,22 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
 
+function getIncomeDesc(income) {
+  if (income === 1) {
+    return '5万以下';
+  } else if (income === 2) {
+    return '5-10万';
+  } else if (income === 3) {
+    return '10-20万';
+  } else if (income === 4) {
+    return '20-40万';
+  } else if (income === 5) {
+    return '40-80万';
+  } else if (income === 6) {
+    return '80万以上';
+  }
+}
+
 @amumu.redux.ConnectStore
 @amumu.decorators.Loading('pc')
 class UserInfo extends React.Component {
@@ -158,13 +174,13 @@ class UserInfo extends React.Component {
             <table>
               <tbody><tr>
                 <td>用户ID：{this.props.userInfo.get('id')}</td>
-                <td>用户昵称{this.props.userInfo.get('nickName')}</td>
+                {/* <td>用户昵称{this.props.userInfo.get('nickName')}</td> */}
                 <td>手机号：{this.props.userInfo.get('phone')}</td>
               </tr>
               <tr>
-                <td>微信号：{this.props.userInfo.get('wxAccount')}</td>
+                {/* <td>微信号：{this.props.userInfo.get('wxAccount')}</td> */}
                 <td>微信昵称：{this.props.userInfo.get('wxName')}</td>
-                <td>微信头像：
+                <td>头像：
                     <img src={this.props.userInfo.get('wxPortrait')}
                        style={{ width: '60px', height: '60px', border: '1px solid #ccc', borderRadius: '60px' }}
                     />
@@ -186,7 +202,7 @@ class UserInfo extends React.Component {
                 </tr>
                 <tr>
                   <td>家乡：{this.props.userInfo.get('var3')}</td>
-                  <td>收入：{this.props.userInfo.get('income')}</td>
+                  <td>收入：{getIncomeDesc(this.props.userInfo.get('income'))}</td>
                   <td>特长：{this.props.userInfo.get('var4')}</td>
                 </tr>
               </tbody>

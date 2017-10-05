@@ -220,12 +220,6 @@ class UserInfo extends React.Component {
           <View className={ Contentstyles.userTags } >
             {this.showTagList(this.props.userInfo.get('tags'))}
           </View>
-          <View className={ Contentstyles.formHeader } >
-            相关活动展示
-          </View>
-          <View className={ Contentstyles.formContent } >
-            <UserDashList dataSource={this.props.userInfo.get('dashList')}/>
-          </View>
         </Form>
         </View>
       </View>

@@ -95,6 +95,7 @@ class ActivityListTable extends React.Component {
             okText="确认已退款"
             cancelText="取消"
             onConfirm={() => this.props.changeActivityTuiKuanStatus({
+              id: data.get('id'),
               activityId: data.get('activityId'),
               userId: data.get('userId'),
               status: data.get('status'),

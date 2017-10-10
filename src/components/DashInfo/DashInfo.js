@@ -140,6 +140,7 @@ class DashInfo extends React.Component {
                   status: 4,
                   userId: item.get('id'),
                   var2: '活动成功',
+                  pingxxId: item.get('pingxxId'),
                 });
               }}>
                 标记活动成功
@@ -152,6 +153,7 @@ class DashInfo extends React.Component {
                   status: 5,
                   userId: item.get('id'),
                   var2: '活动失败',
+                  pingxxId: item.get('pingxxId'),
                 });
               }}>
                 标记活动失败
@@ -164,6 +166,7 @@ class DashInfo extends React.Component {
                   status: 4,
                   userId: item.get('id'),
                   var2: '活动成功',
+                  pingxxId: item.get('pingxxId'),
                 });
               }}>
                 标记活动成功
@@ -176,6 +179,7 @@ class DashInfo extends React.Component {
                   status: 5,
                   userId: item.get('id'),
                   var2: '活动失败',
+                  pingxxId: item.get('pingxxId'),
                 });
               }}>
                 标记活动失败

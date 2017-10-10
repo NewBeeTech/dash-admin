@@ -199,7 +199,7 @@ class Banner extends React.Component {
               </FormItem>
               <FormItem
                 {...formItemLayout}
-                label="Banner图片"
+                label="Banner图片(750*375)"
                 hasFeedback
               >
                 <UploadComponents
@@ -213,35 +213,6 @@ class Banner extends React.Component {
                    }}
                    dir={`prescription/${moment().format('YYYY_MM')}`}
                  />
-              </FormItem>
-              <FormItem
-                label="时间："
-                {...formItemLayout}
-              >
-              <RangePicker
-                showTime
-                format="YYYY-MM-DD HH:mm:ss"
-                style={{ width: '300px' }}
-                disabled={this.isDisabled()}
-                value={
-                  [this.props.bannerInfo.get('startTime') ?
-                   moment(this.props.bannerInfo.get('startTime'),
-                    'YYYY-MM-DD HH:mm:ss') : undefined,
-                    this.props.bannerInfo.get('endTime') ?
-                    moment(this.props.bannerInfo.get('endTime'),
-                     'YYYY-MM-DD HH:mm:ss') : undefined,
-                  ]}
-                onChange={(date, dateString) => {
-                  this.props.changeAction(
-                     'BannerReducer/bannerInfo/startTime',
-                      dateString[0],
-                    );
-                  this.props.changeAction(
-                     'BannerReducer/bannerInfo/endTime',
-                     dateString[1],
-                    );
-                }}
-              />
               </FormItem>
               <FormItem
                 {...formItemLayout}

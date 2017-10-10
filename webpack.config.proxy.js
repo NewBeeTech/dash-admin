@@ -244,7 +244,7 @@ module.exports = {
       }
     },
     host: 'localhost',
-    port: '8000',
+    port: '7000',
     contentBase: path.join(__dirname), // boolean | string | array, static file location
     compress: true, // enable gzip compression
     historyApiFallback: true, // true for index.html upon 404, object for multiple paths

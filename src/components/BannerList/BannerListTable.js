@@ -39,14 +39,6 @@ class BannerListTable extends React.Component {
       dataIndex: 'sort',
       key: 'sort',
     }, {
-      title: '开始时间',
-      dataIndex: 'startTime',
-      key: 'startTime',
-    },{
-      title: '结束时间',
-      dataIndex: 'endTime',
-      key: 'endTime',
-    },{
       title: '创建时间',
       dataIndex: 'createTime',
       key: 'createTime',

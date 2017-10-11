@@ -24,20 +24,20 @@ export const showConfirm = (action, id) => {
   });
 };
 export const showCancel = (action, id, params) => {
-  if (!id) {
-    let i = 0;
-    Object.values(params).filter((value) => {
-      if (value) {
-        i++;
-      }
-      return i;
-    });
-    if (i) {
-      showConfirm(action, id);
-    } else {
+  // if (!id) {
+  //   let i = 0;
+  //   Object.values(params).filter((value) => {
+  //     if (value) {
+  //       i++;
+  //     }
+  //     return i;
+  //   });
+  //   if (i) {
+  //     showConfirm(action, id);
+  //   } else {
       action();
-    }
-  } else {
-    showConfirm(action, id);
-  }
+  //   }
+  // } else {
+  //   showConfirm(action, id);
+  // }
 };

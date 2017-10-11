@@ -50,7 +50,7 @@ const DashInfoHeader = (props) => {
     if (props.id && !props.editing) {
       return revertButton(props.goBackAction)();
     }
-    return cancelButton(showCancel)(props.goBackAction, props.id, props.params);
+    return revertButton(showCancel)(props.goBackAction, props.id, props.params);
   };
   return (
     <View>

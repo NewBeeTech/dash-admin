@@ -10,7 +10,7 @@ import * as RoutingURL from '../../core/RoutingURL/RoutingURL';
 import { isDisabled } from '../../core/CommonFun/CoreState';
 import UploadComponents from '../../common/Upload/UploadComponents';
 import amumu from 'amumu';
-import { Form, Input, Select, Radio, DatePicker, InputNumber } from 'antd';
+import { Form, Input, Select, Radio, DatePicker, InputNumber, Icon, Button } from 'antd';
 import moment from 'moment';
 
 const FormItem = Form.Item;
@@ -192,15 +192,106 @@ class DashInfo extends React.Component {
     }
     return views;
   }
+  remove = (k) => {
+    const { form } = this.props;
+    // can use data-binding to get
+    const descs = form.getFieldValue('descs');
+    // We need at least one passenger
+    if (descs.length === 1) {
+      return;
+    }
+
+    // can use data-binding to set
+    form.setFieldsValue({
+      descs: descs.filter(key => key !== k),
+    });
+  }
+
+  add = (type) => {
+    const { form } = this.props;
+    // can use data-binding to get
+    const descs = form.getFieldValue('descs');
+    descs.push({
+      type,
+      content: '',
+    });
+    // can use data-binding to set
+    // important! notify form to detect changes
+    form.setFieldsValue({
+      descs,
+    });
+  }
   render() {
-    const { getFieldDecorator } = this.props.form;
+    const { getFieldDecorator, getFieldValue } = this.props.form;
     const formItemLayout = {
       labelCol: { span: 6 },
       wrapperCol: { span: 8 },
     };
+    const formItemLayoutWithOutLabel = {
+      wrapperCol: { span: 8, offset: 6 },
+    };
+    console.log(this.props.dashInfo.get('desc'));
+    getFieldDecorator('descs', { initialValue: this.props.dashInfo.get('desc') !== undefined ? JSON.parse(this.props.dashInfo.get('desc')) : [{ type: 1, content: '' }] });
+    // getFieldDecorator('descs', { initialValue: [] });
+    const descs = getFieldValue('descs');
+    const params = this.props.dashInfo.toJS();
+    params.desc = JSON.stringify(descs);
+    console.log(params);
+    const formItems = descs.map((item, index) => {
+      return (
+        <FormItem
+          {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
+          label={index === 0 ? '活动内容介绍' : ''}
+          required={false}
+          key={index}
+        >
+          {getFieldDecorator(`names-${index}`, {
+            initialValue: item.content,
+            validateTrigger: ['onChange', 'onBlur'],
+            rules: [{
+              required: true,
+              whitespace: true,
+              message: '请填写内容或者删除该表单',
+            }],
+            onChange: e => {
+              const value = item.type === 1 ? e.target.value : e;
+              descs[index].content = value;
+              this.props.form.setFieldsValue({
+                descs,
+              });
+            },
+          })(
+            item.type === 1 ? <Input
+              type="textarea"
+              placeholder="活动内容介绍"
+              style={{ width: '80%', marginRight: 8 }}
+            /> :
+            <UploadComponents
+              multiple={false}
+              imgURLArray={item.content}
+              type="public"
+              onChange={(value) => {
+                console.log(value);
+              }}
+              dir={`prescription/${moment().format('YYYY_MM')}`}
+              isDisable={this.isDisabled()}
+            />
+          )}
+          {descs.length > 1 ? (
+            <Icon
+              // className="dynamic-delete-button"
+              className={Contentstyles.deleteButton}
+              type="minus-circle-o"
+              disabled={descs.length === 1}
+              onClick={() => this.remove(item)}
+            />
+          ) : null}
+        </FormItem>
+      );
+    });
     return (
-      <View className={ Contentstyles.content }>
-        <View className={ Contentstyles.contentHeader }>
+      <View className={Contentstyles.content}>
+        <View className={Contentstyles.contentHeader}>
           <DashInfoHeader
             id={this.props.params.id}
             form={this.props.form}
@@ -210,7 +301,7 @@ class DashInfo extends React.Component {
             goUpdateAction={this._goUpdateAction(this.props.dispatch)}
             updateAction={this._createAction(this.props.dispatch)}
             createAction={this._updateAction(this.props.dispatch)}
-            params={this.props.dashInfo.toJS()}
+            params={params}
           />
         </View>
         <View className={ Contentstyles.contentContainer }>
@@ -496,17 +587,24 @@ class DashInfo extends React.Component {
                       'DashReducer/dashInfo/var4', e);
                     },
                   })(
-                  <InputNumber
-                     min={0}
-                  />
+                    <InputNumber min={0} />
                 )}
               </FormItem>
-              <FormItem
+              {formItems}
+              <FormItem {...formItemLayoutWithOutLabel}>
+                <Button type="dashed" disabled={this.isDisabled()} onClick={() => this.add(1)} style={{ width: '30%' }}>
+                  <Icon type="plus" /> 添加文本
+                </Button>
+                <Button type="dashed" disabled={this.isDisabled()} onClick={() => this.add(2)} style={{ width: '30%', marginLeft: 20 }}>
+                  <Icon type="plus" /> 添加图片
+                </Button>
+              </FormItem>
+              {/* <FormItem
                 {...formItemLayout}
                 label="活动内容介绍"
                 hasFeedback
-              >
-                {getFieldDecorator('desc',
+              > */}
+                {/* {getFieldDecorator('desc',
                   {
                     rules: [
                       { required: true, message: '活动内容介绍不能为空' },
@@ -520,8 +618,9 @@ class DashInfo extends React.Component {
                         rows="5"
                         disabled={this.isDisabled()}
                       />
-                )}
-              </FormItem>
+                )} */}
+
+              {/* </FormItem> */}
               <FormItem
                 {...formItemLayout}
                 label="活动流程"

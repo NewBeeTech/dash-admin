@@ -107,7 +107,7 @@ const defaultState = Immutable.Map({
     activityListData: Immutable.List([]),
   }),
   searchData1: Immutable.Map({
-    status: '',
+    statusList: '',
     pageNum: 1,
     pageSize: 10,
   }),
@@ -162,6 +162,7 @@ const getDashInfoHandler = new ActionHandler.handleAction(DashAction.GET_DASHINF
           girlNum : data.sexRate ? data.sexRate.split(':')[1] : 0,
           cost: data.cost,
           var4: data.var4,
+          var5: data.var5,
           desc: data.desc,
           var1: data.var1,
           var2: data.var2,

@@ -25,7 +25,7 @@ class ActivityListSearch extends React.Component {
     if (this.props.searchData1.count() > 1) {
       const dataSource1 = this.props.searchData1;
       return this.props.form.setFieldsValue({
-        status: dataSource1.get('status'),
+        statusList: dataSource1.get('statusList'),
       });
     }
     return false;
@@ -48,10 +48,10 @@ class ActivityListSearch extends React.Component {
               {...formItemLayout}
             >
               {getFieldDecorator('status', {
-                  initialValue: this.props.searchData1.get('status'),
+                  initialValue: this.props.searchData1.get('statusList'),
                   onChange: (e) => {
                     this.props.changeAction(
-                    'DashReducer/searchData1/status', e);
+                    'DashReducer/searchData1/statusList', e);
                   },
                 })(
                   <Select
@@ -60,8 +60,8 @@ class ActivityListSearch extends React.Component {
                     filterOption={false}
                   >
                     <Option value={''}>全部</Option>
-                    <Option value={1}>没问题订单</Option>
-                    <Option value={2}>有问题订单</Option>
+                    <Option value={'1,4,5'}>没问题订单</Option>
+                    <Option value={'2,3'}>有问题订单</Option>
                   </Select>
               )}
             </FormItem>

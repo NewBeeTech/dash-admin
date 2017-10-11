@@ -77,6 +77,7 @@ class DashInfo extends React.Component {
       var4: '',
       var1: '',
       var2: '',
+      var5: '',
       originUserId: '',
       originUserDesc: '',
       originUserName: '',
@@ -159,7 +160,7 @@ class DashInfo extends React.Component {
                 标记活动失败
               </div>
             }
-            {status === 5 &&
+            {/* {status === 5 &&
               <div style={{ margin: '0 5px', color: '#1372D8' }}  onClick={() => {
                 this.changeActivitySignupStatus({
                   activityId: this.props.params.id,
@@ -184,7 +185,7 @@ class DashInfo extends React.Component {
               }}>
                 标记活动失败
               </div>
-            }
+            } */}
           </div>
         )
       });
@@ -279,6 +280,26 @@ class DashInfo extends React.Component {
                   })(
                   <Input
                     placeholder="活动地点"
+                  />
+                )}
+              </FormItem>
+              <FormItem
+                {...formItemLayout}
+                label="详细地址"
+                hasFeedback
+              >
+                {
+                  this.isDisabled() ?
+                  <text>{this.props.dashInfo.get('var5')}</text> :
+                  getFieldDecorator('var5', {
+                    initialValue: this.props.dashInfo.get('var5'),
+                    onChange: (e) => {
+                      this.props.changeAction(
+                      'DashReducer/dashInfo/var5', e.target.value);
+                    },
+                  })(
+                  <Input
+                    placeholder="详细地址"
                   />
                 )}
               </FormItem>

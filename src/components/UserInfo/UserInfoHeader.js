@@ -39,7 +39,10 @@ const UserInfoHeader = (props) => {
     return false;
   };
   const _returnBtn = () => {
-    return cancelButton(showCancel)(props.goBackAction, props.id, props.params);
+    if (props.id && !props.editing) {
+      return revertButton(props.goBackAction)();
+    }
+    return revertButton(showCancel)(props.goBackAction, props.id, props.params);
   };
   return (
     <View>

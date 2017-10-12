@@ -262,7 +262,9 @@ class DashInfo extends React.Component {
             },
           })(
             item.type === 1 ? <Input
+              disabled={this.isDisabled()}
               type="textarea"
+              rows="5"
               placeholder="活动内容介绍"
               style={{ width: '80%', marginRight: 8 }}
             /> :
@@ -283,7 +285,7 @@ class DashInfo extends React.Component {
               className={Contentstyles.deleteButton}
               type="minus-circle-o"
               disabled={descs.length === 1}
-              onClick={() => this.remove(item)}
+              onClick={this.isDisabled() ? '' : () => { this.remove(item) }}
             />
           ) : null}
         </FormItem>

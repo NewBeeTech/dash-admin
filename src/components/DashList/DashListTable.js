@@ -64,7 +64,7 @@ class DashListTable extends React.Component {
       title: '创建时间',
       dataIndex: 'createTime',
       key: 'createTime',
-    },];
+    }];
   }
   _renderDataSource(datas) {
     const dataSource = [];

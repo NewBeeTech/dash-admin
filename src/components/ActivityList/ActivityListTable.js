@@ -22,7 +22,7 @@ class ActivityListTable extends React.Component {
       dataIndex: 'operation',
       key: 'operation',
     }, {
-      title: 'ID',
+      title: '订单ID',
       dataIndex: 'id',
       key: 'id',
     }, {
@@ -41,10 +41,6 @@ class ActivityListTable extends React.Component {
       title: '活动时间',
       dataIndex: 'activityTime',
       key: 'activityTime',
-    }, {
-      title: 'orderId',
-      dataIndex: 'orderId',
-      key: 'orderId',
     }, {
       title: '更新时间',
       dataIndex: 'updateTime',
@@ -125,7 +121,7 @@ class ActivityListTable extends React.Component {
         activityId: data.get('activityId'),
         activityName: data.get('activityName'),
         activityTime: `${data.get('startTime')}-${data.get('endTime')}`,
-        orderId: data.get('orderId'),
+        // orderId: data.get('orderId'),
         updateTime: data.get('updateTime'),
         userId: data.get('userId'),
         var1: sex ? (sex == 1 ? '男' : '女') : '未知',

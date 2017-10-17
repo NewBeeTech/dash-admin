@@ -85,6 +85,7 @@ class DashInfo extends React.Component {
       signupPeople: Immutable.List([]),
       collectUseList: Immutable.List([]),
     }));
+    this.props.changeAction('DashReducer/status', '');
   }
   componentWillUnmount() {
     this.clearDashInfo();

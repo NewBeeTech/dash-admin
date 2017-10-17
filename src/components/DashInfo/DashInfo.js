@@ -231,13 +231,13 @@ class DashInfo extends React.Component {
     const formItemLayoutWithOutLabel = {
       wrapperCol: { span: 8, offset: 6 },
     };
-    console.log(this.props.dashInfo.get('desc'));
+    // console.log(this.props.dashInfo.get('desc'));
     getFieldDecorator('descs', { initialValue: this.props.dashInfo.get('desc') !== undefined ? JSON.parse(this.props.dashInfo.get('desc')) : [{ type: 1, content: '' }] });
     // getFieldDecorator('descs', { initialValue: [] });
     const descs = getFieldValue('descs');
     const params = this.props.dashInfo.toJS();
     params.desc = JSON.stringify(descs);
-    console.log(params);
+    // console.log(params);
     const formItems = descs.map((item, index) => {
       return (
         <FormItem
@@ -302,8 +302,8 @@ class DashInfo extends React.Component {
             status={this.props.status}
             goBackAction={this._goBackAction(this.props.dispatch)}
             goUpdateAction={this._goUpdateAction(this.props.dispatch)}
-            updateAction={this._createAction(this.props.dispatch)}
-            createAction={this._updateAction(this.props.dispatch)}
+            updateAction={this._updateAction(this.props.dispatch)}
+            createAction={this._createAction(this.props.dispatch)}
             params={params}
           />
         </View>

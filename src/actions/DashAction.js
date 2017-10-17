@@ -36,9 +36,10 @@ export const addDash = (params: Object) => (dispatch) => {
   const boyNum = params.boyNum;
   const girlNum = params.girlNum;
   params.sexRate = `${boyNum}:${girlNum}`;
-  const result = GET(URL.addDashPath, params);
+  const result = POSTJSON(URL.addDashPath, params);
   AsyncFetchHandler(ADD_DASH, result, dispatch);
   result.then(data => {
+    console.log(data);
     if (data.code === '001') {
       NotificationCenter.NotificationCard(
         '创建成功',

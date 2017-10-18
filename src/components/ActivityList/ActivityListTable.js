@@ -39,6 +39,7 @@ class ActivityListTable extends React.Component {
       key: 'activityName',
     }, {
       title: '活动时间',
+      width: '15%',
       dataIndex: 'activityTime',
       key: 'activityTime',
     }, {
@@ -57,6 +58,7 @@ class ActivityListTable extends React.Component {
       title: '备注',
       dataIndex: 'var2',
       key: 'var2',
+      width: '25%',
     }, {
       title: '状态',
       dataIndex: 'status',
@@ -99,7 +101,7 @@ class ActivityListTable extends React.Component {
             })}
           >
             <a
-              style={{ color: '#40a5ed', margin: '0 10px' }}
+              style={{ color: '#f40', margin: '0 10px' }}
               href="#"
             >
               已退款

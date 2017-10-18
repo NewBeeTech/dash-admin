@@ -11,6 +11,11 @@
   height: 40px;
   background-color: #585F67;
   padding-right: 2vw;
+  position: fixed;
+  width: calc(100% - 200px);
+  top:0;
+  right: 0;
+  z-index: 1000;
 }
 
 .icon {

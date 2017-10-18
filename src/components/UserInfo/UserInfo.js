@@ -175,12 +175,12 @@ class UserInfo extends React.Component {
               <tbody><tr>
                 <td>用户ID：{this.props.userInfo.get('id')}</td>
                 {/* <td>用户昵称{this.props.userInfo.get('nickName')}</td> */}
-                <td>手机号：{this.props.userInfo.get('phone')}</td>
+                <td colSpan="2">手机号：{this.props.userInfo.get('phone')}</td>
               </tr>
               <tr>
                 {/* <td>微信号：{this.props.userInfo.get('wxAccount')}</td> */}
                 <td>微信昵称：{this.props.userInfo.get('wxName')}</td>
-                <td>头像：
+                <td colSpan="2">头像：
                     <img src={this.props.userInfo.get('wxPortrait')}
                        style={{ width: '60px', height: '60px', border: '1px solid #ccc', borderRadius: '60px' }}
                     />

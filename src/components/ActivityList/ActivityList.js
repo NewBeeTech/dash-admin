@@ -41,7 +41,7 @@ class ActivityList extends React.Component {
   };
   render() {
     return (
-      <View className={ styles.contentList } >
+      <View className={ styles.contentList } style={{ top: '90px' }}>
         <View className={ styles.contentListHeader } >
           <ActivityListHeader
           />

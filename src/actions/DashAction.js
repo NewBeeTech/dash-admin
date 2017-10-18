@@ -68,7 +68,7 @@ export const updateDash = (params: Object) => (dispatch) => {
     const girlNum = params.girlNum;
     params.sexRate = `${boyNum}:${girlNum}`;
   }
-  const result = GET(URL.updateDashPath, params);
+  const result = POSTJSON(URL.updateDashPath, params);
   AsyncFetchHandler(
     UPDATE_DASH,
     result,

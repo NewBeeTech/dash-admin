@@ -120,13 +120,19 @@ class ActivityListTable extends React.Component {
     this.setState({ value });
   }
   renderColorRemarks(remarks) {
-    let text = remarks;
-    console.log(text.indexOf('已退款') > -1);
-    if(text.indexOf('已退款') > -1) {
-      const newString = text.replace(/已退款/, "<span style={{ color: '#f40'}}>已退款</span>");
-      console.log(newString);
+    // let text = remarks;
+    const text = [];
+    const index = remarks.indexOf('已退款');
+    if(index > -1) {
+      const list = remarks.split('已退款');
+      list.map((item, key) => {
+        if(item) {
+          text.push(<span key={key}>{item}<span style={{color: '#f40'}}>已退款</span></span>);
+        }
+      });
+      return text;
     }
-    return text;
+    return remarks;
   }
   renderRemarks(remarks, index, pingxxId) {
     if(this.state.editIndex === index) {
@@ -150,7 +156,7 @@ class ActivityListTable extends React.Component {
     }
     return (
       <div>
-        <div>{remarks}{this.renderColorRemarks(remarks)}</div>
+        <div>{this.renderColorRemarks(remarks)}</div>
         <div style={{ textAlign: 'right' }}>
           <a onClick={() => this.setState({ editIndex:index, value: remarks})}>编辑备注</a>
         </div>

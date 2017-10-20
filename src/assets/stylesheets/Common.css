@@ -1,6 +1,5 @@
 @import "./_palette.css";
 
-
 .contentList{
   display: flex;
   flex-direction: column;
@@ -94,7 +93,6 @@
 
 
 /* header */
-@import "../palette";
 .contentHeader{
   width: 100%;
   display: inline-flex;
@@ -165,7 +163,6 @@
 }
 
 /* button style*/
-@import "./_palette.scss";
 
 .blueButton{
   width: 100px;

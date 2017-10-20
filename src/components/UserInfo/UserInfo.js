@@ -65,7 +65,12 @@ class UserInfo extends React.Component {
     dispatch(push(RoutingURL.UserInfo(id, true)));
   }
   _updateAction = (dispatch) => (params: {}) => {
-    dispatch(DashAction.updateUserInfo(params));
+    dispatch(UserAction.updateUser({
+      id: this.props.userInfo.get('id'),
+      status: this.props.userInfo.get('status'),
+      creditCount: this.props.userInfo.get('creditCount'),
+      vars: this.props.userInfo.get('var5'),
+    }));
   }
   isDisabled() {
     return isDisabled(this.props.params.id, this.props.location.query.editing);
@@ -87,6 +92,8 @@ class UserInfo extends React.Component {
       wxAccount: '',
       wxName: '',
       userName: '',
+      creditCount: '',
+      var5: '',
       boyInfo: {},
       dashList: [],
     }));
@@ -160,15 +167,15 @@ class UserInfo extends React.Component {
             基本信息
           </View>
           <div>用户状态:&nbsp;&nbsp;
-              <Switch
-                checked={Boolean(this.props.userInfo.get('status'))}
-                onChange={(e) => {
-                  this.props.dispatch(UserAction.updateUser({ id: this.props.userInfo.get('id'), status: Number(e) }))
-                }}
-                disabled={this.isDisabled()}
-                checkedChildren="屏蔽"
-                unCheckedChildren="解冻"
-              />
+            <Switch
+              checked={Boolean(this.props.userInfo.get('status'))}
+              onChange={(e) => {
+                this.props.changeAction('UserReducer/userInfo/status', Number(e));
+              }}
+              disabled={this.isDisabled()}
+              checkedChildren="屏蔽"
+              unCheckedChildren="解冻"
+            />
           </div>
           <View className={Contentstyles.basicTable}>
             <table>
@@ -190,7 +197,22 @@ class UserInfo extends React.Component {
                 <td>性别：{this.props.userInfo.get('sex') ? (this.props.userInfo.get('sex') == 1 ? '男' : '女') : '未知'}</td>
                 <td>年龄：{this.props.userInfo.get('age')}</td>
                 <td>收到橄榄枝的数量：{this.props.userInfo.get('likeCount')}</td>
-              </tr></tbody>
+              </tr>
+              <tr>
+                <td>信用分：{this.isDisabled() ?
+                  this.props.userInfo.get('creditCount') :
+                  <Input
+                    onChange={(e) => this.props.changeAction('UserReducer/userInfo/creditCount', e.target.value)}
+                    value={this.props.userInfo.get('creditCount')}
+                />}</td>
+                <td colSpan="2">备注：{this.isDisabled() ?
+                  this.props.userInfo.get('var5') :
+                  <Input
+                    onChange={(e) => this.props.changeAction('UserReducer/userInfo/var5', e.target.value)}
+                    value={this.props.userInfo.get('var5')}
+                />}</td>
+              </tr>
+            </tbody>
             </table>
             {this.props.userInfo.get('sex') == 1 ?
             <table style={{ marginTop: '20px' }}>

@@ -105,10 +105,10 @@ class ActivityListTable extends React.Component {
             })}
           >
             <a
-              style={{ color: '#FF7316', margin: '0 10px' }}
+              style={{ color: '#FF7316' }}
               href="#"
             >
-              已退款
+              需退款
             </a>
           </Popconfirm>
         )
@@ -118,6 +118,15 @@ class ActivityListTable extends React.Component {
   handleChange(e) {
     const value = e.target.value;
     this.setState({ value });
+  }
+  renderColorRemarks(remarks) {
+    let text = remarks;
+    console.log(text.indexOf('已退款') > -1);
+    if(text.indexOf('已退款') > -1) {
+      const newString = text.replace(/已退款/, "<span style={{ color: '#f40'}}>已退款</span>");
+      console.log(newString);
+    }
+    return text;
   }
   renderRemarks(remarks, index, pingxxId) {
     if(this.state.editIndex === index) {
@@ -141,7 +150,7 @@ class ActivityListTable extends React.Component {
     }
     return (
       <div>
-        <div>{remarks}</div>
+        <div>{remarks}{this.renderColorRemarks(remarks)}</div>
         <div style={{ textAlign: 'right' }}>
           <a onClick={() => this.setState({ editIndex:index, value: remarks})}>编辑备注</a>
         </div>
@@ -168,36 +177,38 @@ class ActivityListTable extends React.Component {
         status: this.getStatus(data.get('status')),
         operation: (
           <View>
-            { data.get('status') == 1 &&
-            <Popconfirm
-              title="确认要标记问题?"
-              okText="确认标记"
-              cancelText="取消"
-              onConfirm={() => this.props.changeStatusAction({id: data.get('id'), status: 2 })}
-            >
-              <a
-                style={{ color: '#FF7316' }}
-                href="#"
+            {/*
+              { data.get('status') == 1 &&
+              <Popconfirm
+                title="确认要标记问题?"
+                okText="确认标记"
+                cancelText="取消"
+                onConfirm={() => this.props.changeStatusAction({id: data.get('id'), status: 2 })}
               >
-                标记问题
-              </a>
-            </Popconfirm>
-            }
-            { data.get('status') == 2 &&
-            <Popconfirm
-              title="确认要恢复?"
-              okText="确认恢复"
-              cancelText="取消"
-              onConfirm={() => this.props.changeStatusAction({id: data.get('id'), status: 1 })}
-            >
-              <a
-                style={{ color: '#40a5ed' }}
-                href="#"
+                <a
+                  style={{ color: '#FF7316' }}
+                  href="#"
+                >
+                  标记问题
+                </a>
+              </Popconfirm>
+              }
+              { data.get('status') == 2 &&
+              <Popconfirm
+                title="确认要恢复?"
+                okText="确认恢复"
+                cancelText="取消"
+                onConfirm={() => this.props.changeStatusAction({id: data.get('id'), status: 1 })}
               >
-                恢复正常
-              </a>
-            </Popconfirm>
-            }
+                <a
+                  style={{ color: '#40a5ed' }}
+                  href="#"
+                >
+                  恢复正常
+                </a>
+              </Popconfirm>
+              }
+            */}
             {this.renderTuiKuan(data)}
           </View>
         ),

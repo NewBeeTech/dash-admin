@@ -135,7 +135,7 @@ class DashInfo extends React.Component {
               <div>pingxxId：{item.get('pingxxId')}</div>
               <div>状态：{statusDesc}</div>
             </div>
-            {status === 1 &&
+            {/* {status === 1 &&
               <div style={{ margin: '0 5px', color: '#1372D8' }} onClick={() => {
                 this.changeActivitySignupStatus({
                   activityId: this.props.params.id,
@@ -160,7 +160,7 @@ class DashInfo extends React.Component {
               }}>
                 标记活动失败
               </div>
-            }
+            }*/}
             {/* {status === 5 &&
               <div style={{ margin: '0 5px', color: '#1372D8' }}  onClick={() => {
                 this.changeActivitySignupStatus({

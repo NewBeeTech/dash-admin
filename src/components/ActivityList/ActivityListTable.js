@@ -1,6 +1,6 @@
 
 import React, { PropTypes } from 'react';
-import { Table, Popconfirm } from 'antd';
+import { Table, Popconfirm, Input } from 'antd';
 import { View } from 'isomorphic';
 import Immutable from 'immutable';
 import styles from '../../assets/stylesheets/Common.css';
@@ -21,6 +21,7 @@ class ActivityListTable extends React.Component {
       title: '操作',
       dataIndex: 'operation',
       key: 'operation',
+      width: 70,
     }, {
       title: '订单ID',
       dataIndex: 'id',
@@ -58,12 +59,15 @@ class ActivityListTable extends React.Component {
       title: '备注',
       dataIndex: 'var2',
       key: 'var2',
-      width: '25%',
+      width: '20%',
     }, {
       title: '状态',
       dataIndex: 'status',
       key: 'status',
     }];
+    this.state = {
+      editIndex: '',
+    }
   }
   getStatus(status) {
     let text = '';
@@ -101,7 +105,7 @@ class ActivityListTable extends React.Component {
             })}
           >
             <a
-              style={{ color: '#f40', margin: '0 10px' }}
+              style={{ color: '#FF7316', margin: '0 10px' }}
               href="#"
             >
               已退款
@@ -110,6 +114,39 @@ class ActivityListTable extends React.Component {
         )
       }
     }
+  }
+  handleChange(e) {
+    const value = e.target.value;
+    this.setState({ value });
+  }
+  renderRemarks(remarks, index, pingxxId) {
+    if(this.state.editIndex === index) {
+      return (
+        <div>
+          <div>
+          <Input
+             value={this.state.value}
+             onChange={e => this.handleChange(e)}
+           />
+          </div>
+          <div style={{ textAlign: 'right' }}>
+            <a onClick={() => {
+              this.props.changeRemarkAction({ pingxxId, var2: this.state.value });
+              this.setState({ editIndex: '', value: '' });
+            }}>保存</a>&nbsp;&nbsp;&nbsp;
+            <a onClick={() => this.setState({ editIndex: '', value: '' })}>取消</a>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div>
+        <div>{remarks}</div>
+        <div style={{ textAlign: 'right' }}>
+          <a onClick={() => this.setState({ editIndex:index, value: remarks})}>编辑备注</a>
+        </div>
+      </div>
+    );
   }
   _renderDataSource(datas) {
     const dataSource = [];
@@ -127,7 +164,7 @@ class ActivityListTable extends React.Component {
         updateTime: data.get('updateTime'),
         userId: data.get('userId'),
         var1: sex ? (sex == 1 ? '男' : '女') : '未知',
-        var2: data.get('var2'),
+        var2: this.renderRemarks(data.get('var2'), index, data.get('pingxxId')),
         status: this.getStatus(data.get('status')),
         operation: (
           <View>

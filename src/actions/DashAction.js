@@ -223,3 +223,32 @@ export const changeActivityTuiKuanStatus = (params: Object) => (dispatch) => {
     }
   });
 };
+
+// 修改订单备注
+export const UPDATE_REMARK = 'UPDATE_REMARK';
+export const updateRemark = (params: Object) => (dispatch) => {
+  const result = GET(URL.updateRemarkPath, params);
+  AsyncFetchHandler(
+    UPDATE_REMARK,
+    result,
+    dispatch
+  );
+  result.then(data => {
+    if (data.code === '001') {
+      NotificationCenter.NotificationCard(
+        '修改成功',
+        '',
+        'success',
+        2,
+      );
+      dispatch(getActivityList({ pageNum: 1, pageSize: 10 }));
+    } else {
+      NotificationCenter.NotificationCard(
+        '修改失败',
+        data.message,
+        'error',
+        3,
+      );
+    }
+  });
+};

@@ -399,7 +399,7 @@ class DashInfo extends React.Component {
               </FormItem>
               <FormItem
                 {...formItemLayout}
-                label="活动banner"
+                label="活动banner(16:9 如 750*375)"
                 hasFeedback
               >
                 <UploadComponents

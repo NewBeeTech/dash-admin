@@ -85,3 +85,5 @@ export const getActivityListPath: string = `${rootURL}admin/activitySignup/list`
 export const changeActivityStatusPath: string = `${rootURL}admin/activitySignup/update`;
 // 修改报名活动状态
 export const changeActivitySignupStatusPath = `${rootURL}admin/activitySignup/updateStatus`;
+// 修改订单备注
+export const updateRemarkPath = `${rootURL}admin/activitySignup/updateRemark`;

@@ -100,7 +100,7 @@ class ActivityListTable extends React.Component {
               pingxxId: data.get('pingxxId'),
               activityId: data.get('activityId'),
               userId: data.get('userId'),
-              status: data.get('status'),
+              status: 6,
               var2: '已退款'
             })}
           >

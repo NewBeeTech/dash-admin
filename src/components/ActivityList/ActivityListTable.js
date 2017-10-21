@@ -1,6 +1,6 @@
 
 import React, { PropTypes } from 'react';
-import { Table, Popconfirm } from 'antd';
+import { Table, Popconfirm, Input } from 'antd';
 import { View } from 'isomorphic';
 import Immutable from 'immutable';
 import styles from '../../assets/stylesheets/Common.css';
@@ -21,8 +21,9 @@ class ActivityListTable extends React.Component {
       title: '操作',
       dataIndex: 'operation',
       key: 'operation',
+      width: 70,
     }, {
-      title: 'ID',
+      title: '订单ID',
       dataIndex: 'id',
       key: 'id',
     }, {
@@ -39,12 +40,9 @@ class ActivityListTable extends React.Component {
       key: 'activityName',
     }, {
       title: '活动时间',
+      width: '15%',
       dataIndex: 'activityTime',
       key: 'activityTime',
-    }, {
-      title: 'orderId',
-      dataIndex: 'orderId',
-      key: 'orderId',
     }, {
       title: '更新时间',
       dataIndex: 'updateTime',
@@ -61,11 +59,15 @@ class ActivityListTable extends React.Component {
       title: '备注',
       dataIndex: 'var2',
       key: 'var2',
+      width: '20%',
     }, {
       title: '状态',
       dataIndex: 'status',
       key: 'status',
     }];
+    this.state = {
+      editIndex: '',
+    }
   }
   getStatus(status) {
     let text = '';
@@ -98,20 +100,68 @@ class ActivityListTable extends React.Component {
               pingxxId: data.get('pingxxId'),
               activityId: data.get('activityId'),
               userId: data.get('userId'),
-              status: data.get('status'),
+              status: 6,
               var2: '已退款'
             })}
           >
             <a
-              style={{ color: '#40a5ed', margin: '0 10px' }}
+              style={{ color: '#FF7316' }}
               href="#"
             >
-              已退款
+              需退款
             </a>
           </Popconfirm>
         )
       }
     }
+  }
+  handleChange(e) {
+    const value = e.target.value;
+    this.setState({ value });
+  }
+  renderColorRemarks(remarks) {
+    // let text = remarks;
+    const text = [];
+    const index = remarks.indexOf('已退款');
+    if(index > -1) {
+      const list = remarks.split('已退款');
+      list.map((item, key) => {
+        if(item) {
+          text.push(<span key={key}>{item}<span style={{color: '#f40'}}>已退款</span></span>);
+        }
+      });
+      return text;
+    }
+    return remarks;
+  }
+  renderRemarks(remarks, index, pingxxId) {
+    if(this.state.editIndex === index) {
+      return (
+        <div>
+          <div>
+          <Input
+             value={this.state.value}
+             onChange={e => this.handleChange(e)}
+           />
+          </div>
+          <div style={{ textAlign: 'right' }}>
+            <a onClick={() => {
+              this.props.changeRemarkAction({ pingxxId, var2: this.state.value });
+              this.setState({ editIndex: '', value: '' });
+            }}>保存</a>&nbsp;&nbsp;&nbsp;
+            <a onClick={() => this.setState({ editIndex: '', value: '' })}>取消</a>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div>
+        <div>{this.renderColorRemarks(remarks)}</div>
+        <div style={{ textAlign: 'right' }}>
+          <a onClick={() => this.setState({ editIndex:index, value: remarks})}>编辑备注</a>
+        </div>
+      </div>
+    );
   }
   _renderDataSource(datas) {
     const dataSource = [];
@@ -125,44 +175,46 @@ class ActivityListTable extends React.Component {
         activityId: data.get('activityId'),
         activityName: data.get('activityName'),
         activityTime: `${data.get('startTime')}-${data.get('endTime')}`,
-        orderId: data.get('orderId'),
+        // orderId: data.get('orderId'),
         updateTime: data.get('updateTime'),
         userId: data.get('userId'),
         var1: sex ? (sex == 1 ? '男' : '女') : '未知',
-        var2: data.get('var2'),
+        var2: this.renderRemarks(data.get('var2'), index, data.get('pingxxId')),
         status: this.getStatus(data.get('status')),
         operation: (
           <View>
-            { data.get('status') == 1 &&
-            <Popconfirm
-              title="确认要标记问题?"
-              okText="确认标记"
-              cancelText="取消"
-              onConfirm={() => this.props.changeStatusAction({id: data.get('id'), status: 2 })}
-            >
-              <a
-                style={{ color: '#FF7316' }}
-                href="#"
+            {/*
+              { data.get('status') == 1 &&
+              <Popconfirm
+                title="确认要标记问题?"
+                okText="确认标记"
+                cancelText="取消"
+                onConfirm={() => this.props.changeStatusAction({id: data.get('id'), status: 2 })}
               >
-                标记问题
-              </a>
-            </Popconfirm>
-            }
-            { data.get('status') == 2 &&
-            <Popconfirm
-              title="确认要恢复?"
-              okText="确认恢复"
-              cancelText="取消"
-              onConfirm={() => this.props.changeStatusAction({id: data.get('id'), status: 1 })}
-            >
-              <a
-                style={{ color: '#40a5ed' }}
-                href="#"
+                <a
+                  style={{ color: '#FF7316' }}
+                  href="#"
+                >
+                  标记问题
+                </a>
+              </Popconfirm>
+              }
+              { data.get('status') == 2 &&
+              <Popconfirm
+                title="确认要恢复?"
+                okText="确认恢复"
+                cancelText="取消"
+                onConfirm={() => this.props.changeStatusAction({id: data.get('id'), status: 1 })}
               >
-                恢复正常
-              </a>
-            </Popconfirm>
-            }
+                <a
+                  style={{ color: '#40a5ed' }}
+                  href="#"
+                >
+                  恢复正常
+                </a>
+              </Popconfirm>
+              }
+            */}
             {this.renderTuiKuan(data)}
           </View>
         ),

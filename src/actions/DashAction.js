@@ -36,9 +36,10 @@ export const addDash = (params: Object) => (dispatch) => {
   const boyNum = params.boyNum;
   const girlNum = params.girlNum;
   params.sexRate = `${boyNum}:${girlNum}`;
-  const result = GET(URL.addDashPath, params);
+  const result = POSTJSON(URL.addDashPath, params);
   AsyncFetchHandler(ADD_DASH, result, dispatch);
   result.then(data => {
+    console.log(data);
     if (data.code === '001') {
       NotificationCenter.NotificationCard(
         '创建成功',
@@ -67,7 +68,7 @@ export const updateDash = (params: Object) => (dispatch) => {
     const girlNum = params.girlNum;
     params.sexRate = `${boyNum}:${girlNum}`;
   }
-  const result = GET(URL.updateDashPath, params);
+  const result = POSTJSON(URL.updateDashPath, params);
   AsyncFetchHandler(
     UPDATE_DASH,
     result,
@@ -215,6 +216,35 @@ export const changeActivityTuiKuanStatus = (params: Object) => (dispatch) => {
     } else {
       NotificationCenter.NotificationCard(
         '操作失败',
+        data.message,
+        'error',
+        3,
+      );
+    }
+  });
+};
+
+// 修改订单备注
+export const UPDATE_REMARK = 'UPDATE_REMARK';
+export const updateRemark = (params: Object) => (dispatch) => {
+  const result = GET(URL.updateRemarkPath, params);
+  AsyncFetchHandler(
+    UPDATE_REMARK,
+    result,
+    dispatch
+  );
+  result.then(data => {
+    if (data.code === '001') {
+      NotificationCenter.NotificationCard(
+        '修改成功',
+        '',
+        'success',
+        2,
+      );
+      dispatch(getActivityList({ pageNum: 1, pageSize: 10 }));
+    } else {
+      NotificationCenter.NotificationCard(
+        '修改失败',
         data.message,
         'error',
         3,

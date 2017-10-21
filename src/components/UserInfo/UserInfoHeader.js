@@ -32,12 +32,19 @@ const UserInfoHeader = (props) => {
   const _rednerBtn = () => {
     if (props.id) {
       if (props.editing) {
-        return false;
+        return modifyButton(handleSubmit)(props.updateAction);
       }
-      return modifyButton(props.goUpdateAction)(props.id);
     }
-    return false;
-  };
+  }
+  // const _rednerBtn = () => {
+  //   if (props.id) {
+  //     if (props.editing) {
+  //       return false;
+  //     }
+  //     return modifyButton(props.goUpdateAction)(props.id);
+  //   }
+  //   return false;
+  // };
   const _returnBtn = () => {
     if (props.id && !props.editing) {
       return revertButton(props.goBackAction)();

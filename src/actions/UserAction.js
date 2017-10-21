@@ -46,7 +46,8 @@ export const updateUser = (params: Object) => (dispatch) => {
         'success',
         2,
       );
-      dispatch(getUserInfo({id: params.id}));
+      dispatch(push(RoutingURL.UserInfo(params.id, false)));
+      // dispatch(getUserInfo({id: params.id}));
     } else {
       NotificationCenter.NotificationCard(
         '修改失败',

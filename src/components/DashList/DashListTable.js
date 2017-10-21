@@ -64,7 +64,7 @@ class DashListTable extends React.Component {
       title: '创建时间',
       dataIndex: 'createTime',
       key: 'createTime',
-    },];
+    }];
   }
   _renderDataSource(datas) {
     const dataSource = [];
@@ -91,14 +91,20 @@ class DashListTable extends React.Component {
               }}
             >
               查看
-            </a> | {data.get('status') ? <a
-              onClick={(e) => {
-                e.preventDefault();
+            </a> | {data.get('status') ?
+            <Popconfirm
+              title="确定将该活动下架吗?"
+              onConfirm={() => {
+                // e.preventDefault();
                 this.props.goUpdateAction({ id: data.get('id'), status: 0 });
               }}
+              okText="确定"
+              cancelText="取消"
             >
-              下架
-            </a> : <a
+              <a href="#">
+                下架
+              </a>
+            </Popconfirm> : <a
               onClick={(e) => {
                 e.preventDefault();
                 this.props.dispatch(push(RoutingURL.DashInfo(data.get('id'), true)));

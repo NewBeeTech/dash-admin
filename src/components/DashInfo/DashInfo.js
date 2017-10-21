@@ -85,6 +85,7 @@ class DashInfo extends React.Component {
       signupPeople: Immutable.List([]),
       collectUseList: Immutable.List([]),
     }));
+    this.props.changeAction('DashReducer/status', '');
   }
   componentWillUnmount() {
     this.clearDashInfo();
@@ -134,7 +135,7 @@ class DashInfo extends React.Component {
               <div>pingxxId：{item.get('pingxxId')}</div>
               <div>状态：{statusDesc}</div>
             </div>
-            {status === 1 &&
+            {/* {status === 1 &&
               <div style={{ margin: '0 5px', color: '#1372D8' }} onClick={() => {
                 this.changeActivitySignupStatus({
                   activityId: this.props.params.id,
@@ -159,7 +160,7 @@ class DashInfo extends React.Component {
               }}>
                 标记活动失败
               </div>
-            }
+            }*/}
             {/* {status === 5 &&
               <div style={{ margin: '0 5px', color: '#1372D8' }}  onClick={() => {
                 this.changeActivitySignupStatus({
@@ -230,13 +231,13 @@ class DashInfo extends React.Component {
     const formItemLayoutWithOutLabel = {
       wrapperCol: { span: 8, offset: 6 },
     };
-    console.log(this.props.dashInfo.get('desc'));
+    // console.log(this.props.dashInfo.get('desc'));
     getFieldDecorator('descs', { initialValue: this.props.dashInfo.get('desc') !== undefined ? JSON.parse(this.props.dashInfo.get('desc')) : [{ type: 1, content: '' }] });
     // getFieldDecorator('descs', { initialValue: [] });
     const descs = getFieldValue('descs');
     const params = this.props.dashInfo.toJS();
     params.desc = JSON.stringify(descs);
-    console.log(params);
+    // console.log(params);
     const formItems = descs.map((item, index) => {
       return (
         <FormItem
@@ -301,8 +302,8 @@ class DashInfo extends React.Component {
             status={this.props.status}
             goBackAction={this._goBackAction(this.props.dispatch)}
             goUpdateAction={this._goUpdateAction(this.props.dispatch)}
-            updateAction={this._createAction(this.props.dispatch)}
-            createAction={this._updateAction(this.props.dispatch)}
+            updateAction={this._updateAction(this.props.dispatch)}
+            createAction={this._createAction(this.props.dispatch)}
             params={params}
           />
         </View>
@@ -398,7 +399,7 @@ class DashInfo extends React.Component {
               </FormItem>
               <FormItem
                 {...formItemLayout}
-                label="活动banner"
+                label="活动banner(16:9 如 750*375)"
                 hasFeedback
               >
                 <UploadComponents

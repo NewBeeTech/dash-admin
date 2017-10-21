@@ -44,12 +44,13 @@ class UserListTable extends React.Component {
       dataIndex: 'sex',
       key: 'sex',
     }, {
-      title: '橄榄枝数',
+      title: '喜欢数',
       dataIndex: 'likeCount',
       key: 'likeCount',
     }, {
       title: '标签',
       dataIndex: 'tags',
+      width: '20%',
       key: 'tags',
     }, {
       title: '状态',

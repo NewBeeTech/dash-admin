@@ -203,16 +203,36 @@ class Banner extends React.Component {
                 hasFeedback
               >
                 <UploadComponents
-                   multiple={false}
-                   isDisable={this.isDisabled()}
-                   imgURLArray={this.props.bannerInfo.get('img')}
-                   type="public"
-                   onChange={(value) => {
-                     this.props.changeAction(
-                       `BannerReducer/bannerInfo/img`, value);
-                   }}
-                   dir={`prescription/${moment().format('YYYY_MM')}`}
-                 />
+                  multiple={false}
+                  isDisable={this.isDisabled()}
+                  imgURLArray={this.props.bannerInfo.get('img')}
+                  type="public"
+                  onChange={(value) => {
+                    this.props.changeAction(
+                      `BannerReducer/bannerInfo/img`, value);
+                  }}
+                  dir={`prescription/${moment().format('YYYY_MM')}`}
+                />
+              </FormItem>
+              <FormItem
+                {...formItemLayout}
+                label="跳转地址"
+                hasFeedback
+              >
+                {
+                  this.isDisabled() ?
+                    <text>{this.props.bannerInfo.get('url')}</text> :
+                  getFieldDecorator('url', {
+                    initialValue: this.props.bannerInfo.get('url'),
+                    onChange: (e) => {
+                      this.props.changeAction(
+                      'BannerReducer/bannerInfo/url', e.target.value);
+                    },
+                  })(
+                    <Input
+                      placeholder="跳转地址"
+                    />
+                )}
               </FormItem>
               <FormItem
                 {...formItemLayout}

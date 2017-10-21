@@ -31,6 +31,10 @@ class ActivityList extends React.Component {
     const localParams = Object.assign(params, { pageNum: this.props.searchData1.get('pageNum'), pageSize: this.props.searchData1.get('pageSize') });
     dispatch(DashAction.changeStatus(localParams));
   }
+  _changeRemarkAction = (dispatch: Function) => (params) => {
+    const localParams = Object.assign(params, { pageNum: this.props.searchData1.get('pageNum'), pageSize: this.props.searchData1.get('pageSize') });
+    dispatch(DashAction.updateRemark(localParams));
+  }
   changeActivityTuiKuanStatus = (dispatch) => (params) => {
     dispatch(DashAction.changeActivityTuiKuanStatus(params));
   }
@@ -41,7 +45,7 @@ class ActivityList extends React.Component {
   };
   render() {
     return (
-      <View className={ styles.contentList } >
+      <View className={ styles.contentList } style={{ top: '90px' }}>
         <View className={ styles.contentListHeader } >
           <ActivityListHeader
           />
@@ -57,6 +61,7 @@ class ActivityList extends React.Component {
              <ActivityListTable
                  dataSource={this.props.activityList.get('activityListData')}
                  changeStatusAction={this._changeStatusAction(this.props.dispatch)}
+                 changeRemarkAction={this._changeRemarkAction(this.props.dispatch)}
                  changeActivityTuiKuanStatus={this.changeActivityTuiKuanStatus(this.props.dispatch)}
                  dispatch={this.props.dispatch}
              />

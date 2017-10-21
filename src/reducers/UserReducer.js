@@ -113,7 +113,9 @@ const getUserListHandler = new ActionHandler.handleAction(UserAction.GET_USERLIS
 
 const getUserInfoHandler = new ActionHandler.handleAction(UserAction.GET_USERINFO)
     .success((state, action) => {
-      return state.set('userInfo', Immutable.fromJS(action.data))
+      const userInfo = action.data;
+      userInfo.tags = userInfo.tags && userInfo.tags.trim();
+      return state.set('userInfo', Immutable.fromJS(userInfo))
         .set('isFetching', false).set('errMsg', '');
     });
 

@@ -473,6 +473,29 @@ class DashInfo extends React.Component {
                      'YYYY-MM-DD HH:mm:ss') : undefined,
                   ]}
                 onChange={(date, dateString) => {
+                  if (!this.props.dashInfo.get('signupEndTime')) {
+                    console.log(dateString[0]);
+                    let res = dateString[0];
+                    res = new Date(res) - 60*60*24*1000;
+                    let resStart = res;
+                    resStart = res - 60*60*24*1000*7;
+                    console.log(res);
+                    res = res && moment(res);
+                    res = res && moment(res).format('YYYY-MM-DD HH:mm:ss');
+                    resStart = resStart && moment(resStart);
+                    resStart = resStart && moment(resStart).format('YYYY-MM-DD HH:mm:ss');
+                    console.log(res);
+
+
+                    this.props.changeAction(
+                       'DashReducer/dashInfo/signupEndTime',
+                       res
+                      );
+                      this.props.changeAction(
+                         'DashReducer/dashInfo/signupStartTime',
+                         resStart
+                        );
+                  }
                   this.props.changeAction(
                      'DashReducer/dashInfo/startTime',
                       dateString[0],

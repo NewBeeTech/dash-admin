@@ -44,6 +44,10 @@ class UserListTable extends React.Component {
       dataIndex: 'sex',
       key: 'sex',
     }, {
+      title: '信用分',
+      dataIndex: 'creditCount',
+      key: 'creditCount',
+    }, {
       title: '喜欢数',
       dataIndex: 'likeCount',
       key: 'likeCount',
@@ -73,6 +77,7 @@ class UserListTable extends React.Component {
         status: data.get('status') ? '正常' : '屏蔽',
         likeCount: data.get('likeCount'),
         phone: data.get('phone'),
+        creditCount: data.get('creditCount'),
         tags: data.get('tags'),
         operation: (
           <View>
@@ -109,8 +114,14 @@ class UserListTable extends React.Component {
   }
 
   render() {
+    const userList = this.props.userList;
     return (
       <View>
+        <div style={{ marginBottom: '10px' }}>
+          <span>总用户数:{userList && userList.get('count1')}</span>&nbsp;&nbsp;
+          <span>有效用户数:{userList && userList.get('count2')}</span>&nbsp;&nbsp;
+          <span>参与活动用户数:{userList && userList.get('count3')}</span>
+        </div>
         <Table
           size="middle"
           columns={this.columns}

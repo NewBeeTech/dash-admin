@@ -75,10 +75,10 @@ class ActivityListTable extends React.Component {
       text = '未支付';
     }
     if(status == 1) {
-      text = '成功';
+      text = '支付成功';
     }
     if(status == 2) {
-      text = '问题订单';
+      text = '流局';
     }
     if(status == 3) {
       text = '用户取消';

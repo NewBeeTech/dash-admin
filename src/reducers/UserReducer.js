@@ -104,16 +104,21 @@ const defaultState = Immutable.Map({
 
 const getUserListHandler = new ActionHandler.handleAction(UserAction.GET_USERLIST)
   .success((state, action) => {
-    return state.setIn(['userList', 'userListData'], Immutable.fromJS(action.data.list))
-      .setIn(['userList', 'total'], Immutable.fromJS(action.data.totalRow))
-      .setIn(['searchData', 'pageSize'], Immutable.fromJS(action.data.pageSize))
-      .setIn(['searchData', 'pageNum'], Immutable.fromJS(action.data.pageNumber))
+    return state.setIn(['userList', 'userListData'], Immutable.fromJS(action.data.list.list))
+      .setIn(['userList', 'total'], Immutable.fromJS(action.data.list.totalRow))
+      .setIn(['userList', 'count1'], Immutable.fromJS(action.data.count1))
+      .setIn(['userList', 'count2'], Immutable.fromJS(action.data.count2))
+      .setIn(['userList', 'count3'], Immutable.fromJS(action.data.count3))
+      .setIn(['searchData', 'pageSize'], Immutable.fromJS(action.data.list.pageSize))
+      .setIn(['searchData', 'pageNum'], Immutable.fromJS(action.data.list.pageNumber))
       .set('isFetching', false).set('errMsg', '');
   });
 
 const getUserInfoHandler = new ActionHandler.handleAction(UserAction.GET_USERINFO)
     .success((state, action) => {
-      return state.set('userInfo', Immutable.fromJS(action.data))
+      const userInfo = action.data;
+      userInfo.tags = userInfo.tags && userInfo.tags.trim();
+      return state.set('userInfo', Immutable.fromJS(userInfo))
         .set('isFetching', false).set('errMsg', '');
     });
 

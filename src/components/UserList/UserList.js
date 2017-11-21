@@ -47,9 +47,7 @@ class UserList extends React.Component {
             </View>
           <View className={ styles.contentListTable } >
              <UserListTable
-                  userList={this.props.userList}
                  dataSource={this.props.userList.get('userListData')}
-                 total={this.props.userList.get('total')}
                  dispatch={this.props.dispatch}
              />
           </View>
